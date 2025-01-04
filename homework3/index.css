@@ -51,7 +51,7 @@ header {
 
 section {
     padding: 5px 20px 20px 20px;
-    background-color: darkseagreen;    
+    background-color: darkseagreen;
 }
 
 h1 {
@@ -64,7 +64,6 @@ h1 {
     text-align: center;
 }
 
-
 .material-symbols-outlined {
     vertical-align: text-bottom;
 }
@@ -76,7 +75,7 @@ gallery {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background-color: darkseagreen;      
+    background-color: darkseagreen;
 }
 
 .gallery_cell {
@@ -150,8 +149,6 @@ article {
     background-color: #04AA6D;
     color: white;
 }
-
-
 
 a {
     color: black;
