@@ -2,6 +2,7 @@
     background-color: darkseagreen;
     margin: auto;
     width: 95vw;
+    (*font-family: system-ui;*)
 }
 
 .header {
@@ -95,6 +96,31 @@
     overflow: hidden;  
 }
 
+.read_more_div {
+    display: flex;
+    margin-top: 10px;
+}
+
+.read_more_div a {
+    float: none;
+    background-color:green;  
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-decoration: none;
+    font-size: 17px;  
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.read_more_div a:hover {
+    background-color:rgb(15, 139, 15);  
+    color: black;  
+    font-weight: 600;
+}
+
 .top_navigation a {
     float: left;
     color: #f2f2f2;
@@ -115,7 +141,7 @@
 }
 
 .main_div {
-    padding: 20px;
+    padding: 0px 20px 0px 20px;
 }
 
 a {
@@ -155,3 +181,12 @@ textarea {
     background-color: #f8f8f8;
     resize: none;
   }
+
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #333;
+    margin: 1em 0;
+    padding: 0;
+}
