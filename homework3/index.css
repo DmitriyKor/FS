@@ -70,18 +70,24 @@ h1 {
 
 gallery {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;
+    justify-content: space-evenly;
     padding: 20px;
     background-color: darkseagreen;
 }
 
-.gallery_cell {
-    padding: 10px;
+.gallery_cell {  
+    display: grid;
+    background-color: rgb(184, 210, 184);    
     width: 400px;
-    text-align: center;
+    align-items:self-start;
+    text-align: center;   
+    box-shadow: 5px 5px 5px rgb(108, 108, 108); 
+}
+
+figcaption {
+    padding: 5px 0px 10px 0px;
 }
 
 .cell_image {
