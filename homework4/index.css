@@ -37,3 +37,8 @@ main .div_class p {
 div p {
     color: yellow;   
 }
+
+/*0-2-0*/
+main .class1 .mylink {
+    color: greenyellow;
+}
