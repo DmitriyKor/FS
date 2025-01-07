@@ -1,39 +1,39 @@
-(*0-0-1*)
+/*0-0-1*/
 header {
     color: red;
 }
 
-(*0-0-1*)
+/*0-0-1*/
 header p {
     color: pink;
 }
 
-(*1-0-1*)
+/*1-0-1*/
 header #h1_text {
     color: orange;
 }
 
-(*0-1-0 *)
+/*0-1-0 */
 .nav_class {
     color: darkblue;
 }
 
-(*0-1-1*)
+/*0-1-1*/
 .nav_class > p {
     color: lightblue;   
 }
 
-(*0-1-0*)
+/*0-1-0*/
 a[href*="google"] {
     background-color: #cccccc;
 }
 
-(*0-1-2*)
+/*0-1-2*/
 main .div_class p {
     color: green;   
 }
 
-(*0-0-2*)
+/*0-0-2*/
 div p {
     color: yellow;   
 }
