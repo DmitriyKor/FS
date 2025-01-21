@@ -1,23 +1,50 @@
 
 section {
-    display: block;
     margin-bottom: 20px;
     border: 1px solid black;
+    height: 250px;
+}
+
+.half_box {
+    display: float;
+    width: calc(50% - 20px);
+    height: 245px;
+    padding: 0;
+    margin: 0;
 }
 
 .pic {
     display: float;
     width: 200px;
-    height: 150px;
+    height: 100px;
+    background-color: darkgreen;
+}
+
+.pic_high {
+    display: float;
+    width: 200px;
+    height: 200px;
     background-color: darkgreen;
 }
 
 .floatleft {
     float: left;
-    margin: 20px;
+    margin: 10px;
 }
 
 .floatright {
     float: right;
-    margin: 20px;
+    margin: 10px;
+}
+
+.clear_right {
+    clear: right;
+}
+
+.clear_left {
+    clear: left;
+}
+
+.top_margin_shifted {
+    margin-top: -100px;
 }
