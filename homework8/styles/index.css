@@ -1,0 +1,23 @@
+
+section {
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid black;
+}
+
+.pic {
+    display: float;
+    width: 200px;
+    height: 150px;
+    background-color: darkgreen;
+}
+
+.floatleft {
+    float: left;
+    margin: 20px;
+}
+
+.floatright {
+    float: right;
+    margin: 20px;
+}
