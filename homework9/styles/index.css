@@ -7,6 +7,9 @@
     --text-color-dark: #000000;
     --text-color-inverse: #FFFFFF;
     --gap: 20px;
+    --line-height-def: 26.25px;
+    --font-weight-def: 400;
+    --font-size-def: 16px;
 }
 
 main {
@@ -27,11 +30,12 @@ main {
 
 nav > ul {
     display: flex;
+    padding: 0;
     list-style-type: none;
     gap: var(--gap);
-    font-size: 16px;
-    line-height: 26.25px;
-    font-weight: 400;
+    font-size: var(--font-size-def);
+    line-height: var(--line-height-def);
+    font-weight: var(--font-weight-def);
     text-align: left;
     color: var(--text-color-dark);
 }
@@ -59,9 +63,9 @@ h1 {
     max-width: 540px;
     margin-bottom: 65px;  
     color: var(--text-color-light); 
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 26.25px;
+    font-size: var(--font-size-def);
+    font-weight: var(--font-weight-def);
+    line-height: var(--line-height-def);
     text-align: left;    
 }
 
@@ -71,9 +75,9 @@ h1 {
     background-color: var(--bckgrnd-color-high-intensity);
     border: none;
     color: var(--text-color-inverse);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 26.25px;
+    font-size: var(--font-size-def);
+    font-weight: var(--font-weight-def);
+    line-height: var(--line-height-def);
     text-align: center;    
 }
 
