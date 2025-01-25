@@ -154,7 +154,7 @@ h2 {
     line-height: var(--line-height-def);  
 }
 
-.cell_achiev h3 {
+h3 {
     height: 19px;
     font-size: 21px;
     font-weight: 500;
@@ -162,6 +162,10 @@ h2 {
     text-align: left;   
     margin: 0;
     padding: 0;
+    color: var(--text-color-inverse);
+    font-size: var(--font-size-def);
+    font-weight: var(--font-weight-def);
+    line-height: var(--line-height-def);     
 }
 
 .cell_achiev p {
@@ -181,4 +185,22 @@ h2 {
     margin-top: 57px;
     width: var(--width-max);
     height: 600px;
+}
+
+footer {
+    padding: 50px 0;
+    background-color: var(--bckgrnd-color-high-intensity);
+    color: var(--text-color-inverse);
+}
+
+footer h3 {
+    margin-top: var(--gap);
+}
+
+footer p {
+    margin-top: var(--gap);
+    font-size: 13px;
+    font-weight: var(--font-weight-def);
+    line-height: 21.33px;
+    text-align: left;    
 }
