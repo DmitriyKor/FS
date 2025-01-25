@@ -1,0 +1,26 @@
+:root {
+    font-family: 'Roboto', sans-serif;
+    --bckgrnd-color: #F9F9F9;
+    --bckgrnd-color-mid-intensity: #EEEFF1;    
+    --bckgrnd-color-high-intensity: #34547A;   
+    --gap: 20px;
+}
+
+.container {
+    max-width: 1110px;
+    margin: 0 20px;
+}
+
+.header {
+    background-color: var(--bckgrnd-color-mid-intensity);
+}
+
+nav > ul {
+    display: flex;
+    list-style-type: none;
+    gap: var(--gap);
+    padding-top: 79px;
+    font-size: 16px;
+    line-height: 26.25px;
+    text-align: left;
+}
