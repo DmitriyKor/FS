@@ -13,6 +13,7 @@
     --font-weight-hover: 600;
     --font-size-def: 16px;
     --width-internal-element: 540px;
+    --width-max: 1110px;
     --padding-mid: 100px;
 }
 
@@ -21,7 +22,7 @@ main {
 }
 
 .container {
-    max-width: 1110px;
+    max-width: var(--width-max);
     padding: 0 var(--gap);
     margin: 0 auto;
 }
@@ -68,7 +69,7 @@ h2 {
     line-height: 37.5px;
     text-align: center;
     max-width: var(--width-internal-element);   
-    margin: 0;   
+    margin: 0 auto;   
 }
 
 .p_write_me {
@@ -99,15 +100,13 @@ h2 {
 }
 
 .section_about {
-    display: flex;
-    flex-direction: column;
     padding-top: 112px;
     padding-bottom: var(--padding-mid);
-    justify-content: center;
 }
 
-.p_about_me {
+.p_under_h2 {
     padding-top: 50px;
+    margin: 0 auto;
     max-width: var(--width-internal-element);   
     color: var(--text-color-light); 
     text-align: center;     
@@ -172,4 +171,14 @@ h2 {
     line-height: var(--line-height-def);
     margin: 0;
     padding: 0;      
+}
+
+.section_how_i_work {
+    padding:  var(--padding-mid) 0;
+}
+
+.section_how_i_work iframe {
+    margin-top: 57px;
+    width: var(--width-max);
+    height: 600px;
 }
