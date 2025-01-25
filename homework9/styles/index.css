@@ -1,0 +1,207 @@
+:root {
+    font-family: 'Roboto', sans-serif;
+    --bckgrnd-color: #F9F9F9;
+    --bckgrnd-color-mid-intensity: #EEEFF1;    
+    --bckgrnd-color-high-intensity: #34547A;  
+    --bckgrnd-color-high-intensity-h: #233954;  
+    --text-color-light: #727272;
+    --text-color-dark: #000000;
+    --text-color-inverse: #FFFFFF;
+    --gap: 20px;
+    --line-height-def: 26.25px;
+    --font-weight-def: 400;
+    --font-weight-hover: 600;
+    --font-size-def: 16px;
+    --width-internal-element: 540px;
+    --width-max: 1110px;
+    --padding-mid: 100px;
+}
+
+main {
+    background-color: var(--bckgrnd-color);   
+}
+
+.container {
+    max-width: var(--width-max);
+    padding: 0 var(--gap);
+    margin: 0 auto;
+}
+
+.header {
+    background-color: var(--bckgrnd-color-mid-intensity);
+    padding-top: 79px;
+    padding-bottom: 81px;
+}
+
+nav > ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    list-style-type: none;
+    gap: var(--gap);
+    font-size: var(--font-size-def);
+    line-height: var(--line-height-def);
+    font-weight: var(--font-weight-def);
+    text-align: left;
+    color: var(--text-color-dark);
+}
+
+nav > ul > li:hover {
+    font-weight: var(--font-weight-hover);
+}
+
+.section_write_me {    
+    padding-top: 81px;
+    padding-bottom: 141px;
+    background-color: var(--bckgrnd-color-mid-intensity);     
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 78.75px;
+    text-align: left;  
+    max-width: var(--width-internal-element);  
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 37.5px;
+    text-align: center;
+    max-width: var(--width-internal-element);   
+    margin: 0 auto;   
+}
+
+.p_write_me {
+    margin-top: 60px;
+    max-width: var(--width-internal-element);
+    margin-bottom: 65px;  
+    color: var(--text-color-light); 
+    font-size: var(--font-size-def);
+    font-weight: var(--font-weight-def);
+    line-height: var(--line-height-def);
+    text-align: left;    
+}
+
+.button_write_me {
+    width: 225px;
+    height: 65px;
+    background-color: var(--bckgrnd-color-high-intensity);
+    border: none;
+    color: var(--text-color-inverse);
+    font-size: var(--font-size-def);
+    font-weight: var(--font-weight-def);
+    line-height: var(--line-height-def);
+    text-align: center;    
+}
+
+.button_write_me:hover {
+    background-color: var(--bckgrnd-color-high-intensity-h);
+}
+
+.section_about {
+    padding-top: 112px;
+    padding-bottom: var(--padding-mid);
+}
+
+.p_under_h2 {
+    padding-top: 50px;
+    margin: 0 auto;
+    max-width: var(--width-internal-element);   
+    color: var(--text-color-light); 
+    text-align: center;     
+    font-size: var(--font-size-def);
+    font-weight: var(--font-weight-def);
+    line-height: var(--line-height-def);    
+}
+
+.section_achievements {
+    background-color: var(--bckgrnd-color-high-intensity);
+    padding: var(--padding-mid) 0;
+}
+
+.section_achievements > div {
+    display: flex;
+    gap: 45px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cell_achiev {
+    display: flex;
+    gap: var(--gap);
+    padding: 0;   
+    margin: 0;     
+}
+
+.cell_achiev > img {
+    width: 50px;
+    height: 50px;
+}
+
+.cell_achiev > div {
+    padding: 0;   
+    margin: 0;   
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 44px;
+    width: 71px;
+    color: var(--text-color-inverse);
+    font-size: var(--font-size-def);
+    font-weight: var(--font-weight-def);
+    line-height: var(--line-height-def);  
+}
+
+h3 {
+    height: 19px;
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 24.61px;
+    text-align: left;   
+    margin: 0;
+    padding: 0;
+    color: var(--text-color-inverse);
+    font-size: var(--font-size-def);
+    font-weight: var(--font-weight-def);
+    line-height: var(--line-height-def);     
+}
+
+.cell_achiev p {
+    height: 15px;
+    font-size: var(--font-size-def);
+    font-weight: var(--font-weight-def);
+    line-height: var(--line-height-def);
+    margin: 0;
+    padding: 0;      
+}
+
+.section_how_i_work {
+    padding:  var(--padding-mid) 0;
+}
+
+.section_how_i_work iframe {
+    margin-top: 57px;
+    width: var(--width-max);
+    height: 600px;
+}
+
+footer {
+    padding: 50px 0;
+    background-color: var(--bckgrnd-color-high-intensity);
+    color: var(--text-color-inverse);
+}
+
+footer h3 {
+    margin-top: var(--gap);
+}
+
+footer p {
+    margin-top: var(--gap);
+    font-size: 13px;
+    font-weight: var(--font-weight-def);
+    line-height: 21.33px;
+    text-align: left;    
+}
