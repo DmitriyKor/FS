@@ -1,0 +1,30 @@
+button {
+    width: 150px;
+    height: 50px;
+    background-color: blue;
+    border-radius: 5px;
+    border-style: none;
+    color: white;
+    position: absolute;
+    left: 300px;
+    top: 200px;
+}
+
+button:hover{
+    animation: anim_b 2s infinite alternate;
+}
+
+@keyframes anim_b {
+    from {
+        width: 150px;
+        height: 50px;
+        background-color: blue;
+        top: 200px;
+    }
+    to {
+        width: 170px;
+        height: 60px;
+        background-color: green;     
+        top: 180px;   
+    }
+}
