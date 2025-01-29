@@ -186,10 +186,25 @@ h3 {
     padding:  var(--padding-mid) 0;
 }
 
-.section_how_i_work iframe {
-    margin-top: 57px;
-    width: var(--width-max);
-    height: 600px;
+.extra_margin_bottom {
+    margin-bottom: 57px;
+}
+
+.container_iframe {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-top: 56.25%;    
+}
+
+.container_iframe iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
 }
 
 footer {
@@ -256,11 +271,6 @@ footer p {
     .section_achievements > div {
         gap: 25px;
     }
-    .section_how_i_work iframe {
-        margin-top: 0px;
-        width: var(--width-max);
-        height: 400px;
-    }
     footer {
         padding: 10px 0;
     }    
@@ -311,11 +321,6 @@ footer p {
     }
     .section_achievements > div {
         gap: 15px;
-    }
-    .section_how_i_work iframe {
-        margin-top: 0px;
-        width: var(--width-max);
-        height: 400px;
     }
     footer {
         padding: 5px 0;
