@@ -300,9 +300,9 @@ footer p {
         max-width: var(--width-internal-element);   
     }
     h3 {
-        height: 14px;
-        line-height: 14px; 
-        font-size: 12px;
+        height: 10px;
+        line-height: 10px; 
+        font-size: 10px;
         font-weight: 300;
     }
     .p_write_me {
@@ -320,7 +320,15 @@ footer p {
         padding-top: 10px;
     }
     .section_achievements > div {
-        gap: 15px;
+        gap: 0;
+    }
+    .cell_achiev > img {
+        width: 25px;
+        height: 25px;
+    }
+    .cell_achiev p {
+        height: 12px;
+        line-height: 12px;
     }
     footer {
         padding: 5px 0;
