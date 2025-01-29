@@ -15,7 +15,11 @@
     --width-internal-element: 540px;
     --width-max: 1110px;
     --padding-mid: 100px;
+    --padding-header: 80px;
+    --padding-write-me-bottom: 141px;
 }
+
+
 
 main {
     background-color: var(--bckgrnd-color);   
@@ -29,8 +33,8 @@ main {
 
 .header {
     background-color: var(--bckgrnd-color-mid-intensity);
-    padding-top: 79px;
-    padding-bottom: 81px;
+    padding-top: var(--padding-header);
+    padding-bottom: var(--padding-header);
 }
 
 nav > ul {
@@ -51,8 +55,8 @@ nav > ul > li:hover {
 }
 
 .section_write_me {    
-    padding-top: 81px;
-    padding-bottom: 141px;
+    padding-top: var(--padding-header);
+    padding-bottom: var(--padding-write-me-bottom);
     background-color: var(--bckgrnd-color-mid-intensity);     
 }
 
@@ -205,3 +209,116 @@ footer p {
     line-height: 21.33px;
     text-align: left;    
 }
+
+@media screen and (max-width: 768px) {
+    :root {
+        --gap: 10px;
+        --line-height-def: 20px;
+        --font-size-def: 14px;
+        --width-internal-element: 90%;
+        --width-max: 95%;
+        --padding-mid: 50px;
+        --padding-header: 40px;
+        --padding-write-me-bottom: 60px;
+    }
+    h1 {
+        font-size: 36px;
+        font-weight: 400;
+        line-height: 50px;
+        max-width: var(--width-internal-element);  
+    } 
+    h2 {
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 32px;
+        max-width: var(--width-internal-element);   
+    }
+    h3 {
+        height: 19px;
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 22px; 
+    }
+    .p_write_me {
+        margin-top: 30px;
+        margin-bottom: 35px;  
+    }
+    .button_write_me {
+        width: 150px;
+        height: 45px;   
+    }    
+    .section_about {
+        padding-top: 60px;
+    }    
+    .p_under_h2 {
+        padding-top: 25px;
+    }
+    .section_achievements > div {
+        gap: 25px;
+    }
+    .section_how_i_work iframe {
+        margin-top: 0px;
+        width: var(--width-max);
+        height: 400px;
+    }
+    footer {
+        padding: 10px 0;
+    }    
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        --gap: 10px;
+        --line-height-def: 15px;
+        --font-size-def: 10px;
+        --width-internal-element: 90%;
+        --width-max: 95%;
+        --padding-mid: 20px;
+        --padding-header: 20px;
+        --padding-write-me-bottom: 20px;
+    }
+    h1 {
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 30px;
+        max-width: var(--width-internal-element);  
+    } 
+    h2 {
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 22px;
+        max-width: var(--width-internal-element);   
+    }
+    h3 {
+        height: 14px;
+        line-height: 14px; 
+        font-size: 12px;
+        font-weight: 300;
+    }
+    .p_write_me {
+        margin-top: 10px;
+        margin-bottom: 15px;  
+    }
+    .button_write_me {
+        width: 120px;
+        height: 40px;   
+    }      
+    .section_about {
+        padding-top: 20px;
+    }    
+    .p_under_h2 {
+        padding-top: 10px;
+    }
+    .section_achievements > div {
+        gap: 15px;
+    }
+    .section_how_i_work iframe {
+        margin-top: 0px;
+        width: var(--width-max);
+        height: 400px;
+    }
+    footer {
+        padding: 5px 0;
+    }    
+}
+
