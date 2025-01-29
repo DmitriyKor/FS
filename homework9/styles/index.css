@@ -15,6 +15,48 @@
     --width-internal-element: 540px;
     --width-max: 1110px;
     --padding-mid: 100px;
+    --padding-header: 80px;
+    --padding-write-me-bottom: 141px;
+}
+
+#menu__toggle {
+    display: none;
+}
+
+.menu_area {
+    display: none;
+    position: relative;
+    height: 30px;
+}
+
+#menu__toggle:checked ~ .menu {
+    visibility: visible;
+}
+
+.menu {
+    display: block;
+    visibility: hidden;
+    width: 90%;
+    margin: 0;
+    padding: 10px;
+    list-style: none;
+    background-color: var(--bckgrnd-color);   
+    box-shadow: 1px 0px 6px rgba(0, 0, 0, .2);
+    transition: 0.3s;    
+}
+
+.menu > li {
+    margin: 5px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: var(--font-weight-def);
+    text-align: left;
+    color: var(--text-color-dark);  
+    transition: 0.3s;        
+}
+
+.menu > li:hover {
+    font-weight: var(--font-weight-hover); 
 }
 
 main {
@@ -29,8 +71,9 @@ main {
 
 .header {
     background-color: var(--bckgrnd-color-mid-intensity);
-    padding-top: 79px;
-    padding-bottom: 81px;
+    padding-top: var(--padding-header);
+    padding-bottom: var(--padding-header);
+    margin: 0;
 }
 
 nav > ul {
@@ -46,13 +89,15 @@ nav > ul {
     color: var(--text-color-dark);
 }
 
+
+
 nav > ul > li:hover {
     font-weight: var(--font-weight-hover);
 }
 
 .section_write_me {    
-    padding-top: 81px;
-    padding-bottom: 141px;
+    padding-top: var(--padding-header);
+    padding-bottom: var(--padding-write-me-bottom);
     background-color: var(--bckgrnd-color-mid-intensity);     
 }
 
@@ -182,10 +227,25 @@ h3 {
     padding:  var(--padding-mid) 0;
 }
 
-.section_how_i_work iframe {
-    margin-top: 57px;
-    width: var(--width-max);
-    height: 600px;
+.extra_margin_bottom {
+    margin-bottom: 57px;
+}
+
+.container_iframe {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-top: 56.25%;    
+}
+
+.container_iframe iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
 }
 
 footer {
@@ -205,3 +265,122 @@ footer p {
     line-height: 21.33px;
     text-align: left;    
 }
+
+@media screen and (max-width: 768px) {
+    :root {
+        --gap: 10px;
+        --line-height-def: 20px;
+        --font-size-def: 14px;
+        --width-internal-element: 90%;
+        --width-max: 95%;
+        --padding-mid: 50px;
+        --padding-header: 40px;
+        --padding-write-me-bottom: 60px;
+    }
+    h1 {
+        font-size: 36px;
+        font-weight: 400;
+        line-height: 50px;
+        max-width: var(--width-internal-element);  
+    } 
+    h2 {
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 32px;
+        max-width: var(--width-internal-element);   
+    }
+    h3 {
+        height: 19px;
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 22px; 
+    }
+    .p_write_me {
+        margin-top: 30px;
+        margin-bottom: 35px;  
+    }
+    .button_write_me {
+        width: 150px;
+        height: 45px;   
+    }    
+    .section_about {
+        padding-top: 60px;
+    }    
+    .p_under_h2 {
+        padding-top: 25px;
+    }
+    .section_achievements > div {
+        gap: 25px;
+    }
+    footer {
+        padding: 10px 0;
+    }    
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        --gap: 10px;
+        --line-height-def: 15px;
+        --font-size-def: 10px;
+        --width-internal-element: 90%;
+        --width-max: 96%;
+        --padding-mid: 20px;
+        --padding-header: 5px;
+        --padding-write-me-bottom: 20px;
+    }
+    .menu_area {
+        display: block;
+    }
+
+    nav {
+        display: none;
+    }
+
+    h1 {
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 30px;
+        max-width: var(--width-internal-element);  
+    } 
+    h2 {
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 22px;
+        max-width: var(--width-internal-element);   
+    }
+    h3 {
+        height: 10px;
+        line-height: 10px; 
+        font-size: 10px;
+        font-weight: 300;
+    }
+    .p_write_me {
+        margin-top: 5px;
+        margin-bottom: 15px;  
+    }
+    .button_write_me {
+        width: 120px;
+        height: 40px;   
+    }      
+    .section_about {
+        padding-top: 20px;
+    }    
+    .p_under_h2 {
+        padding-top: 10px;
+    }
+    .section_achievements > div {
+        gap: 0;
+    }
+    .cell_achiev > img {
+        width: 25px;
+        height: 25px;
+    }
+    .cell_achiev p {
+        height: 12px;
+        line-height: 12px;
+    }
+    footer {
+        padding: 5px 0;
+    }    
+}
+
