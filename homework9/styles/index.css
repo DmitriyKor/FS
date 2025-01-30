@@ -51,8 +51,7 @@
     line-height: 20px;
     font-weight: var(--font-weight-def);
     text-align: left;
-    color: var(--text-color-dark);  
-    transition: 0.3s;        
+    color: var(--text-color-dark);       
 }
 
 .menu > li:hover {
@@ -321,7 +320,7 @@ footer p {
     :root {
         --gap: 10px;
         --line-height-def: 15px;
-        --font-size-def: 10px;
+        --font-size-def: 12px;
         --width-internal-element: 90%;
         --width-max: 96%;
         --padding-mid: 20px;
