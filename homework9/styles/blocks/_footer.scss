@@ -4,14 +4,20 @@ footer {
     color: $text-color-inverse;
 
     h3 {
-        margin-top: $gap;
+        margin-top: var(--gap);
     }
 
     p {
-        margin-top: $gap;
-        @include set-text(13px, $font-weight-def, 21.33px, left);
-        font-size: 13px;
-        font-weight: $font-weight-def;
-        line-height: 21.33px;
+        margin-top: var(--gap);
+        @include set-text(13px, var(--font-weight-def), 21.33px, left);
     }
+
+    @media screen and (max-width: $screen-size-tablet) {
+        padding: 10px 0;
+    }
+
+    @media screen and (max-width: $screen-size-phone) {
+        padding: 5px 0;
+    }
+
 }

@@ -1,6 +1,6 @@
 .section_achievements {
     background-color: $bckgrnd-color-high-intensity;
-    padding: $padding-mid 0;
+    padding: var(--padding-mid) 0;
 
     >div {
         display: flex;
@@ -13,7 +13,7 @@
 
 .cell_achiev {
     display: flex;
-    gap: $gap;
+    gap: var(--gap);
     @include reset-mg-pd;
 
     >img {
@@ -22,13 +22,39 @@
     }
 
     >div {
-        display: flex;
         @include reset-mg-pd;
-        @include set-text($font-size-def, $font-weight-def, $line-height-def, left);
+        display: flex;
+        @include set-text(var(--font-size-def), var(--font-weight-def), var(--line-height-def), left);
         flex-direction: column;
-        gap: 10px;
+        gap: 0;
         height: 44px;
         width: 71px;
         color: $text-color-inverse;
+    }
+}
+
+@media screen and (max-width: $screen-size-tablet) {
+    .section_achievements>div {
+        gap: 25px;
+    }
+}
+
+@media screen and (max-width: $screen-size-phone) {
+    .section_achievements {
+        >div {
+            gap: 0;
+        }
+    }
+
+    .cell_achiev {
+        >img {
+            width: 25px;
+            height: 25px;
+        }
+
+        >p {
+            height: 12px;
+            line-height: 12px;
+        }
     }
 }

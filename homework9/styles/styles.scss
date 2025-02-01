@@ -1,37 +1,97 @@
-@import "variables";
-@import "mixins";
+@import "./_variables.scss";
+@import "./_mixins.scss";
 
 :root {
     font-family: 'Roboto', sans-serif;
+    --gap: 20px;
+    --line-height-def: 26.25px;
+    --font-weight-def: 400;
+    --font-size-def: 16px;
+    --width-internal-element: 540px;
+    --width-max: 1110px;
+    --padding-mid: 100px;
+    --padding-header: 80px;
+    --padding-write-me-bottom: 141px;
 }
 
 .container {
-    max-width: $width-max;
-    padding: 0 $gap;
+    max-width: var(--width-max);
+    padding: 0 var(--gap);
     margin: 0 auto;
 }
 
 main {
-    background-color: $bckgrnd-color;   
+    background-color: $bckgrnd-color;
 }
 
 h1 {
     @include set-text(48px, 500, 78.75px, left);
-    max-width: $width-internal-element;  
+    max-width: var(--width-internal-element);
 }
 
 h2 {
     @include set-text(32px, 500, 37.5px, center);
-    max-width: $width-internal-element;   
-    margin: 0 auto;   
+    max-width: var(--width-internal-element);
+    margin: 0 auto;
 }
 
 h3 {
     @include set-text(21px, 500, 24.61px, left);
-    height: 19px; 
+    height: 19px;
     @include reset-mg-pd;
-    color: $text-color-inverse;   
+    color: $text-color-inverse;
 }
+
+@media screen and (max-width: 768px) {
+    :root {
+        --gap: 10px;
+        --line-height-def: 20px;
+        --font-size-def: 14px;
+        --width-internal-element: 90%;
+        --width-max: 95%;
+        --padding-mid: 50px;
+        --padding-header: 40px;
+        --padding-write-me-bottom: 60px;
+    }
+    
+    h1 {
+        @include set-text(36px, 400, 50px, left);
+    }
+
+    h2 {
+        @include set-text(28px, 400, 32px, center);
+    }
+
+    h3 {
+        @include set-text(18px, 300, 22px, left);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        --gap: 10px;
+        --line-height-def: 15px;
+        --font-size-def: 12px;
+        --width-internal-element: 90%;
+        --width-max: 96%;
+        --padding-mid: 20px;
+        --padding-header: 5px;
+        --padding-write-me-bottom: 20px;
+    }    
+
+    h1 {
+        @include set-text(20px, 300, 30px, left);
+    }
+
+    h2 {
+        @include set-text(16px, 300, 22px, center);
+    }
+
+    h3 {
+        @include set-text(10px, 300, 10px, left);
+    }
+}
+
 
 @import "./blocks/header";
 @import "./blocks/writeme";

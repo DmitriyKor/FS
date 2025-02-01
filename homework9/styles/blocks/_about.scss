@@ -1,12 +1,32 @@
 .section_about {
     padding-top: 112px;
-    padding-bottom: $padding-mid;
+    padding-bottom: var(--padding-mid);
 }
 
 .p_under_h2 {
-    @include set-text($font-size-def, $font-weight-def, $line-height-def, center);
+    @include set-text(var(--font-size-def), var(--font-weight-def), var(--line-height-def), center);
     padding-top: 50px;
     margin: 0 auto;
-    max-width: $width-internal-element;
+    max-width: var(--width-internal-element);
     color: $text-color-light;
+}
+
+@media screen and (max-width: $screen-size-tablet) {
+    .section_about {
+        padding-top: 60px;
+    }
+
+    .p_under_h2 {
+        padding-top: 25px;
+    }
+}
+
+@media screen and (max-width: $screen-size-phone) {
+    .section_about {
+        padding-top: 20px;
+    }
+
+    .p_under_h2 {
+        padding-top: 10px;
+    }
 }
