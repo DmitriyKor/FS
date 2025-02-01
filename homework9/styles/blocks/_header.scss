@@ -25,10 +25,7 @@
 
     li {
         margin: 5px;
-        font-size: 16px;
-        line-height: 20px;
-        font-weight: $font-weight-def;
-        text-align: left;
+        @include set-text(16px, $font-weight-def, 20px, left);
         color: $text-color-dark;
     }
 
@@ -51,11 +48,9 @@ nav {
         padding: 0;
         list-style-type: none;
         gap: $gap;
-        font-size: $font-size-def;
-        line-height: $line-height-def;
-        font-weight: $font-weight-def;
-        text-align: left;
+        @include set-text($font-size-def, $font-weight-def, $line-height-def, left);
         color: $text-color-dark;
+
         li:hover {
             font-weight: $font-weight-hover;
         }

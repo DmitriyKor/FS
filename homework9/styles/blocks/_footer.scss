@@ -1,0 +1,17 @@
+footer {
+    padding: 50px 0;
+    background-color: $bckgrnd-color-high-intensity;
+    color: $text-color-inverse;
+
+    h3 {
+        margin-top: $gap;
+    }
+
+    p {
+        margin-top: $gap;
+        @include set-text(13px, $font-weight-def, 21.33px, left);
+        font-size: 13px;
+        font-weight: $font-weight-def;
+        line-height: 21.33px;
+    }
+}

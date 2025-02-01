@@ -1,0 +1,26 @@
+.section_write_me {    
+    padding-top: $padding-header;
+    padding-bottom: $padding-write-me-bottom;
+    background-color: $bckgrnd-color-mid-intensity;     
+}
+
+.p_write_me {
+    margin-top: 60px;
+    max-width: $width-internal-element;
+    margin-bottom: 65px;  
+    color: $text-color-light; 
+    @include set-text($font-size-def, $font-weight-def, $line-height-def, left);      
+}
+
+.button_write_me {
+    width: 225px;
+    height: 65px;
+    background-color: $bckgrnd-color-high-intensity;
+    border: none;
+    color: $text-color-inverse;
+    @include set-text($font-size-def, $font-weight-def, $line-height-def, center);    
+
+    &:hover {
+        background-color: $bckgrnd-color-high-intensity-h;
+    }
+}

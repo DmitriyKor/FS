@@ -15,5 +15,27 @@ main {
     background-color: $bckgrnd-color;   
 }
 
+h1 {
+    @include set-text(48px, 500, 78.75px, left);
+    max-width: $width-internal-element;  
+}
+
+h2 {
+    @include set-text(32px, 500, 37.5px, center);
+    max-width: $width-internal-element;   
+    margin: 0 auto;   
+}
+
+h3 {
+    @include set-text(21px, 500, 24.61px, left);
+    height: 19px; 
+    @include reset-mg-pd;
+    color: $text-color-inverse;   
+}
+
 @import "./blocks/header";
 @import "./blocks/writeme";
+@import "./blocks/about";
+@import "./blocks/work";
+@import "./blocks/achiev";
+@import "./blocks/footer";

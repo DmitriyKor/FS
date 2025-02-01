@@ -1,0 +1,11 @@
+@mixin set-text($font-s, $font-w, $line-h, $text-al) {
+    font-size: $font-s;
+    font-weight: $font-w;
+    line-height: $line-h;
+    text-align: $text-al;
+}
+
+@mixin reset-mg-pd {
+    margin: 0;
+    padding: 0;
+}
