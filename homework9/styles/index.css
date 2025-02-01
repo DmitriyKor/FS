@@ -88,8 +88,6 @@ nav > ul {
     color: var(--text-color-dark);
 }
 
-
-
 nav > ul > li:hover {
     font-weight: var(--font-weight-hover);
 }

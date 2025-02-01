@@ -1,0 +1,19 @@
+@import "variables";
+@import "mixins";
+
+:root {
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    max-width: $width-max;
+    padding: 0 $gap;
+    margin: 0 auto;
+}
+
+main {
+    background-color: $bckgrnd-color;   
+}
+
+@import "./blocks/header";
+@import "./blocks/writeme";
