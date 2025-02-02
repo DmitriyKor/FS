@@ -1,0 +1,60 @@
+.section_achievements {
+    background-color: $bckgrnd-color-high-intensity;
+    padding: var(--padding-mid) 0;
+
+    >div {
+        display: flex;
+        gap: 45px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+.cell_achiev {
+    display: flex;
+    gap: var(--gap);
+    @include reset-mg-pd;
+
+    >img {
+        width: 50px;
+        height: 50px;
+    }
+
+    >div {
+        @include reset-mg-pd;
+        display: flex;
+        @include set-text(var(--font-size-def), var(--font-weight-def), var(--line-height-def), left);
+        flex-direction: column;
+        gap: 0;
+        height: 44px;
+        width: 71px;
+        color: $text-color-inverse;
+    }
+}
+
+@media screen and (max-width: $screen-size-tablet) {
+    .section_achievements>div {
+        gap: 25px;
+    }
+}
+
+@media screen and (max-width: $screen-size-phone) {
+    .section_achievements {
+        >div {
+            gap: 0;
+        }
+    }
+
+    .cell_achiev {
+        >img {
+            width: 25px;
+            height: 25px;
+        }
+
+        >p {
+            height: 12px;
+            line-height: 12px;
+        }
+    }
+}

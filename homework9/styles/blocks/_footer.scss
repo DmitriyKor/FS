@@ -1,0 +1,23 @@
+footer {
+    padding: 50px 0;
+    background-color: $bckgrnd-color-high-intensity;
+    color: $text-color-inverse;
+
+    h3 {
+        margin-top: var(--gap);
+    }
+
+    p {
+        margin-top: var(--gap);
+        @include set-text(13px, var(--font-weight-def), 21.33px, left);
+    }
+
+    @media screen and (max-width: $screen-size-tablet) {
+        padding: 10px 0;
+    }
+
+    @media screen and (max-width: $screen-size-phone) {
+        padding: 5px 0;
+    }
+
+}

@@ -1,0 +1,50 @@
+.section_write_me {
+    padding-top: var(--padding-header);
+    padding-bottom: var(--padding-write-me-bottom);
+    background-color: $bckgrnd-color-mid-intensity;
+}
+
+.p_write_me {
+    margin-top: 60px;
+    max-width: var(--width-internal-element);
+    margin-bottom: 65px;
+    color: $text-color-light;
+    @include set-text(var(--font-size-def), var(--font-weight-def), var(--line-height-def), left);
+}
+
+.button_write_me {
+    width: 225px;
+    height: 65px;
+    background-color: $bckgrnd-color-high-intensity;
+    border: none;
+    color: $text-color-inverse;
+    @include set-text(var(--font-size-def), var(--font-weight-def), var(--line-height-def), center);
+
+    &:hover {
+        background-color: $bckgrnd-color-high-intensity-h;
+    }
+}
+
+@media screen and (max-width: $screen-size-tablet) {
+    .p_write_me {
+        margin-top: 30px;
+        margin-bottom: 35px;
+    }
+
+    .button_write_me {
+        width: 150px;
+        height: 45px;
+    }
+}
+
+@media screen and (max-width: $screen-size-phone) {
+    .p_write_me {
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }
+
+    .button_write_me {
+        width: 120px;
+        height: 40px;
+    }
+}
