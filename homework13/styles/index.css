@@ -1,0 +1,31 @@
+svg {
+    margin: 20px;
+}
+
+.my-style1 {
+    stroke: blue;
+    stroke-width: 5px;
+    width: 200px;
+    height: 200px;
+    fill: yellow;
+}
+
+.my-style2 {
+    stroke: red;
+    fill: lightblue;
+    width: 300px;
+    height: 300px;
+    stroke-width: 7px;
+    animation: 4s linear 0s infinite alternate anim;
+}
+
+@keyframes anim {
+    from {
+        stroke: red;
+        fill: lightblue;      
+    }
+    to {
+        stroke: black;
+        fill: darkblue;             
+    }
+  }

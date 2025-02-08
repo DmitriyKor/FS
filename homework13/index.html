@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/index.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <svg style="display: none">
+        <symbol viewBox="0 0 100 100" id="square">
+            <rect vector-effect="non-scaling-stroke" x="2" y="2" width="96" height="96"></rect>
+        </symbol>
+
+        <symbol viewBox="0 0 200 100" id="rect">
+            <rect vector-effect="non-scaling-stroke" x="2" y="2" width="196" height="96"></rect>
+        </symbol>
+        
+        <symbol viewBox="0 0 100 100" id="circle">
+            <circle vector-effect="non-scaling-stroke" cx="50" cy="50" r="48"></circle>
+        </symbol>
+        
+        <symbol viewBox="0 0 200 100" id="ellipse">
+            <ellipse vector-effect="non-scaling-stroke" cx="100" cy="50" rx="98" ry="49"></ellipse>
+        </symbol>
+    </svg>
+
+    <svg class="my-style1">
+        <use xlink:href="#circle"></use>
+    </svg>
+    <svg class="my-style2">
+        <use xlink:href="#square"></use>
+    </svg>
+    <svg class="my-style1">
+        <use xlink:href="#rect"></use>
+    </svg>    
+    <svg class="my-style2">
+        <use xlink:href="#ellipse"></use>
+    </svg>        
+
+</body>
+
+</html>
