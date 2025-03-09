@@ -253,6 +253,7 @@ nav ul li:hover {
   min-width: 50px;
   outline: none;
   border: none;
+  margin: 0 auto;
   background-color: rgba(45, 54, 81, 0.8);
   color: #FFFFFF;
   font-family: Roboto, sans-serif;
@@ -631,6 +632,7 @@ nav ul li:hover {
 }
 .section_posts {
   padding-top: var(--gap-xxl);
+  padding-bottom: var(--gap-xxl);
 }
 .section_posts h2 {
   color: #2D3651;
@@ -647,7 +649,7 @@ nav ul li:hover {
 .section_posts button {
   display: block;
   overflow: hidden;
-  margin: var(--gap-standard) auto var(--gap-xxl);
+  margin: var(--gap-standard) auto 0;
 }
 
 .posts {
@@ -702,6 +704,7 @@ nav ul li:hover {
 @media screen and (max-width: 992px) {
   .section_posts {
     padding-top: 77px;
+    padding-bottom: 80px;
   }
   .section_posts h2 {
     font-family: "", sans-serif;
@@ -712,9 +715,6 @@ nav ul li:hover {
     text-align: left;
     font-family: "Courier New", Courier, monospace;
     margin-bottom: 32px;
-  }
-  .section_posts button {
-    margin-bottom: 80px;
   }
   .posts {
     grid-template-columns: repeat(3, 1fr);
@@ -754,6 +754,7 @@ nav ul li:hover {
 @media screen and (max-width: 768px) {
   .section_posts {
     padding-top: 58px;
+    padding-bottom: 60px;
   }
   .section_posts h2 {
     font-family: "", sans-serif;
@@ -764,9 +765,6 @@ nav ul li:hover {
     text-align: left;
     font-family: "Courier New", Courier, monospace;
     margin-bottom: 7px;
-  }
-  .section_posts button {
-    margin-bottom: 60px;
   }
   .posts {
     grid-template-columns: repeat(2, 1fr);
@@ -804,6 +802,10 @@ nav ul li:hover {
   }
 }
 @media screen and (max-width: 576px) {
+  .section_posts button {
+    width: 100%;
+    margin: var(--gap-standard) auto 0;
+  }
   .posts {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(6, 550px);
