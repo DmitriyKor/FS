@@ -5,6 +5,7 @@
 :root {
   --gap-standard: 20px;
   --gap-large: 40px;
+  --gap-xxl: 100px;
   --height-button: 60px;
 }
 
@@ -36,6 +37,7 @@ body {
 .container {
   max-width: 1300px;
   margin: 0 auto;
+  padding: 0;
 }
 
 .menu_top {
@@ -53,6 +55,7 @@ body {
   margin: 0;
   padding: 0;
   color: #FFFFFF;
+  transition: all 0.2s ease-out;
 }
 .logo p {
   margin: auto;
@@ -85,6 +88,7 @@ nav ul {
   letter-spacing: 0.085ex;
   text-align: center;
   align-items: stretch;
+  transition: all 0.2s ease-out;
 }
 nav ul li {
   padding: 5px;
@@ -125,16 +129,14 @@ nav ul li:hover {
   letter-spacing: 0.105ex;
   text-align: center;
   border: 2px solid white;
+  transition: all 0.2s ease-out;
 }
 .caption .caption_buttons button:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.section_gallery button {
-  display: block;
+.button_std1 {
   height: var(--height-button);
-  width: 350px;
-  margin: var(--gap-standard) auto var(--gap-large);
   outline: none;
   border: none;
   background-color: rgba(45, 54, 81, 0.8);
@@ -145,9 +147,17 @@ nav ul li:hover {
   line-height: 100%;
   letter-spacing: 0.1ex;
   text-align: center;
+  transition: all 0.2s ease-out;
 }
-.section_gallery button:hover {
+
+.button_std1:hover {
   background-color: #2d3651;
+}
+
+.section_gallery button {
+  display: block;
+  width: 350px;
+  margin: var(--gap-standard) auto var(--gap-large);
 }
 
 .gallery {
@@ -160,6 +170,7 @@ nav ul li:hover {
 .gallery .gal_cell {
   background-color: rgba(45, 54, 81, 0.8);
   position: relative;
+  transition: all 0.2s ease-out;
 }
 .gallery .gal_cell img {
   position: absolute;
@@ -195,6 +206,230 @@ nav ul li:hover {
 .gallery .gal_cell:nth-child(6) {
   grid-column: 4;
   grid-row: 2/4;
+}
+
+.section_ready {
+  background-color: #E5E5E5;
+}
+
+.ready {
+  display: flex;
+  align-items: center;
+  gap: 93px;
+  padding-top: var(--gap-xxl);
+  padding-bottom: 62px;
+}
+.ready div:nth-child(2) img {
+  width: 281;
+  height: 487px;
+  object-fit: cover;
+}
+
+.left_side h2 {
+  color: #2D3651;
+  font-family: "", sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+  letter-spacing: 0.1ex;
+  text-align: left;
+  font-family: "Courier New", Courier, monospace;
+  padding: 0;
+  margin-bottom: 50px;
+}
+.left_side > div {
+  position: relative;
+}
+.left_side > div p:nth-child(1)::after {
+  content: "";
+  position: absolute;
+  height: 200px;
+  width: 1px;
+  left: calc(100% + 50px);
+  top: 0;
+  border-right: 1px solid #707070;
+}
+.left_side > div p {
+  color: rgb(99, 117, 136);
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.05ex;
+  text-align: left;
+}
+
+.section_form {
+  background-color: rgb(45, 54, 81);
+}
+
+.subscribe_form {
+  display: grid;
+  padding: 30px 0;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+.subscribe_form input {
+  padding: 10px 20px;
+  height: var(--height-button);
+  border-style: solid;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.05);
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 39px;
+  letter-spacing: 0.1ex;
+  text-align: left;
+  color: #FFFFFF;
+}
+.subscribe_form button {
+  height: var(--height-button);
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #FFFFFF;
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 39px;
+  letter-spacing: 0.1ex;
+  text-align: center;
+  transition: all 0.2s ease-out;
+}
+.subscribe_form button:hover {
+  background-color: #2d3651;
+}
+
+.section_posts {
+  padding-top: var(--gap-xxl);
+}
+.section_posts h2 {
+  color: #2D3651;
+  font-family: "", sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+  letter-spacing: 0.1ex;
+  text-align: left;
+  font-family: "Courier New", Courier, monospace;
+  margin-bottom: 54px;
+}
+.section_posts button {
+  display: block;
+  width: 350px;
+  margin: var(--gap-standard) auto var(--gap-xxl);
+}
+
+.posts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 550px);
+  gap: var(--gap-standard);
+}
+.posts > div {
+  background-color: #EEEEEE;
+}
+.posts > div img {
+  display: block;
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+}
+.posts > div h4 {
+  margin: 69px 15px 15px;
+  font-family: "", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.05ex;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  color: #637588;
+}
+.posts > div p {
+  margin: 0 36px 68px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-align: center;
+  color: #637588;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 5em;
+}
+.posts div:nth-child(1) {
+  grid-column: 1/3;
+}
+.posts div:nth-child(6) {
+  grid-column: 3/5;
+}
+
+footer {
+  background-color: rgb(45, 54, 81);
+  margin: 0;
+  padding-top: 42px;
+  padding-bottom: 67px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+footer > ul {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+  gap: 30px;
+  color: #FFFFFF;
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.085ex;
+  text-align: center;
+  margin-bottom: 27px;
+}
+footer > ul li {
+  margin: 0;
+  padding: 0;
+}
+footer > div {
+  width: 75px;
+  height: 2px;
+  border: 1px solid #FFFFFF;
+  margin-bottom: 30px;
+}
+
+.highlight1 {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 100;
+  line-height: 20px;
+  letter-spacing: 0.5ex;
+  text-align: center;
+  color: rgb(75, 85, 117);
+}
+
+.highlight2 {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.05ex;
+  text-align: center;
+  color: #FFFFFF;
 }
 
 /*# sourceMappingURL=index.css.map */
