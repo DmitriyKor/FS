@@ -56,8 +56,8 @@ body {
 .section_top {
     position: relative;
     margin: 0 auto;
-    height: 1080px;    
-    padding: 0;
+    height: 1080px;   
+    padding: 0; 
     background: $overlay-color;
 }
 
@@ -72,6 +72,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
 }
 
 .logo {
@@ -82,6 +83,7 @@ body {
     @include reset-mg-pd;
     color: $text-color-light;
     transition: all 0.2s ease-out;
+    overflow: hidden;
     p {
         margin: auto;
         @include set-text(Roboto, 24px, 400, 100%, 0.23ex, center);      
@@ -102,8 +104,10 @@ nav {
         @include set-text(Roboto, 18px, 400, 20px, 0.085ex, center);
         align-items: stretch;
         transition: all 0.2s ease-out;
+        overflow: hidden;
         li {
             padding: 5px;
+            overflow: hidden;
         }
         li:hover {
             color: rgb(190, 190, 190);
@@ -123,6 +127,7 @@ nav {
 
     .caption_buttons {
         display: flex;
+        overflow: hidden;
         justify-content: center;
         gap: var(--gap-standard);
         button {      
@@ -143,6 +148,8 @@ nav {
 
 .button_std1 {
     height: var(--height-button);
+    overflow: hidden;
+    min-width: 50px;
     outline: none;
     border: none;
     background-color: $button-color;
@@ -173,7 +180,8 @@ nav {
     .gal_cell {
         background-color: $overlay-color; 
         position: relative;  
-        transition: all 0.2s ease-out;     
+        transition: all 0.2s ease-out;  
+        overflow: hidden;   
         img {
             position: absolute;
             width: 100%;
@@ -216,6 +224,7 @@ nav {
 
 .ready {
     display: flex;
+    overflow: hidden;
     align-items: center;
     gap: 93px;
     padding-top: var(--gap-xxl);
@@ -261,14 +270,20 @@ nav {
     background-color: $theme-color;
 }
 
+.div_form {
+    margin: 0 auto;
+    padding: 30px 0;
+}
+
 .subscribe_form { 
     display: grid;
-    padding: 30px 0;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: var(--height-button);
+    overflow: hidden;
     gap: 20px;
-
     input {
         padding: 10px 20px;
+        min-width: 0;
         height: var(--height-button);
         border-style: solid;
         outline: none;
@@ -280,6 +295,7 @@ nav {
     }
 
     button {
+        min-width: 0;
         height: var(--height-button); 
         outline: none;
         border: none;
@@ -300,11 +316,13 @@ nav {
         color: $text-color-intense;
         @include set-text('', 40px, 700, 48px, 0.1ex, left);  
         font-family: 'Courier New', Courier, monospace;
-        margin-bottom: 54px
+        margin-bottom: 54px;
+        overflow: hidden;
     }
     button {
         display: block;
         width: 350px;
+        overflow: hidden;
         margin: var(--gap-standard) auto var(--gap-xxl);  
            
     }
@@ -312,12 +330,14 @@ nav {
 
 .posts {
     display: grid;
+    overflow: hidden;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 550px);
     gap: var(--gap-standard);
 
     >div {
         background-color: $background-color-light2;
+        min-width: 0;
         img {
             display: block;
             height: 300px;
