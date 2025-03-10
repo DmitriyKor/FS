@@ -1,6 +1,6 @@
 # Homework17
 
-Homework17 is a demostration of the skills of creating web pages using the html, css and scss technology. 
+Homework17 is a demonstration of the skills of creating web pages using the html, css and scss technology. 
 
 ## Header
 
