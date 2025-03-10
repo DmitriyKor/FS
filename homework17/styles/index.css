@@ -30,13 +30,13 @@ body {
 }
 
 .container {
-  max-width: 1300px;
+  max-width: 1260px;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 20px;
 }
 @media screen and (max-width: 992px) {
   .container {
-    max-width: responsive-laptop;
+    max-width: 992px;
     padding: 0 20px;
   }
 }
@@ -142,7 +142,7 @@ body {
   padding: 10px;
 }
 .dropdown_menu li:hover {
-  background-color: #2d3651;
+  background-color: #D66926;
 }
 
 .logo {
@@ -200,7 +200,7 @@ nav ul li {
   overflow: hidden;
 }
 nav ul li:hover {
-  color: rgb(190, 190, 190);
+  color: #D66926;
 }
 
 @media screen and (max-width: 768px) {
@@ -248,7 +248,7 @@ nav ul li:hover {
   transition: all 0.2s ease-out;
 }
 .caption .caption_buttons button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #D66926;
 }
 
 @media screen and (max-width: 992px) {
@@ -321,11 +321,6 @@ nav ul li:hover {
   text-align: center;
   transition: all 0.2s ease-out;
 }
-@media screen and (max-width: 992px) {
-  .button_std1 {
-    background-color: #D66926;
-  }
-}
 @media screen and (max-width: 576px) {
   .button_std1 {
     width: calc(100% - 2 * var(--gap-standard));
@@ -333,7 +328,7 @@ nav ul li:hover {
 }
 
 .button_std1:hover {
-  background-color: #2d3651;
+  background-color: #D66926;
 }
 
 .section_gallery button {
@@ -643,14 +638,9 @@ nav ul li:hover {
   transition: all 0.2s ease-out;
 }
 .subscribe_form button:hover {
-  background-color: #2d3651;
+  background-color: #D66926;
 }
 
-@media screen and (max-width: 992px) {
-  .subscribe_form button {
-    background-color: #D66926;
-  }
-}
 @media screen and (max-width: 768px) {
   .subscribe_form {
     grid-template-columns: repeat(2, 1fr);

@@ -10,6 +10,8 @@ $text-color-post: #637588;
 $hover-color: rgba(0, 0, 0, 0.1);
 $input-color: rgba(255, 255, 255, 0.05);
 $button-color: rgba(#2D3651, 0.8);
+$button-color-transp: rgba(255, 255, 255, 0.1);
+
 $button-color2: #D66926;
 $button-color-hover: rgba(#2D3651, 1.0);
 $background-color-light: #E5E5E5;
@@ -58,11 +60,11 @@ body {
 }
 
 .container {
-    max-width: 1300px;
+    max-width: 1260px;
     margin: 0 auto;
-    padding: 0;
-    @media screen and (max-width: $responsive-laptop) {
-        max-width: responsive-laptop;
+    padding: 0 20px;
+        @media screen and (max-width: $responsive-laptop) {
+        max-width: $responsive-laptop;
         padding: 0 20px;
     }
     @media screen and (max-width: $responsive-tablet) {
@@ -154,7 +156,7 @@ body {
     }
 
     li:hover {
-        background-color: $button-color-hover;
+        background-color: $button-color2;
     }
 }
 
@@ -196,7 +198,7 @@ nav {
             overflow: hidden;
         }
         li:hover {
-            color: rgb(190, 190, 190);
+            color: $button-color2; 
         }
     }
 }
@@ -231,14 +233,14 @@ nav {
             height: var(--height-button);
             width: 250px;
             outline: none;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: $button-color-transp;
             color: $text-color-light;             
             @include set-text(Roboto, 18px, 400, 100%, 0.105ex, center); 
             border: 2px solid white;  
             transition: all 0.2s ease-out;  
         }
         button:hover {
-            background-color: $hover-color;            
+            background-color: $button-color2;            
         }
     }
 }
@@ -300,17 +302,14 @@ nav {
     background-color: $button-color;
     color: $text-color-light;             
     @include set-text(Roboto, 18px, 400, 100%, 0.1ex, center); 
-    transition: all 0.2s ease-out;   
-    @media screen and (max-width: $responsive-laptop) {
-        background-color: $button-color2;      
-    }    
+    transition: all 0.2s ease-out;      
     @media screen and (max-width: $responsive-phone) {
         width: calc(100% - (2 * var(--gap-standard)));        
     }
 }
 
 .button_std1:hover {
-    background-color: $button-color-hover;        
+    background-color: $button-color2;        
 }
 
 .section_gallery {
@@ -549,15 +548,7 @@ nav {
         transition: all 0.2s ease-out;    
     }
     button:hover {
-        background-color: $button-color-hover;        
-    }
-}
-
-@media screen and (max-width: $responsive-laptop) {
-    .subscribe_form { 
-        button {
-            background-color: $button-color2;      
-        }
+        background-color: $button-color2;        
     }
 }
 
