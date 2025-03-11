@@ -1,0 +1,13 @@
+@mixin set-text($font-fml, $font-s, $font-w, $line-h, $letter-sp, $text-al) {
+    font-family: $font-fml, sans-serif;
+    font-size: $font-s;
+    font-weight: $font-w;
+    line-height: $line-h;
+    letter-spacing: $letter-sp;
+    text-align: $text-al;
+}
+
+@mixin reset-mg-pd {
+    margin: 0;
+    padding: 0;
+}
