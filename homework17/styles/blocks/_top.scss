@@ -88,14 +88,25 @@
     display: flex;
     width: 163px;
     height: 60px;
-    border: 3px solid #D53D27;
     @include reset-mg-pd;
     color: $text-color-light;
     transition: all 0.2s ease-out;
     overflow: hidden;
-    p {
-        margin: auto;
-        @include set-text(Roboto, 24px, 400, 100%, 0.23ex, center);      
+
+    span {
+        height: 60px;
+    }
+
+    span:nth-child(1){
+        width: 80px;
+        border: 3px solid #D53D27;
+        padding: 14px 8px 8px 6px;
+        @include set-text(Roboto, 24px, 400, 100%, 0.23ex, right); 
+    }
+    span:nth-child(2){
+        width: 83px;
+        padding: 17px 8px 8px 3px;
+        @include set-text(Roboto, 24px, 400, 100%, 0.23ex, left); 
     }
     &:hover {
         background-color:$hover-color;
