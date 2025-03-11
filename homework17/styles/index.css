@@ -94,21 +94,35 @@
   display: flex;
   width: 163px;
   height: 60px;
-  border: 3px solid #D53D27;
   margin: 0;
   padding: 0;
   color: #FFFFFF;
   transition: all 0.2s ease-out;
   overflow: hidden;
 }
-.logo p {
-  margin: auto;
+.logo span {
+  height: 60px;
+}
+.logo span:nth-child(1) {
+  width: 80px;
+  border: 3px solid #D53D27;
+  padding: 14px 8px 8px 6px;
   font-family: Roboto, sans-serif;
   font-size: 24px;
   font-weight: 400;
   line-height: 100%;
   letter-spacing: 0.23ex;
-  text-align: center;
+  text-align: right;
+}
+.logo span:nth-child(2) {
+  width: 83px;
+  padding: 17px 8px 8px 3px;
+  font-family: Roboto, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: 0.23ex;
+  text-align: left;
 }
 .logo:hover {
   background-color: rgba(0, 0, 0, 0.1);
@@ -661,7 +675,7 @@ nav ul li:hover {
   text-overflow: ellipsis;
   word-wrap: break-word;
   overflow: hidden;
-  max-height: 4em;
+  max-height: 5em;
 }
 .posts div:nth-child(1) {
   grid-column: 1/3;
