@@ -1,58 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
-:root {
-  --gap-standard: 20px;
-  --gap-large: 40px;
-  --gap-xxl: 100px;
-  --height-button: 60px;
-}
-@media screen and (max-width: 992px) {
-  :root {
-    --height-button: 50px;
-  }
-}
-@media screen and (max-width: 768px) {
-  :root {
-    --height-button: 40px;
-  }
-}
-@media screen and (max-width: 576px) {
-  :root {
-    --height-button: 40px;
-  }
-}
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  max-width: 1260px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-@media screen and (max-width: 992px) {
-  .container {
-    max-width: 992px;
-    padding: 0 20px;
-  }
-}
-@media screen and (max-width: 768px) {
-  .container {
-    max-width: 768px;
-    padding: 0 20px;
-  }
-}
-@media screen and (max-width: 576px) {
-  .container {
-    max-width: 576px;
-    padding: 0 20px;
-  }
-}
-
 .section_top::before {
   content: "";
   background-image: url(../images/img-header.png);
@@ -70,7 +15,7 @@ body {
   margin: 0 auto;
   height: 1080px;
   padding: 0;
-  background: rgba(45, 54, 81, 0.8);
+  background: rgba(45, 54, 81, 0.9);
 }
 @media screen and (max-width: 992px) {
   .section_top {
@@ -302,35 +247,6 @@ nav ul li:hover {
     width: 170px;
   }
 }
-.button_std1 {
-  display: block;
-  height: var(--height-button);
-  width: 350px;
-  overflow: hidden;
-  min-width: 50px;
-  outline: none;
-  border: none;
-  margin: 0 auto;
-  background-color: rgba(45, 54, 81, 0.8);
-  color: #FFFFFF;
-  font-family: Roboto, sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 100%;
-  letter-spacing: 0.1ex;
-  text-align: center;
-  transition: all 0.2s ease-out;
-}
-@media screen and (max-width: 576px) {
-  .button_std1 {
-    width: calc(100% - 2 * var(--gap-standard));
-  }
-}
-
-.button_std1:hover {
-  background-color: #D66926;
-}
-
 .section_gallery button {
   margin: var(--gap-standard) auto var(--gap-large);
 }
@@ -343,7 +259,7 @@ nav ul li:hover {
   gap: 10px;
 }
 .gallery .gal_cell {
-  background-color: rgba(45, 54, 81, 0.8);
+  background-color: rgba(45, 54, 81, 0.75);
   position: relative;
   transition: all 0.2s ease-out;
   overflow: hidden;
@@ -371,7 +287,10 @@ nav ul li:hover {
   text-align: center;
 }
 .gallery .gal_cell:hover {
-  background-color: rgba(45, 54, 81, 0.65);
+  background-color: rgba(45, 54, 81, 0.9);
+}
+.gallery .gal_cell:hover p {
+  color: #D66926;
 }
 .gallery .gal_cell:nth-child(1) {
   grid-column: 1/3;
@@ -600,7 +519,7 @@ nav ul li:hover {
 .subscribe_form {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: var(--height-button);
+  grid-template-rows: 60px;
   overflow: hidden;
   gap: 20px;
 }
@@ -620,6 +539,9 @@ nav ul li:hover {
   letter-spacing: 0.1ex;
   text-align: left;
   color: #FFFFFF;
+}
+.subscribe_form input:hover, .subscribe_form input:active, .subscribe_form input:focus {
+  border: 2px solid #FFFFFF;
 }
 .subscribe_form button {
   min-width: 0;
@@ -941,6 +863,90 @@ footer > div {
   letter-spacing: 0.05ex;
   text-align: center;
   color: #FFFFFF;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --gap-standard: 20px;
+  --gap-large: 40px;
+  --gap-xxl: 100px;
+  --height-button: 60px;
+}
+@media screen and (max-width: 992px) {
+  :root {
+    --height-button: 50px;
+  }
+}
+@media screen and (max-width: 768px) {
+  :root {
+    --height-button: 40px;
+  }
+}
+@media screen and (max-width: 576px) {
+  :root {
+    --height-button: 40px;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+@media screen and (max-width: 992px) {
+  .container {
+    max-width: 992px;
+    padding: 0 20px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding: 0 20px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .container {
+    max-width: 576px;
+    padding: 0 20px;
+  }
+}
+
+.button_std1 {
+  display: block;
+  height: var(--height-button);
+  width: 350px;
+  overflow: hidden;
+  min-width: 50px;
+  outline: none;
+  border: 2px solid rgba(45, 54, 81, 0.8);
+  margin: 0 auto;
+  background-color: rgba(45, 54, 81, 0.8);
+  color: #FFFFFF;
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: 0.1ex;
+  text-align: center;
+  transition: all 0.2s ease-out;
+}
+@media screen and (max-width: 576px) {
+  .button_std1 {
+    width: calc(100% - 2 * var(--gap-standard));
+  }
+}
+
+.button_std1:hover {
+  background-color: #D66926;
 }
 
 /*# sourceMappingURL=index.css.map */

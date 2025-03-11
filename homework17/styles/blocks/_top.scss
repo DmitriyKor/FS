@@ -1,0 +1,216 @@
+@use "const" as *;
+@use "mixins" as *;
+
+.section_top::before {
+    content: '';
+    background-image: url(../images/img-header.png);
+    background-size: auto;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.section_top {
+    position: relative;
+    margin: 0 auto;
+    height: 1080px;   
+    padding: 0; 
+    background: $overlay-color;
+    @media screen and (max-width: $responsive-laptop) {
+        height: 766px;
+    }
+    @media screen and (max-width: $responsive-tablet) {
+        height: 560px;
+    }
+    @media screen and (max-width: $responsive-phone) {
+        height: 992px;
+    }    
+}
+
+.menu_top {
+    padding-top: var(--gap-standard);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: display;
+}
+
+#menu__toggle {
+    display: none;
+}
+
+.menu__btn {
+    color: $text-color-light;
+}
+
+.menu_area {
+    display: none;
+    position: relative;
+    height: 30px;
+    width: 30px;
+}
+
+#menu__toggle:checked~.dropdown_menu {
+    visibility: visible;
+}
+
+.dropdown_menu {
+    display: block;
+    visibility: hidden;
+    position: absolute;
+    width: 200px;
+    left: -175px;
+    top: 30px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: $text-color-light;             
+    border: 2px solid white;  
+    @include set-text(Roboto, 18px, 400, 26px, 0.1ex, center);       
+    box-shadow: -2px 2px 4px rgba(44, 44, 44, 0.4);
+    transition: 0.2s;
+
+    li {
+        margin: 0;
+        padding: 10px;
+    }
+
+    li:hover {
+        background-color: $button-color2;
+    }
+}
+
+.logo {
+    display: flex;
+    width: 163px;
+    height: 60px;
+    border: 3px solid #D53D27;
+    @include reset-mg-pd;
+    color: $text-color-light;
+    transition: all 0.2s ease-out;
+    overflow: hidden;
+    p {
+        margin: auto;
+        @include set-text(Roboto, 24px, 400, 100%, 0.23ex, center);      
+    }
+    &:hover {
+        background-color:$hover-color;
+    }
+}
+
+nav {
+    @include reset-mg-pd;
+    @media screen and (max-width: $responsive-tablet) {
+        display: none;
+    }
+    ul {
+        @include reset-mg-pd;
+        color: $text-color-light;
+        display: flex;
+        list-style-type: none;
+        gap: 30px;
+        @include set-text(Roboto, 18px, 400, 20px, 0.085ex, center);
+        align-items: stretch;
+        transition: all 0.2s ease-out;
+        overflow: hidden;
+        li {
+            padding: 5px;
+            overflow: hidden;
+        }
+        li:hover {
+            color: $button-color2; 
+        }
+    }
+}
+
+@media screen and (max-width: $responsive-tablet) {
+    .menu_area {
+        display: block;
+    }
+
+    nav {
+        display: none;
+    }
+}
+
+
+.caption {
+    margin: 367px auto 447px;
+   
+    h1 {
+        color: $text-color-light;
+        @include set-text('', 60px, 300, 100%, 0.08ex, center);
+        font-family: 'Courier New', Courier, monospace;
+        padding-bottom: 47px;  
+        overflow: hidden;    
+    }
+
+    .caption_buttons {
+        display: flex;
+        overflow: hidden;
+        justify-content: center;
+        gap: var(--gap-standard);
+        button {      
+            height: var(--height-button);
+            width: 250px;
+            outline: none;
+            background-color: $button-color-transp;
+            color: $text-color-light;             
+            @include set-text(Roboto, 18px, 400, 100%, 0.105ex, center); 
+            border: 2px solid white;  
+            transition: all 0.2s ease-out;  
+        }
+        button:hover {
+            background-color: $button-color2;            
+        }
+    }
+}
+
+@media screen and (max-width: $responsive-laptop) {
+    .caption {
+        margin: 234px auto 311px;
+    }
+    h1 {
+        @include set-text('', 30px, 300, 100%, 0.08ex, center);  
+        padding-bottom: 38px;
+    }
+    .caption_buttons {
+        button {
+            width: 200px;
+        }
+    }
+}
+
+@media screen and (max-width: $responsive-tablet) {
+    .caption {
+        margin: 147px auto 236px;
+    }
+    h1 {
+        @include set-text('', 30px, 300, 100%, 0.08ex, center);  
+        padding-bottom: 27px;
+    }
+    .caption_buttons {
+        button {
+            width: 170px;
+        }
+    }
+}
+
+@media screen and (max-width: $responsive-phone) {
+    .caption {
+        margin: 339px auto 418px;
+    }
+    h1 {
+        @include set-text('', 30px, 300, 100%, 0.08ex, center);  
+        padding-bottom: 35px;
+    }
+    .caption_buttons {
+        button {
+            width: 170px;
+        }
+    }
+}
