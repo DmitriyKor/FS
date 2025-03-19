@@ -48,7 +48,8 @@ console.log(userObj.fullName()) // John Smith
  */
 
 function defUpperStr(aText) {
-    return ((aText===undefined) || (aText==null) || (aText.length<=0)) ? "DEFAULT TEXT" : aText.toUpperCase();
+    return aText ? aText.toUpperCase() : "DEFAULT TEXT";
+    //return ((aText===undefined) || (aText==null) || (aText.length<=0)) ? "DEFAULT TEXT" : aText.toUpperCase();
 }
 
 console.log(defUpperStr('My text')) // MY TEXT
@@ -137,8 +138,6 @@ function weekFn(n) {
  * При виконанні завдання допускається використовувати тільки тернарний оператор ?.
  * Використання операторів if, switch - заборонено.
  */
-
-
 
 function ageClassification(n){
     return n <= 0 ? null :    //в задачі: <0   - null, в тестах <=0 - null, роблю під тести
