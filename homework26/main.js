@@ -19,6 +19,7 @@ console.log('#9. JavaScript homework example file')
 
 function handleButtonClick(buttonId, message) {
   const el = document.getElementById (buttonId);
+  console.log(el);
   
   const clickHandler = function (e) {
     console.log(message);
@@ -28,7 +29,7 @@ function handleButtonClick(buttonId, message) {
 }
 
 // Демонстрація використання функції (припустимо, що HTML містить кнопку з ID 'myButton')
- //handleButtonClick('myButton', 'Button clicked!');
+ handleButtonClick('myButton', 'Button clicked!');
 //see index.html
  
 /*
