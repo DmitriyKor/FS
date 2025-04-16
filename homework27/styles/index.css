@@ -6,12 +6,6 @@
     padding: 0;
 }
 
-.slide_container:focus-visible,
-.slide_container:active
-{
-    border: 1px solid blue;
-}
-
 .prev, 
 .next {
     cursor: pointer;
@@ -87,7 +81,7 @@
 }
 
 .bullet_item_active {
-    color: darkgray;
+    color: rgb(110, 110, 110);
 }
 
 
