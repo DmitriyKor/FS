@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/index.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="slide_container" tabindex="0">
+        <ul class="slide_list">
+            <li class="slide_item">
+                <img src="images/slide_img1.jpg">
+                <p>Item 1</p>
+            </li>          
+            <li class="slide_item">
+                <img src="images/slide_img2.jpg">
+                <p>Item 2</p>
+            </li>          
+            <li class="slide_item">
+                <img src="images/slide_img3.jpg">
+                <p>Item 3</p>
+            </li>          
+        </ul>
+        <a class="prev">&#10094;</a>
+        <a class="next">&#10095;</a>
+
+        <ul class="bullet_list">
+            <li class="bullet_item">&#8226;</li>
+            <li class="bullet_item">&#8226;</li>
+            <li class="bullet_item">&#8226;</li>
+        </ul>
+
+        <a class="pause">&#9208;</a>
+
+    </div>
+
+    <script>
+        const INTERVAL_MS = 2000;
+        
+        let slideItems = document.querySelectorAll(".slide_item");
+        let bulletItems = document.querySelectorAll(".bullet_item"); 
+        let pauseEl = document.querySelector(".pause");
+        let slider = document.querySelector(".slide_container");
+        
+        let selectedSlide = 0; 
+        let paused = false; 
+        let touchStartX = 0;
+        let touchStarted = false;
+        let mouseStartX = 0;
+        let mouseStarted = false;
+
+        function displaySlide(index) {
+            slideItems.forEach((item) => item.className="slide_item");
+            bulletItems.forEach((item) => item.className="bullet_item" )
+            selectedSlide=index;
+            slideItems[selectedSlide].className="slide_item slide_active";
+            bulletItems[selectedSlide].className="bullet_item bullet_item_active";
+        }
+
+        function shiftSlide(offset){
+            let indexNew=(selectedSlide + slideItems.length + offset) % slideItems.length;
+            displaySlide(indexNew);
+        }
+
+        const handleArrowClick = function (e) {
+            if (!paused) {clearInterval(timerId)};
+            e.target.className=="prev"? shiftSlide(-1) : shiftSlide(1); 
+            if (!paused) {timerId = setInterval(handleTimer, INTERVAL_MS)};
+            e.stopPropagation();
+        }
+
+        const handleBulletClick = function (e) {
+            if (!paused) {clearInterval(timerId)};
+            let index;
+            for (let i = 0; i < bulletItems.length; i++) {
+                if (e.target == bulletItems[i]) {
+                    index = i;
+                    break;
+                }
+            }       
+            console.log(index);
+            displaySlide(index);
+            if (!paused) {timerId = setInterval(handleTimer, INTERVAL_MS)};
+            e.stopPropagation();
+        }
+
+        const handlePauseClick = function (e) {
+            paused = !paused;
+            if (paused) {
+                clearInterval(timerId);                
+                pauseEl.textContent='\u{23F5}';
+            }  
+            else {
+                timerId = setInterval(handleTimer, INTERVAL_MS);
+                pauseEl.textContent='\u{23F8}';
+            };
+            e.stopPropagation();
+        }
+        const handleKeyDown = function (e) {
+            if ((e.key=='ArrowLeft') || (e.key=='ArrowRight')){
+                if (!paused) {clearInterval(timerId)};
+                e.key=='ArrowLeft'? shiftSlide(-1) : shiftSlide(1); 
+                if (!paused) {timerId = setInterval(handleTimer, INTERVAL_MS)};            
+            }     
+        }
+
+        const handleTouchStart = function (e) {
+            e.preventDefault();
+            touchStartX = e.changedTouches[0].clientX;
+            touchStarted = true;
+        }
+
+        const handleTouchMove = function (e) {
+            if (!touchStarted) {return;} //single scroll per one touch allowed (>100px)
+            e.preventDefault();
+            const offsetX = touchStartX - e.changedTouches[e.changedTouches.length-1].clientX;
+            if (offsetX > 100) {
+                if (!paused) {clearInterval(timerId)};
+                shiftSlide(1);
+                if (!paused) {timerId = setInterval(handleTimer, INTERVAL_MS)};            
+                touchStarted = false; //single scroll per one touch only
+            }
+            else if (offsetX <-100) {
+                if (!paused) {clearInterval(timerId)};
+                shiftSlide(-1);
+                if (!paused) {timerId = setInterval(handleTimer, INTERVAL_MS)};            
+                touchStarted = false; //single scroll per one touch only
+            }  
+        }
+
+        const handleMouseDown = function (e) {
+            e.preventDefault();
+            mouseStartX = e.clientX;
+            mouseStarted = true;
+        }
+
+        const handleMouseUp = function (e) {
+            e.preventDefault();
+            mouseStarted = false;
+        }
+
+        const handleMouseMove = function (e) {
+            if (!mouseStarted) {return;} 
+            e.preventDefault();
+            const offsetX = mouseStartX - e.clientX;
+            if (offsetX > 100) {
+                if (!paused) {clearInterval(timerId)};
+                shiftSlide(1);
+                if (!paused) {timerId = setInterval(handleTimer, INTERVAL_MS)};            
+                mouseStarted = false; 
+            }
+            else if (offsetX <-100) {
+                if (!paused) {clearInterval(timerId)};
+                shiftSlide(-1);
+                if (!paused) {timerId = setInterval(handleTimer, INTERVAL_MS)};            
+                mouseStarted = false; 
+            }  
+        }
+
+        const handleTimer = function () {
+            shiftSlide(1); 
+        }
+
+        //events
+        let arrowPrev = document.querySelector(".prev");
+        arrowPrev.addEventListener("click", handleArrowClick);
+        let arrowNext = document.querySelector(".next");
+        arrowNext.addEventListener("click", handleArrowClick);
+        bulletItems.forEach((item) => item.addEventListener("click", handleBulletClick));
+        pauseEl.addEventListener("click", handlePauseClick);
+        slider.addEventListener("keydown", handleKeyDown);
+        slider.addEventListener("touchstart", handleTouchStart);
+        slider.addEventListener("touchmove", handleTouchMove);
+        slider.addEventListener("mousedown", handleMouseDown);
+        slider.addEventListener("mouseup", handleMouseUp);
+        slider.addEventListener("mouseleave", handleMouseUp);
+        slider.addEventListener("mousemove", handleMouseMove);
+
+        //display the first slide
+        displaySlide(0);
+
+        //set timer
+        timerId = setInterval(handleTimer, INTERVAL_MS);
+    </script>
+</body>
+</html>
