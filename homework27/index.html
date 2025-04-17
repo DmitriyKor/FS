@@ -148,8 +148,14 @@
         arrowPrev.addEventListener("click", handleArrowClick);
         let arrowNext = document.querySelector(".next");
         arrowNext.addEventListener("click", handleArrowClick);
-        bulletItems.forEach((item) => item.addEventListener("click", handleBulletClick));
+        bulletItems.forEach((item) => {
+            item.addEventListener("click", handleBulletClick);
+            item.addEventListener("touchend", handleBulletClick);
+        });
+
         pauseEl.addEventListener("click", handlePauseClick);
+        pauseEl.addEventListener("touchend", handlePauseClick);
+
         slider.addEventListener("keydown", handleKeyDown);
         slider.addEventListener("touchstart", handleTouchStart);
         slider.addEventListener("touchmove", handleTouchMove);
@@ -157,6 +163,7 @@
         slider.addEventListener("mouseup", handleMouseUp);
         slider.addEventListener("mouseleave", handleMouseUp);
         slider.addEventListener("mousemove", handleTouchMove);
+
 
         //display the first slide
         displaySlide(0);
