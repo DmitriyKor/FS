@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="slide_container" tabindex="0">
+    <div id="slider1" class="slide_container" tabindex="0">
         <ul class="slide_list">
             <li class="slide_item">
                 <img src="images/slide_img1.jpg">
@@ -37,7 +37,10 @@
 
     <script>
         const INTERVAL_MS = 2000;
-        
+        const ARROW_LEFT = 'ArrowLeft';
+        const ARROW_RIGHT = 'ArrowRight';
+        const MOUSE_DOWN = 'mousedown';
+
         let slideItems = document.querySelectorAll(".slide_item");
         let bulletItems = document.querySelectorAll(".bullet_item"); 
         let pauseEl = document.querySelector(".pause");
@@ -47,8 +50,6 @@
         let paused = false; 
         let touchStartX = 0;
         let touchStarted = false;
-        let mouseStartX = 0;
-        let mouseStarted = false;
 
         function displaySlide(index) {
             slideItems.forEach((item) => item.className="slide_item");
@@ -97,24 +98,27 @@
             };
             e.stopPropagation();
         }
+        
         const handleKeyDown = function (e) {
-            if ((e.key=='ArrowLeft') || (e.key=='ArrowRight')){
+            if ((e.key==ARROW_LEFT) || (e.key==ARROW_RIGHT)){
                 if (!paused) {clearInterval(timerId)};
-                e.key=='ArrowLeft'? shiftSlide(-1) : shiftSlide(1); 
+                e.key==ARROW_LEFT? shiftSlide(-1) : shiftSlide(1); 
                 if (!paused) {timerId = setInterval(handleTimer, INTERVAL_MS)};            
             }     
         }
 
         const handleTouchStart = function (e) {
             e.preventDefault();
-            touchStartX = e.changedTouches[0].clientX;
+            slider.focus();
+            e.type==MOUSE_DOWN? touchStartX = e.clientX : touchStartX = e.changedTouches[0].clientX;
             touchStarted = true;
         }
 
         const handleTouchMove = function (e) {
             if (!touchStarted) {return;} //single scroll per one touch allowed (>100px)
             e.preventDefault();
-            const offsetX = touchStartX - e.changedTouches[e.changedTouches.length-1].clientX;
+            let offsetX;
+            e.type=="mousemove"? offsetX = touchStartX - e.clientX : offsetX = touchStartX - e.changedTouches[e.changedTouches.length-1].clientX;
             if (offsetX > 100) {
                 if (!paused) {clearInterval(timerId)};
                 shiftSlide(1);
@@ -127,35 +131,12 @@
                 if (!paused) {timerId = setInterval(handleTimer, INTERVAL_MS)};            
                 touchStarted = false; //single scroll per one touch only
             }  
-        }
-
-        const handleMouseDown = function (e) {
-            e.preventDefault();
-            mouseStartX = e.clientX;
-            mouseStarted = true;
         }
 
         const handleMouseUp = function (e) {
             e.preventDefault();
             mouseStarted = false;
-        }
-
-        const handleMouseMove = function (e) {
-            if (!mouseStarted) {return;} 
-            e.preventDefault();
-            const offsetX = mouseStartX - e.clientX;
-            if (offsetX > 100) {
-                if (!paused) {clearInterval(timerId)};
-                shiftSlide(1);
-                if (!paused) {timerId = setInterval(handleTimer, INTERVAL_MS)};            
-                mouseStarted = false; 
-            }
-            else if (offsetX <-100) {
-                if (!paused) {clearInterval(timerId)};
-                shiftSlide(-1);
-                if (!paused) {timerId = setInterval(handleTimer, INTERVAL_MS)};            
-                mouseStarted = false; 
-            }  
+            touchStarted = false;
         }
 
         const handleTimer = function () {
@@ -172,10 +153,10 @@
         slider.addEventListener("keydown", handleKeyDown);
         slider.addEventListener("touchstart", handleTouchStart);
         slider.addEventListener("touchmove", handleTouchMove);
-        slider.addEventListener("mousedown", handleMouseDown);
+        slider.addEventListener(MOUSE_DOWN, handleTouchStart);
         slider.addEventListener("mouseup", handleMouseUp);
         slider.addEventListener("mouseleave", handleMouseUp);
-        slider.addEventListener("mousemove", handleMouseMove);
+        slider.addEventListener("mousemove", handleTouchMove);
 
         //display the first slide
         displaySlide(0);
