@@ -125,11 +125,11 @@
             this.paused = !this.paused;
             if (this.paused) {
                 clearInterval(this.timerId);                
-                this.pauseEl.textContent='\u{23F5}';
+                this.pauseEl.innerHTML='\u{23F5}';
             }  
             else {
                 this.timerId = setInterval(this.handleTimer.bind(this), this.interval);
-                this.pauseEl.textContent='\u{23F8}';
+                this.pauseEl.innerHTML = '\u{23F8}';
             };
             //e.stopPropagation();
         }
