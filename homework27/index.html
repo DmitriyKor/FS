@@ -30,9 +30,10 @@
         const ARROW_RIGHT = 'ArrowRight';
         const MOUSE_DOWN = 'mousedown';
 
-        function Slider({startIndex = 0, pauseState = false, displayControls = true, interval = 2000}) {
+        function Slider(startIndex = 0, pauseState = false, displayControls = true, interval = 2000) {
             this.slideItems = document.querySelectorAll(".slide_item");
             this.slider = document.querySelector(".slide_container");
+            console.log('constructor')
             if (displayControls) {
                 this.createControls();
                 this.bulletItems = document.querySelectorAll(".bullet_item"); 
@@ -41,21 +42,14 @@
                     item.addEventListener("touchend", this.handleBulletClick.bind(this));
                 });                
                 this.pauseEl = document.querySelector(".pause");
-                console.log('this.pauseEl:');
-                console.log(this.pauseEl);
- 
                 this.pauseEl.addEventListener("click", this.handlePauseClick.bind(this));
                 //this.pauseEl.addEventListener("touchend", this.handlePauseClick.bind(this));
                 this.arrowPrev = document.querySelector(".prev");
                 this.arrowPrev.addEventListener("click", this.handleArrowClick.bind(this));
                 this.arrowNext = document.querySelector(".next");
-                this.arrowNext.addEventListener("click", this.handleArrowClick.bind(this));
-                
-                this.slider.addEventListener("keydown", this.handleKeyDown.bind(this));
-                /*
-                this.slider.addEventListener("touchstart", this.handleTouchStart);
-                this.slider.addEventListener("touchmove", this.handleTouchMove);
-                */         
+                this.arrowNext.addEventListener("click", this.handleArrowClick.bind(this));              
+                this.slider.addEventListener("touchstart", this.handleTouchStart.bind(this));
+                this.slider.addEventListener("touchmove", this.handleTouchMove.bind(this));
                 this.slider.addEventListener(MOUSE_DOWN, this.handleTouchStart.bind(this));
                 this.slider.addEventListener("mouseup", this.handleMouseUp.bind(this));
                 this.slider.addEventListener("mouseleave", this.handleMouseUp.bind(this));
@@ -66,9 +60,7 @@
             this.interval = interval ?? INTERVAL_MS;
             this.touchStartX = 0;
             this.touchStarted = false;
-
             this.displaySlide(this.selectedSlide);
-
             this.timerId = setInterval(this.handleTimer.bind(this),  this.interval);
         }
 
@@ -82,20 +74,16 @@
             aNext.setAttribute('class', 'next');
             aNext.innerHTML = '\u{0276F}';
             this.slider.appendChild(aNext);
-
             //pause
             let aPause = document.createElement('a');
             aPause.setAttribute('class', 'pause');
             aPause.innerHTML = '\u{23F8}';
             this.slider.appendChild(aPause);
-
             //bullets
             const ul = document.createElement('ul');
             ul.setAttribute('class','bullet_list');
             for (let i=0; i<this.slideItems.length; i++) {
-                const li = document.createElement('li');
-                //const textNode = document.createTextNode('\u{2022}');  
-                //li.appendChild(textNode); 
+                const li = document.createElement('li'); 
                 li.setAttribute('class', 'bullet_item');
                 li.innerHTML = '\u{2022}'; 
                 ul.appendChild(li);
@@ -146,18 +134,9 @@
             //e.stopPropagation();
         }
         
-        Slider.prototype.handleKeyDown = function (e) {
-            if ((e.key==ARROW_LEFT) || (e.key==ARROW_RIGHT)){
-                if (!this.paused) {clearInterval(this.timerId)};
-                e.key==ARROW_LEFT? this.shiftSlide(-1) : this.shiftSlide(1); 
-                if (!this.paused) {this.timerId = setInterval(this.handleTimer.bind(this), this.interval)};            
-            }     
-        }
-
         Slider.prototype.handleTouchStart = function (e) {
             //e.preventDefault();
             //slider.focus();
-            console.log('handleTouchStart');
             e.type==MOUSE_DOWN? this.touchStartX = e.clientX : this.touchStartX = e.changedTouches[0].clientX;
             this.touchStarted = true;
         }
@@ -190,7 +169,23 @@
             this.shiftSlide(1); 
         }
 
-        sl = new Slider(0, false, true);
+        //Advanced slider with handling of the arrow keys of the keyboard
+        function AdvSlider(config) {          
+            Slider.call(this, config.startIndex, config.pauseState, config.displayControls, config.interval);
+            this.slider.addEventListener("keydown", this.handleKeyDown.bind(this));
+        }
+        AdvSlider.prototype = Object.create(Slider.prototype);
+        AdvSlider.prototype.constructor = AdvSlider;
+        AdvSlider.prototype.handleKeyDown = function (e) {
+            if ((e.key==ARROW_LEFT) || (e.key==ARROW_RIGHT)){
+                if (!this.paused) {clearInterval(this.timerId)};
+                e.key==ARROW_LEFT? this.shiftSlide(-1) : this.shiftSlide(1); 
+                if (!this.paused) {this.timerId = setInterval(this.handleTimer.bind(this), this.interval)};            
+            }     
+        }
+
+       // sl = new Slider(0, false, true); //standard
+        sl = new AdvSlider({startIndex:0, pauseState:false, displayControls:true});//advanced
 
     </script>
 </body>
