@@ -22,16 +22,6 @@
                 <p>Item 3</p>
             </li>          
         </ul>
-        <!--
-        <a class="prev">&#10094;</a>
-        <a class="next">&#10095;</a>
-        <ul class="bullet_list">
-            <li class="bullet_item">&#8226;</li>
-            <li class="bullet_item">&#8226;</li>
-            <li class="bullet_item">&#8226;</li>
-        </ul>
-        <a class="pause">&#9208;</a>
-        -->
     </div>
 
     <script>
@@ -44,32 +34,32 @@
             this.slideItems = document.querySelectorAll(".slide_item");
             this.slider = document.querySelector(".slide_container");
             if (displayControls) {
-                console.log('displayControls = true');
                 this.createControls();
                 this.bulletItems = document.querySelectorAll(".bullet_item"); 
-                console.log('bulletItems');
-                console.log(this.bulletItems);
-
                 this.bulletItems.forEach((item) => {
-                    item.addEventListener("click", this.handleBulletClick);
-                    item.addEventListener("touchend", this.handleBulletClick);
+                    item.addEventListener("click", this.handleBulletClick.bind(this));
+                    item.addEventListener("touchend", this.handleBulletClick.bind(this));
                 });                
                 this.pauseEl = document.querySelector(".pause");
-                this.pauseEl.addEventListener("click", this.handlePauseClick);
-                this.pauseEl.addEventListener("touchend", this.handlePauseClick);
+                console.log('this.pauseEl:');
+                console.log(this.pauseEl);
+ 
+                this.pauseEl.addEventListener("click", this.handlePauseClick.bind(this));
+                //this.pauseEl.addEventListener("touchend", this.handlePauseClick.bind(this));
                 this.arrowPrev = document.querySelector(".prev");
-                this.arrowPrev.addEventListener("click", this.handleArrowClick);
+                this.arrowPrev.addEventListener("click", this.handleArrowClick.bind(this));
                 this.arrowNext = document.querySelector(".next");
-                this.arrowNext.addEventListener("click", this.handleArrowClick);
+                this.arrowNext.addEventListener("click", this.handleArrowClick.bind(this));
+                
+                this.slider.addEventListener("keydown", this.handleKeyDown.bind(this));
                 /*
-                this.slider.addEventListener("keydown", this.handleKeyDown);
                 this.slider.addEventListener("touchstart", this.handleTouchStart);
                 this.slider.addEventListener("touchmove", this.handleTouchMove);
-                this.slider.addEventListener(MOUSE_DOWN, this.handleTouchStart);
-                this.slider.addEventListener("mouseup", this.handleMouseUp);
-                this.slider.addEventListener("mouseleave", this.handleMouseUp);
-                this.slider.addEventListener("mousemove", this.handleTouchMove);       
                 */         
+                this.slider.addEventListener(MOUSE_DOWN, this.handleTouchStart.bind(this));
+                this.slider.addEventListener("mouseup", this.handleMouseUp.bind(this));
+                this.slider.addEventListener("mouseleave", this.handleMouseUp.bind(this));
+                this.slider.addEventListener("mousemove", this.handleTouchMove.bind(this));       
             }
             this.selectedSlide = startIndex ?? 0;
             this.paused = pauseState ?? 0; 
@@ -78,7 +68,8 @@
             this.touchStarted = false;
 
             this.displaySlide(this.selectedSlide);
-            this.timerId = setInterval(this.handleTimer,  this.interval);
+
+            this.timerId = setInterval(this.handleTimer.bind(this),  this.interval);
         }
 
         Slider.prototype.createControls = function () {
@@ -110,8 +101,6 @@
                 ul.appendChild(li);
             }
             this.slider.appendChild(ul);
-            console.log('createControls');
-            console.log(this.slider);
         }
         
         Slider.prototype.displaySlide = function (index) {
@@ -126,7 +115,7 @@
         Slider.prototype.handleArrowClick = function (e) {
             if (!this.paused) {clearInterval(this.timerId)};
             e.target.className=="prev"? this.shiftSlide(-1) : this.shiftSlide(1); 
-            if (!this.paused) {this.timerId = setInterval(this.handleTimer, this.interval)};
+            if (!this.paused) {this.timerId = setInterval(this.handleTimer.bind(this), this.interval)};
             //e.stopPropagation();
         }
 
@@ -139,9 +128,8 @@
                     break;
                 }
             }       
-            console.log(index);
             this.displaySlide(index);
-            if (!this.paused) {this.timerId = setInterval(this.handleTimer, this.interval)};
+            if (!this.paused) {this.timerId = setInterval(this.handleTimer.bind(this), this.interval)};
             //e.stopPropagation();
         }
 
@@ -152,7 +140,7 @@
                 this.pauseEl.textContent='\u{23F5}';
             }  
             else {
-                this.timerId = setInterval(this.handleTimer, this.interval);
+                this.timerId = setInterval(this.handleTimer.bind(this), this.interval);
                 this.pauseEl.textContent='\u{23F8}';
             };
             //e.stopPropagation();
@@ -162,13 +150,14 @@
             if ((e.key==ARROW_LEFT) || (e.key==ARROW_RIGHT)){
                 if (!this.paused) {clearInterval(this.timerId)};
                 e.key==ARROW_LEFT? this.shiftSlide(-1) : this.shiftSlide(1); 
-                if (!this.paused) {this.timerId = setInterval(this.handleTimer, this.interval)};            
+                if (!this.paused) {this.timerId = setInterval(this.handleTimer.bind(this), this.interval)};            
             }     
         }
 
         Slider.prototype.handleTouchStart = function (e) {
             //e.preventDefault();
             //slider.focus();
+            console.log('handleTouchStart');
             e.type==MOUSE_DOWN? this.touchStartX = e.clientX : this.touchStartX = e.changedTouches[0].clientX;
             this.touchStarted = true;
         }
@@ -177,31 +166,22 @@
             if (!this.touchStarted) {return;} //single scroll per one touch allowed (>100px)
             //e.preventDefault();
             let offsetX;
-            e.type=="mousemove"? this.offsetX = touchStartX - e.clientX : this.offsetX = touchStartX - e.changedTouches[e.changedTouches.length-1].clientX;
-            if (offsetX > 100) {
+            e.type=="mousemove"? offsetX = this.touchStartX - e.clientX : offsetX = this.touchStartX - e.changedTouches[e.changedTouches.length-1].clientX;
+            if (Math.abs(offsetX) > 100) {
                 if (!this.paused) {clearInterval(this.timerId)};
-                this.shiftSlide(1);
-                if (!this.paused) {this.timerId = setInterval(this.handleTimer, this.interval)};            
+                offsetX > 0? this.shiftSlide(1) : this.shiftSlide(-1);
+                if (!this.paused) {this.timerId = setInterval(this.handleTimer.bind(this), this.interval)};            
                 this.touchStarted = false; //single scroll per one touch only
             }
-            else if (offsetX <-100) {
-                if (!this.paused) {clearInterval(this.timerId)};
-                this.shiftSlide(-1);
-                if (!this.paused) {this.timerId = setInterval(this.handleTimer, this.interval)};            
-                this.touchStarted = false; //single scroll per one touch only
-            }  
         }
 
         Slider.prototype.handleMouseUp = function (e) {
-            e.preventDefault();
+            //e.preventDefault();
             this.mouseStarted = false;
             this.touchStarted = false;
         }
-
-        console.log('before shiftSlide')
         
         Slider.prototype.shiftSlide = function(offset) {
-            console.log(`shiftSlide: ${offset}`);
             let indexNew = (this.selectedSlide + this.slideItems.length + offset) % this.slideItems.length;
             this.displaySlide(indexNew);
         }
