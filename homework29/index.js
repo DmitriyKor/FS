@@ -9,6 +9,7 @@ function ageClassification(num) {
                 num <= 122 ? 'Рекорд' : null
   }
 
+  /*
 console.log('    -1 :', ageClassification(-1)) // -1 : null
 console.log('     0 :', ageClassification(0)) // 0 : null
 console.log('     1 :', ageClassification(1)) // 1 : Дитинство
@@ -25,6 +26,6 @@ console.log(' 90.01 :', ageClassification(90.01)) // 90.01 : Рекорд
 console.log('   122 :', ageClassification(122)) // 122 : Рекорд
 console.log('122.01 :', ageClassification(122.01)) // 122.01 : null
 console.log('   150 :', ageClassification(150)) // 150 : null
-
+*/
 
 export {ageClassification};
