@@ -1,4 +1,6 @@
 import { ageClassification } from '../index.js';
+import { weekFn } from '../index.js';
+
 
 describe('Функція ageClassification', () => {
 
@@ -50,4 +52,27 @@ describe('Функція ageClassification', () => {
         expect(ageClassification(122.01)).toBe(null)
     });
 
+});
+
+describe('Функція weekFn', () => {
+
+    test('для параметру 1 очікуваний результат Понеділок', () => {
+        expect(weekFn(1)).toBe('Понеділок')
+    });
+
+    test('для параметру 3 очікуваний результат Середа', () => {
+        expect(weekFn(3)).toBe('Середа')
+    });
+
+    test('для параметру 7 очікуваний результат Неділя', () => {
+        expect(weekFn(7)).toBe('Неділя')
+    });
+
+    test('для параметру 9 очікуваний результат null', () => {
+        expect(weekFn(9)).toBe(null)
+    });
+    
+    test('для параметру 1.5 очікуваний результат null', () => {
+        expect(weekFn(1.5)).toBe(null)
+    });
 });
