@@ -1,3 +1,4 @@
+
 function ageClassification(num) {
     return num < 0 ? null :
       num <= 24 ? 'Дитинство' :
@@ -26,4 +27,4 @@ console.log('122.01 :', ageClassification(122.01)) // 122.01 : null
 console.log('   150 :', ageClassification(150)) // 150 : null
 
 
-module.exports = ageClassification;
+export {ageClassification};
