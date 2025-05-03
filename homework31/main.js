@@ -266,14 +266,14 @@ async function deleteData(id) {
       method: 'DELETE'
     });
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      throw new Error(response.status);
     }
     const json = await response.json();
-    console.log('deleteData:');
+    console.log(`Post with id ${id} has been successfully deleted.`);
     console.log(json);
     return json;
   } catch (error) {
-    console.log(error.message);
+    console.log(`Failed to delete post with id ${id}. Status: ${error.status}`);
     return error.message;
   }
 }
