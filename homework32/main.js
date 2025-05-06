@@ -6,7 +6,7 @@ function prepareURL(search_str, page){
     return `${API_URL}/?s=${search_str}&page=${page}&apikey=${API_KEY}`;
 }
 
-async function getData(search_str, page) {
+async function searchData(search_str, page) {
     try {
       const url = prepareURL(search_str, page);
       console.log(url);
@@ -14,12 +14,23 @@ async function getData(search_str, page) {
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
-      const json = await response.json();
-      console.log('getData:');
-      console.log(json);
+      const jsonData = await response.json();
+      return jsonData;
     } catch (error) {
       console.log(error.message);
     }
   }
 
-  getData('a', 2);
+  function handleSearchInput(e){
+    console.log('change event')
+    let json = searchData(search.value , 1);
+    console.log(json);
+    result_p.innerText = json;
+  }
+
+  document.getElementById('search')?.addEventListener("input", handleSearchInput);    
+  result_p = document.getElementById('result');
+
+
+
+
