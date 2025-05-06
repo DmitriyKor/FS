@@ -2,13 +2,13 @@ const
     API_URL = 'http://www.omdbapi.com';
     API_KEY = 'fda20e87';
   
-function getURL(title) {
-    return `${API_URL}/?s=${title}&page=${page}&apikey=${API_KEY}`;
+function prepareURL(search_str, page){
+    return `${API_URL}/?s=${search_str}&page=${page}&apikey=${API_KEY}`;
 }
 
-async function getData(title) {
+async function getData(search_str, page) {
     try {
-      const url = getURL(title);
+      const url = prepareURL(search_str, page);
       console.log(url);
       const response = await fetch(url);
       if (!response.ok) {
@@ -22,4 +22,4 @@ async function getData(title) {
     }
   }
 
-  getData('pulp');
+  getData('a', 2);

@@ -1,0 +1,35 @@
+:root {
+    font-family: 'Roboto', sans-serif;
+    --color-dark: rgb(103, 103, 103);
+    --width-max: 1240px;
+    --gap: 20px;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: var(--width-max);
+    padding: 0 var(--gap);
+    margin: 0 auto;
+}
+
+header {
+    background-color: var(--color-dark);
+}
+
+.search_form {
+    display:flex;
+    padding: var(--gap) 0;
+    color: white;
+    width: 100%;
+    label {
+        width: 100px;
+    }
+    input {
+        width: calc(100% - 100px);
+    }
+}
