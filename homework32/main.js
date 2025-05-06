@@ -3,7 +3,7 @@ const
     API_KEY = 'fda20e87';
   
 function prepareURL(search_str, page){
-    return `${API_URL}/?s=${search_str}&page=${page}&apikey=${API_KEY}`;
+    return encodeURI(`${API_URL}/?s=${search_str}&page=${page}&apikey=${API_KEY}`);
 }
 
 async function searchData(search_str, page) {
@@ -21,16 +21,21 @@ async function searchData(search_str, page) {
     }
   }
 
-  function handleSearchInput(e){
+  async function handleSearchInput(e){
     console.log('change event')
-    let json = searchData(search.value , 1);
+    const json = await searchData(search.value , 1);
     console.log(json);
-    result_p.innerText = json;
+    result_p.innerText = JSON.stringify(json);
   }
 
   document.getElementById('search')?.addEventListener("input", handleSearchInput);    
   result_p = document.getElementById('result');
 
-
+  // function handleSearchInput(e) { 
+  //   console.log('change event'); 
+  //   searchData(search.value, 1).then(json => { 
+  //     console.log(json); result_p.innerText = JSON.stringify(json); // Або виведіть json.whatever }); 
+  //     })
+  // }
 
 
