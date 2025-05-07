@@ -22,40 +22,44 @@ async function searchData(search_str, page) {
   }
 
 function addMovie (name, year, image_url) {
-  if (image_url?.length) {
-    const movie_item = document.createElement('div');
-    movie_item.className = 'movie-item';
+  const movie_item = document.createElement('div');
+  movie_item.className = 'movie-item';
 
-    const img = document.createElement('img');
-    img.setAttribute('src', image_url);
-    img.setAttribute('alt', name);
-    movie_item.append(img);
+  const img = document.createElement('img');
+  img.setAttribute('src', image_url);
+  img.setAttribute('alt', name);
+  movie_item.append(img);
 
-    const p = document.createElement('p');
-    p.innerText = name;
-    movie_item.append(p);
+  const p = document.createElement('p');
+  p.innerText = name;
+  movie_item.append(p);
 
-    const span = document.createElement('span');
-    span.innerText = year;
-    movie_item.append(span);
+  const span = document.createElement('span');
+  span.innerText = year;
+  movie_item.append(span);
 
-    movies.append(movie_item);
-  }
+  movies.append(movie_item);
 }
   
 async function handleSearchInput(e){
-    indicator.className='indicator indicator_visible';
+  indicator.className='indicator indicator_visible';
+  try {
     movies.textContent = '';
     const json = await searchData(search.value , 1);
+        
     result_p.innerText = JSON.stringify(json);
     dataAvailable = json["Response"].toLowerCase() == "true"; 
     if (dataAvailable) {      
-
       for (film of json["Search"]) {
-        addMovie(film.Title, film.Year, film.Poster);
+        //const response = await fetch(film.Poster, { method: 'HEAD' });
+        //if (response.ok) {         
+          addMovie(film.Title, film.Year, film.Poster);
+        //}
       }
     }
+  } finally {
     indicator.className='indicator';
+  }
 }
 
 document.getElementById('search')?.addEventListener("input", handleSearchInput);    
@@ -70,5 +74,4 @@ indicator = document.querySelector(".indicator");
   //     console.log(json); result_p.innerText = JSON.stringify(json); // Або виведіть json.whatever }); 
   //     })
   // }
-
 
