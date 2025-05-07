@@ -22,10 +22,14 @@ async function searchData(search_str, page) {
   }
 
   async function handleSearchInput(e){
-    console.log('change event')
     const json = await searchData(search.value , 1);
     console.log(json);
     result_p.innerText = JSON.stringify(json);
+    dataAvailable = json["Response"].toLowerCase() == "true"; 
+    console.log(dataAvailable);
+    if (dataAvailable) {
+      console.log('OK');  
+    }
   }
 
   document.getElementById('search')?.addEventListener("input", handleSearchInput);    
