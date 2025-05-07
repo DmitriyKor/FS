@@ -48,6 +48,26 @@ header {
     }
 }
 
+@keyframes process {
+    from {width: 0%;}
+    to {width: 100%;}
+}
+
+.indicator {
+    display: none;
+    height: 5px;
+    background-color: cadetblue;
+    animation-name: process;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+.indicator_visible {
+    display: block;  
+}
+
+
+
 .movies {
     margin-top: 60px;
     display: flex;

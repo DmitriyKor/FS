@@ -21,19 +21,48 @@ async function searchData(search_str, page) {
     }
   }
 
-  async function handleSearchInput(e){
+function addMovie (name, year, image_url) {
+  if (image_url?.length) {
+    const movie_item = document.createElement('div');
+    movie_item.className = 'movie-item';
+
+    const img = document.createElement('img');
+    img.setAttribute('src', image_url);
+    img.setAttribute('alt', name);
+    movie_item.append(img);
+
+    const p = document.createElement('p');
+    p.innerText = name;
+    movie_item.append(p);
+
+    const span = document.createElement('span');
+    span.innerText = year;
+    movie_item.append(span);
+
+    movies.append(movie_item);
+  }
+}
+  
+async function handleSearchInput(e){
+    indicator.className='indicator indicator_visible';
+    movies.textContent = '';
     const json = await searchData(search.value , 1);
-    console.log(json);
     result_p.innerText = JSON.stringify(json);
     dataAvailable = json["Response"].toLowerCase() == "true"; 
-    console.log(dataAvailable);
-    if (dataAvailable) {
-      console.log('OK');  
-    }
-  }
+    if (dataAvailable) {      
 
-  document.getElementById('search')?.addEventListener("input", handleSearchInput);    
-  result_p = document.getElementById('result');
+      for (film of json["Search"]) {
+        addMovie(film.Title, film.Year, film.Poster);
+      }
+    }
+    indicator.className='indicator';
+}
+
+document.getElementById('search')?.addEventListener("input", handleSearchInput);    
+result_p = document.getElementById('result');
+
+movies = document.querySelector(".movies");
+indicator = document.querySelector(".indicator");
 
   // function handleSearchInput(e) { 
   //   console.log('change event'); 
