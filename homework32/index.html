@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_back_ios,arrow_forward_ios" />
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <form class="search_form">
+                <label for="search">Search</label>
+                <input type="text" id="search" name="search" autocomplete="off" placeholder="Enter movie's name here">
+            </form>
+        </div>
+        <div class="indicator">
+        </div>
+    </header>
+    <main>
+        <section class="container search_results">
+            <div class="movies">
+            </div>
+            <div id="pages" class="pages">
+                <span id="pages_left" class="material-symbols-outlined page_arrow">
+                    arrow_back_ios
+                </span>
+                <span id="pages_info">1...10 of 90</span>
+                <span id="pages_right" class="material-symbols-outlined page_arrow">
+                    arrow_forward_ios
+                </span>
+            </div>
+        </section>
+    </main>
+    <footer>
+    </footer>
+</body>
+<script type="text/javascript" src="main.js"></script>
+
+</html>
