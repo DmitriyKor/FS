@@ -3,7 +3,7 @@ const
     API_KEY = 'fda20e87';
   
 function getURL(title) {
-    return `${API_URL}/?s=${title}&page=${page}&apikey=${API_KEY}`;
+    return `${API_URL}/?s=${title}&apikey=${API_KEY}`;
 }
 
 async function getData(title) {
