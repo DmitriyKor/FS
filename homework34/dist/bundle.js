@@ -1,0 +1,1 @@
+(()=>{"use strict";const e=new class{constructor(e){this.element=document.getElementById(e)}update(){this.now=new Date,this.element.innerText=this.now}}("time");setInterval(e.update.bind(e),2e3)})();
