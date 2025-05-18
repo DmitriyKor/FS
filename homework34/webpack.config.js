@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash].js',
-    assetModuleFilename: 'images/[hash].[ext]'
+    assetModuleFilename: 'assets/[hash].[ext]'
   },
   plugins: [
     new HtmlWebpackPlugin({template: './index.html' }),
@@ -22,7 +22,7 @@ module.exports = {
         test: /\.(png| jpe?g|svg|gif|webp)$/, 
         type: 'asset/resource', 
         generator: {
-          filename: 'images/[hash].[ext]',
+          filename: 'assets/[hash].[ext]',
         },
       }
     ]

@@ -126,7 +126,7 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
   \*******************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("module.exports = __webpack_require__.p + \"images/edae89c525492b927d70..png\";\n\n//# sourceURL=webpack:///./assets/background.png?");
+eval("module.exports = __webpack_require__.p + \"assets/edae89c525492b927d70..png\";\n\n//# sourceURL=webpack:///./assets/background.png?");
 
 /***/ }),
 
@@ -136,7 +136,7 @@ eval("module.exports = __webpack_require__.p + \"images/edae89c525492b927d70..pn
   \********************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("module.exports = __webpack_require__.p + \"images/5cc9f0983886425da662..jpg\";\n\n//# sourceURL=webpack:///./assets/background2.jpg?");
+eval("module.exports = __webpack_require__.p + \"assets/5cc9f0983886425da662..jpg\";\n\n//# sourceURL=webpack:///./assets/background2.jpg?");
 
 /***/ }),
 
