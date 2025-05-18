@@ -1,0 +1,17 @@
+@import "fonts.css";
+
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+.watch {
+    color: red;
+    font-size: 20px;
+}
+
+.image {
+    background-image: url(../assets/background2.jpg);
+    background-size: cover;
+    width: 600px;
+    height: 300px;
+}
