@@ -11,6 +11,9 @@ module.exports = {
     filename: '[name].[contenthash].js',
     assetModuleFilename: 'assets/[hash].[ext]'
   },
+  optimization: {
+    splitChunks: { chunks: 'all' }
+  },
   plugins: [
     new HtmlWebpackPlugin({template: './index.html' }),
     new CleanWebpackPlugin ()
