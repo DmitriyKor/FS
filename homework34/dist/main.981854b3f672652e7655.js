@@ -214,7 +214,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"vendors-node_modules_html2canvas_dist_html2canvas_js":"27955f02088753d5707d","vendors-node_modules_dompurify_dist_purify_es_mjs":"4de53dc893e617b4c5f1","vendors-node_modules_canvg_lib_index_es_js":"ec6447fea1a24a43fa54"}[chunkId] + ".js";
+/******/ 			return "" + chunkId + "." + {"vendors-node_modules_html2canvas_dist_html2canvas_js":"27955f02088753d5707d","vendors-node_modules_dompurify_dist_purify_es_mjs":"8c16b727848a576daa07","vendors-node_modules_canvg_lib_index_es_js":"ec6447fea1a24a43fa54"}[chunkId] + ".js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
