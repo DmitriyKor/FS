@@ -18,5 +18,8 @@ class Util {
 }
 
 console.log('Util Id:', Util.id);
+
+let unused = 'unused';
+
     
 

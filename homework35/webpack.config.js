@@ -5,6 +5,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin' )
 const TerserPlugin = require('terser-webpack-plugin' );
+const EslintWebpackPlugin = require('eslint-webpack-plugin');
+
+new EslintWebpackPlugin ({
+    extensions: ['js'],
+    fix: true
+})
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
@@ -24,6 +30,7 @@ module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: {
         main: ['./main.js'],
+        stat: './statistics.ts'
     },
     mode: 'development',
     target: 'web',

@@ -5,7 +5,8 @@
     "dev": "cross-env NODE_ENV=development webpack --mode development",
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "watch": "cross-env NODE_ENV=development webpack --mode development --watch",
-    "start": "cross-env NODE_ENV=development webpack-cli serve --mode development --open"
+    "start": "cross-env NODE_ENV=development webpack-cli serve --mode development --open",
+    "analyze": "npx webpack --profile --json > stats.json && webpack-bundle-analyzer stats.json dist/"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
+    "eslint-webpack-plugin": "^5.0.1",
     "html-webpack-plugin": "^5.6.3",
     "mini-css-extract-plugin": "^2.9.2",
     "sass": "^1.89.0",
@@ -29,6 +31,7 @@
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.14",
     "webpack": "^5.99.8",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.1"
   },
