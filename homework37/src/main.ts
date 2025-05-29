@@ -49,20 +49,31 @@ console.log(newPerson)
  */
 
 function LogMethodCalls(target: any, propertyName: string, propertyDescriptor: PropertyDescriptor): PropertyDescriptor {
-  // code here
-}
-
-class Calculator {
-  add(a, b: number): number {
-
+  const originalMethod = propertyDescriptor.value;
+  propertyDescriptor.value = function (...args: any[]) {
+    console.log(`Calling "${propertyName}" with arguments: `, args);
+    const result = originalMethod.apply(this, args);
+    return result;
   }
 }
 
-// const calculator = new Calculator()
-// // "Calling "add" with arguments: 2, 3"
-// console.log(calculator.add(2, 3)) // 5
-// // "Calling "multiply" with arguments: 3, 4"
-// console.log(calculator.multiply(3, 4)) // 12
+class Calculator {
+  @LogMethodCalls
+  add(a:number, b: number): number {
+    return a + b;
+  }
+  @LogMethodCalls
+  multiply(a:number, b: number): number {
+    return a * b;
+  }
+
+}
+
+ const calculator = new Calculator()
+ // "Calling "add" with arguments: 2, 3"
+ console.log(calculator.add(2, 3)) // 5
+ // "Calling "multiply" with arguments: 3, 4"
+ console.log(calculator.multiply(3, 4)) // 12
 
 /*
  * #3
@@ -80,10 +91,27 @@ class Calculator {
  */
 
 namespace UserProfile {
-  // code here
+  let privateId = 0;
+  
+  function generateId(name:string) : string {
+    let id : string = privateId.toString() + name.toLowerCase().replace(/\s+/g, '');
+    privateId++;
+    return id.split('').sort(function(){return 0.5-Math.random()}).join('').substring(0,9);;
+  }
+  
+  export interface ProfileInterface{
+    id : string,
+    name: string,
+    email: string  
+  }
+
+  export function createProfile(name: string, email:string): ProfileInterface {
+    let id : string = generateId(name);
+    return { id, name, email }
+  }
 }
 
-// const profile = UserProfile.createProfile('John Doe', 'john@example.com')
-// console.log(profile) // { "id": "e6uvai5egqd", "name": "John Doe", "email": "john@example.com" }
+ const profile = UserProfile.createProfile('John Doe', 'john@example.com')
+ console.log(profile) // { "id": "e6uvai5egqd", "name": "John Doe", "email": "john@example.com" }
 
 export { createPerson, Calculator, UserProfile }
