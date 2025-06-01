@@ -11,7 +11,10 @@ module.exports = {
         filename: 'build[fullhash].js',
         clean: true
     },
-    target: 'web',
+    resolve: {
+        extensions:['.js', '.jsx', '.ts', '.tsx', '...']
+    },
+   // target: 'web',
     plugins: [
         new HtmlWebpackPlugin({ template: './src/index.html' }),
         new MiniCssExtractPlugin({ filename: './styles/styles[fullhash].css'})
@@ -23,7 +26,9 @@ module.exports = {
         },
         devMiddleware: {
             writeToDisk: true
-        }
+        },
+        allowedHosts: ['all'],
+        //disableHostCheck: true
     },
     module: {
         rules: [
@@ -32,7 +37,7 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader,'css-loader']   
             },
             {
-                 test: /\.js$/,
+                 test: /\.jsx?$/,
                  exclude: /node_modules/,  
                  use: {
                     loader: 'babel-loader', 
@@ -42,12 +47,11 @@ module.exports = {
                  }
             },
             {
-                test: /\.ts$/,
+                test: /\.tsx?$/,
                 exclude: /node_modules/,
                 use: {loader: 'babel-loader',
-                options: {presets: [
-                '@babel/preset-env',
-                '@babel/preset-typescript'
+                options: {presets: ['@babel/preset-env',
+                '@babel/preset-typescript', '@babel/preset-react'
                 ]}
                 }
             }, 
