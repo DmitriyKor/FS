@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom/client';
 
+
 export const Button = ({ text, handleclick }) => {
     return <span>
         <button type="button" onClick={handleclick}>{text}</button>
