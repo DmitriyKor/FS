@@ -6,8 +6,7 @@ import { UserViewer } from './components/UserViewer';
 function App() {
   return (
     <div className="App">
-      <UserViewer>
-      </UserViewer>
+      <UserViewer/>
     </div>
   );
 }
