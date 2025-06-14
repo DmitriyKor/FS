@@ -4,21 +4,21 @@ import { BeatLoader } from "react-spinners";
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { override } from './common.js'
 
-export function Comments(){
+export function Users(){
     
-    const { data, stateReading } = useGetDataInit('https://jsonplaceholder.typicode.com/comments');
+    const { data, stateReading } = useGetDataInit('https://jsonplaceholder.typicode.com/users');
 
     console.log(data);
  
     return (
         <div>
-            <h1>Comments</h1>
+            <h1>Users</h1>
             {data?.map((item) => {
                     return (
                         <div key={item.id + item.name}>
-                            <h2>{item.name}</h2>
-                            <p>From: {item.email}</p>
-                            <p>{item.body}</p>
+                            <h4>Name: {item.name}</h4>
+                            <p>Username: {item.username}</p>
+                            <p>email: {item.email}</p>                            
                         </div>)
                 })}
             

@@ -1,12 +1,8 @@
 import { useState, useEffect, CSSProperties } from 'react';
 import { useGetDataInit } from './hooks/useGetInit';
 import { BeatLoader } from "react-spinners";
-
-const override: CSSProperties = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "red",
-};
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { override } from './common.js'
 
 export function Posts(){
     
@@ -20,9 +16,8 @@ export function Posts(){
             {data?.map((item) => {
                     return (
                         <div key={item.id + item.name}>
-                            <p>ID: {item.id}</p>
-                            <p>Name: {item.name}</p>
-                            <p>Email: {item.email}</p>
+                            <Link to={'/posts/'+item.id.toString()}><h2>{item.title}</h2></Link>
+                            <p>{item.body}</p>
                         </div>)
                 })}
             
@@ -30,7 +25,7 @@ export function Posts(){
                 color="black"
                 loading={stateReading}
                 cssOverride={override}
-                size={150}
+                size={25}
                 aria-label="Loading data"
                 data-testid="loader"
             />
