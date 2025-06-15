@@ -2,11 +2,12 @@ import { useState, useEffect, CSSProperties } from 'react';
 import { useGetDataInit } from './hooks/useGetInit';
 import { BeatLoader } from "react-spinners";
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { override } from './common.js'
+import { apiURL } from '../const';
+import { LoadIndicator } from '../components/LoadIndicator';
 
 export function Posts(){
     
-    const { data, stateReading } = useGetDataInit('https://jsonplaceholder.typicode.com/posts');
+    const { data, stateReading } = useGetDataInit(apiURL + '/posts');
 
     console.log(data);
  
@@ -20,15 +21,7 @@ export function Posts(){
                             <p>{item.body}</p>
                         </div>)
                 })}
-            
-            <BeatLoader
-                color="black"
-                loading={stateReading}
-                cssOverride={override}
-                size={25}
-                aria-label="Loading data"
-                data-testid="loader"
-            />
+            <LoadIndicator state={stateReading}/>
         </div>
     )
 }
