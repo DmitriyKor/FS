@@ -1,16 +1,12 @@
 import { useState, useEffect, CSSProperties } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useGetDataInit } from './hooks/useGetInit';
 import { BeatLoader } from "react-spinners";
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { apiURL } from '../const';
 import { LoadIndicator } from '../components/LoadIndicator';
 
 export function Posts(){
-    
     const { data, stateReading } = useGetDataInit(apiURL + '/posts');
-
-    console.log(data);
- 
     return (
         <div>
             <h1>Posts</h1>
