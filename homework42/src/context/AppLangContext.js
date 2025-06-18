@@ -1,28 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 
-const supportedLanguages = [
-    'English',
-    'Francais',
-    'Українська',
-];
-
-const translationTable = [
-    {}, //first language is english, no translation 
-    {
-        "Home": "Accueil",
-        "Posts": "Publications",
-        "Users": "Utilisateurs",
-        "Photos": "Photos",
-        "Todos": "A faire"
-    },
-    {
-        "Home": "Домашня",
-        "Posts": "Пости",
-        "Users": "Користувачі",
-        "Photos": "Фотографії",
-        "Todos": "До виконання"
-    }
-]
+import {supportedLanguages, translationTable} from './AppLangContext.const';
 
 const StorageKey = 'features-ui-language';
 
