@@ -1,0 +1,26 @@
+[build]
+  # The command to run to build your React application.
+  # This typically corresponds to "npm run build" or "yarn build"
+  command = "npm run build"
+  # The directory containing the built static files to be deployed.
+  # For Create React App, this is typically "build/".
+  publish = "build/"
+
+# Redirects are crucial for Single Page Applications (SPAs) like React apps
+# to ensure that all routes are handled by the client-side router.
+# This rule redirects all unmatched paths to index.html with a 200 status,
+# allowing the React application to handle the routing.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Optional: Configuration for Netlify Dev for local development.
+# This section is commented out by default as it's primarily for local setup.
+# #[dev]
+#   # Command to start your local development server (e.g., "npm start").
+#   # command = "npm start"
+#   # Port that the dev server will be listening on.
+#   # port = 3000
+#   # Folder with the static content for _redirect file (same as publish).
+#   # publish = "build"
