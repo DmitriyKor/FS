@@ -1,7 +1,8 @@
 import { useState, useEffect, CSSProperties } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { useGetDataInit } from './hooks/useGetInit';
 import { BeatLoader } from "react-spinners";
+
+import { useGetDataInit } from './hooks/useGetInit';
 import { apiURL } from '../const';
 import { LoadIndicator } from '../components/LoadIndicator';
 

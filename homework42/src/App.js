@@ -5,20 +5,23 @@ import { appContent } from './const';
 import { NavMenu } from './components/NavMenu';
 import { UpperBar } from './components/UpperBar';
 import { AppThemeProvider, ThemeContext, ThemeProvider } from './context/AppThemeContext';
+import { AppLangProvider, LangContext, LangProvider } from './context/AppLangContext';
 
 function App() {
   return (
     <Router>
       <AppThemeProvider>
-      <UpperBar />
-      <NavMenu />
-        <Routes>
-          {appContent.map((item, index) => {
-            return (
-              <Route path={item.link} element={item.el} key={index} />
-            )
-          })}
-        </Routes>
+        <AppLangProvider>
+          <UpperBar />
+          <NavMenu />
+          <Routes>
+            {appContent.map((item, index) => {
+              return (
+                <Route path={item.link} element={item.el} key={index} />
+              )
+            })}
+          </Routes>
+        </AppLangProvider>
       </AppThemeProvider>
     </Router>
   );

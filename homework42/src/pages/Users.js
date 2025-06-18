@@ -1,16 +1,13 @@
 import { useState, useEffect, CSSProperties } from 'react';
-import { useGetDataInit } from './hooks/useGetInit';
-import { BeatLoader } from "react-spinners";
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BeatLoader } from "react-spinners";
+
+import { useGetDataInit } from './hooks/useGetInit';
 import { apiURL } from '../const';
 import { LoadIndicator } from '../components/LoadIndicator';
 
-export function Users(){
-    
+export function Users(){  
     const { data, stateReading } = useGetDataInit(apiURL+ '/users');
-
-    console.log(data);
- 
     return (
         <div>
             <h1>Users</h1>
