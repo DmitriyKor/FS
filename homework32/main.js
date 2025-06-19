@@ -3,8 +3,13 @@ const
     API_KEY = 'fda20e87';
     RESULTS_PER_PAGE = 10;
   
+<<<<<<< HEAD
+function getURL(title) {
+    return `${API_URL}/?s=${title}&apikey=${API_KEY}`;
+=======
 function prepareURL(search_str, page){
     return encodeURI(`${API_URL}/?s=${search_str}&page=${page}&apikey=${API_KEY}`);
+>>>>>>> f57cee5c103af84a88e5078ec6bb3892f89b71fc
 }
 
 async function searchData(search_str, page) {
