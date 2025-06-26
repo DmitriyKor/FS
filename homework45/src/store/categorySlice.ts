@@ -48,7 +48,6 @@ const DEFAULT_CATEGORIES: ICategories = {
     ];
 }
 
-
 const categorySlice = createSlice({
     name: 'category',
     initialState: DEFAULT_CATEGORIES,
@@ -68,7 +67,13 @@ const categorySlice = createSlice({
             if (idx >=0 && !state.items[idx].default) {
                 state.items = state.items.filter((el) => el.id !== action.payload.id)
             }   
+        },
+        clearCategories: (state) => {
+            state = DEFAULT_CATEGORIES;   
         }
     },
 })
 
+export const { addOrSetCategory, deleteCategory, clearCategories } = categorySlice.actions;
+export type { ICategoryItem, ICategoryId, ICategories };
+export default categorySlice.reducer;
