@@ -1,21 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-interface IUser {
-  name: String,
-  email: String,
-  password: String,
-  startBalance: Number,
-}
-
-interface IUserPassword {
-  oldPassword : String;
-  password : String;
-}
+import type {IUserPassword, IUser} from './interfaces.ts';
 
 const initialState: IUser = {
   name: "",
   email: "",
+  image: "",
   password: "",
   startBalance: 0
 } satisfies IUser as IUser;
@@ -27,6 +18,7 @@ const userSlice = createSlice({
     setUser: (state, action: PayloadAction<IUser>) => {
       state.name = action.payload.name;
       state.email = action.payload.email;
+      state.image = action.payload.image;
       state.startBalance = action.payload.startBalance;
     },
     setPassword: (state, action: PayloadAction<IUserPassword>) => {
@@ -36,5 +28,5 @@ const userSlice = createSlice({
 });
 
 export const { setUser, setPassword } = userSlice.actions;
-export type { IUser, IUserPassword };
+//export { IUser, IUserPassword } from './interfaces';;
 export default userSlice.reducer;
