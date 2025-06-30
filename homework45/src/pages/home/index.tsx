@@ -1,15 +1,16 @@
 import { SideBar } from "../../components/sideBar"
+import { HomeGridLayout, HomeLayout } from "./index.styles"
 
 export const Home = ()=>{
     return (
-        <div>
+        <HomeLayout>
             <SideBar/>
-            <section>
+            <HomeGridLayout>
                 <div>account</div>
                 <div>category</div>
                 <div>history</div>
                 <div>add category</div>
-            </section>
-        </div>
+            </HomeGridLayout>
+        </HomeLayout>
     )
 }

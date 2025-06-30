@@ -5,7 +5,7 @@
             "name" : "John Deere",
             "password": "",
             "email": "johnforever@gmail.com",
-            "image": "",
+            "image": "https://cdn-icons-png.flaticon.com/512/266/266033.png",
             "startBalance": 0
         }
     ],

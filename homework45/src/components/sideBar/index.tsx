@@ -3,21 +3,22 @@ import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import type { RootState, AppDispatch } from '../../store/store';
-import type { IUser } from '../../store/user';
+import type { IUser, IUserData } from '../../store/user';
+import { Avatar, ProfileContainer } from './index.styles';
 
 
 export const SideBar: React.FC = () => {
-
-    //const displayPosts = useSelector((state) => state.settings.displayPosts);
-
     const user : IUser = useSelector(state => state.user);
 
+    console.log('useSelector');
+    console.log(user);
     return (
-        <div className="sidebar">
-            <div>
-                <img src={user.image} alt="avatar"></img>
-                <h4>{user.name}</h4>
-            </div>
+        <div>
+            <ProfileContainer>
+                <Avatar src={user.data?.image} alt="avatar"></Avatar>
+                <h4>{user.data?.name}</h4>
+                <p>{user.data?.email}</p>
+            </ProfileContainer>
             <nav>
                 <ul>
                     <li><Link to='/'>Home</Link></li>

@@ -1,27 +1,33 @@
-import { Provider } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
-import './App.css'
-import { store } from './store/store'
 import { Home } from './pages/home';
 import { Profile } from './pages/profile';
 import { NotFound } from './pages/notFound';
-
+import { useEffect } from 'react';
+import { fetchUser } from './store/user';
 
 function App() {
+  
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
+
   return (
     <>
-      <Provider store={store}>
+      
         <Router>
           <Routes>
-              <Route path='/' element={<Home/>}/>
-              <Route path='/sign-in' element={<Home/>}/>
-              <Route path='/sign-up' element={<Home/>}/>
-              <Route path='/profile' element={<Profile/>}/>
-              <Route path='*' element={<NotFound/>}/>
+            <Route path='/' element={<Home />} />
+            <Route path='/sign-in' element={<Home />} />
+            <Route path='/sign-up' element={<Home />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </Router>
-      </Provider>
+      
     </>
   )
 }

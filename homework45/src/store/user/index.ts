@@ -6,6 +6,7 @@ import type { IUserPassword, IUserData, IUser } from './interfaces.ts';
 
 const initialState: IUser = {
   data: null,
+  password : "",
   isLoading: true,
   error: null
 }
@@ -13,8 +14,8 @@ const initialState: IUser = {
 export const fetchUser = createAsyncThunk(
   'user/fetchUser',
   async () => {
-    const response = await axios('http:/localhost:3001/users/1');
-    return response.json();
+    const response = await axios('http://localhost:3005/users/1');
+    return response.data;
   }
 )
 
@@ -26,20 +27,25 @@ const userSlice = createSlice({
       state.data = action.payload;
     },
     setPassword: (state, action: PayloadAction<IUserPassword>) => {
-      if (state.data?.password === action.payload.oldPassword) { state.data.password = action.payload.password }
+      if (state.password === action.payload.oldPassword) { state.password = action.payload.password }
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUser.pending, (state)=>{state.isLoading=true})
-      .addCase(fetchUser.fulfilled, (state)=>{state.isLoading=false})
-      .addCase(fetchUser.rejected, (state, action)=>{
-        state.isLoading=false; 
-        state.error=action.error.message
+      .addCase(fetchUser.pending, (state) => { state.isLoading = true })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log('Fulfilled:')
+        console.log(action.payload);
+        state.data = action.payload;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message
       });
   }
 });
 
 export const { setUser, setPassword } = userSlice.actions;
-//export { IUser, IUserPassword } from './interfaces';;
+export type { IUser, IUserData, IUserPassword } from './interfaces';
 export default userSlice.reducer;
