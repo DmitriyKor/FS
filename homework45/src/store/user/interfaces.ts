@@ -1,12 +1,18 @@
-export interface IUser {
-  name: String;
-  email: String;
-  image: String;
-  password: String;
-  startBalance: Number;
+export interface IUserData {
+  name: string;
+  email: string;
+  image: string;
+  password: string;
+  startBalance: number;
 }
 
+export interface IUser {
+  data: IUserData | null;
+  isLoading: boolean;
+  error: string | null;
+};
+
 export interface IUserPassword {
-  oldPassword : String;
-  password : String;
+  oldPassword: string;
+  password: string;
 }

@@ -1,0 +1,24 @@
+{
+    "users":[
+        {
+            "id": 1,
+            "name" : "John Deere",
+            "password": "",
+            "email": "johnforever@gmail.com",
+            "image": "",
+            "startBalance": 0
+        }
+    ],
+    "categories":[
+        {"id": 1,
+        "default": true,
+        "name": "Clothes",
+        "description": "",
+        "balanceIncome": 0,
+        "balanceExpend": 0
+        }
+    ],
+    "history":[
+
+    ]
+}
