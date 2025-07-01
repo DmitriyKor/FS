@@ -12,4 +12,15 @@ export const ProfileContainer = styled.div`
 `
 export const StyledSideBar = styled.div`
     width: 20%;
+    background-color: lightgray;
+    color: black;
+    padding: 10px;
+`
+export const SideBarNav = styled.nav`    
+    ul {  
+        list-style-type: none;
+        li {
+            text-decoration: none;
+        }
+    }
 `

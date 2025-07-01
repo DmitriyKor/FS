@@ -1,4 +1,8 @@
 import { SideBar } from "../../components/sideBar"
+import { AccountArea } from "./components/account"
+import { AddHistoryArea } from "./components/addHistory"
+import { CategoriesArea } from "./components/categories"
+import { HistoryArea } from "./components/history"
 import { HomeGridLayout, HomeLayout } from "./index.styles"
 
 export const Home = ()=>{
@@ -6,10 +10,10 @@ export const Home = ()=>{
         <HomeLayout>
             <SideBar/>
             <HomeGridLayout>
-                <div>account</div>
-                <div>category</div>
-                <div>history</div>
-                <div>add category</div>
+                <AccountArea/>
+                <AddHistoryArea/>
+                <CategoriesArea/>
+                <HistoryArea/>
             </HomeGridLayout>
         </HomeLayout>
     )

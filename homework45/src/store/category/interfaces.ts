@@ -1,10 +1,10 @@
 export interface ICategoryItem {
-    id: String;
-    default: Boolean;
-    name: String;
-    description: String;
-    balanceIncome: Number;
-    balanceExpend: Number;
+    id: string;
+    default: boolean;
+    name: string;
+    description: string;
+    balanceIncome: number;
+    balanceExpend: number;
 }
 
 export interface ICategoryId {
@@ -12,5 +12,7 @@ export interface ICategoryId {
 }
 
 export interface ICategories {
-    items: ICategoryItem[];
+    items: ICategoryItem[] | null;
+    isLoading : boolean;
+    error: string | null | undefined;
 }

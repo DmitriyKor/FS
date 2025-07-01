@@ -6,28 +6,30 @@ import { Profile } from './pages/profile';
 import { NotFound } from './pages/notFound';
 import { useEffect } from 'react';
 import { fetchUser } from './store/user';
+import { fetchCategories } from './store/category';
 
 function App() {
-  
+
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const { categories } = useSelector((state) => state.categories);
+
   useEffect(() => {
     dispatch(fetchUser());
+    dispatch(fetchCategories());
   }, []);
 
   return (
     <>
-      
-        <Router>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/sign-in' element={<Home />} />
-            <Route path='/sign-up' element={<Home />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='*' element={<NotFound />} />
-          </Routes>
-        </Router>
-      
+      <Router>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/sign-in' element={<Home />} />
+          <Route path='/sign-up' element={<Home />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </Router>
     </>
   )
 }
