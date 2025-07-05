@@ -3,7 +3,6 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import axios, { type AxiosResponse } from 'axios';
 
-
 import type {ICategoryItem, ICategoryId, ICategories} from './interfaces.ts';
 //import {DEFAULT_CATEGORIES} from './consts.ts';
 

@@ -16,6 +16,13 @@
         "description": "",
         "balanceIncome": 0,
         "balanceExpend": 0
+        },
+        {"id": 2,
+        "default": true,
+        "name": "Foods",
+        "description": "",
+        "balanceIncome": 0,
+        "balanceExpend": 0
         }
     ],
     "history":[

@@ -9,7 +9,8 @@ export interface IHistoryItem {
 export interface IHistoryId {
     id: String;
 }
-
 export interface IHistory {
     items: IHistoryItem[];
+    isLoading: boolean;
+    error: string | undefined;
 }

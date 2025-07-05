@@ -1,4 +1,4 @@
-import { SideBar } from "../../components/sideBar"
+import { SideBar } from "../../shared/components/sideBar"
 import { AccountArea } from "./components/account"
 import { AddHistoryArea } from "./components/addHistory"
 import { CategoriesArea } from "./components/categories"

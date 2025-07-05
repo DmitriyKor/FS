@@ -1,11 +1,30 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 import type {IHistoryItem, IHistoryId, IHistory} from './interfaces.ts';
 
+export const fetchHistory = createAsyncThunk(
+  'user/fetchHistory',
+  async () => {
+    const response = await axios('http://localhost:3005/history');
+    return response.data;
+  }
+)
+
+export const addHistory = createAsyncThunk(
+  'user/addHistory',
+  async (data : IHistoryItem) => {
+    const response = await axios.post('http://localhost:3005/history', JSON.stringify(data));
+    return response.data;
+  }
+)
+
 const initialState: IHistory = {
     items: [],
+    isLoading: false,
+    error: "",
 } satisfies IHistory as IHistory;
 
 const historySlice = createSlice({
@@ -32,6 +51,25 @@ const historySlice = createSlice({
             state = initialState;  
         }
     },
+    extraReducers: (builder) => {
+            builder
+              .addCase(fetchHistory.pending, (state) => { state.isLoading = true })
+              .addCase(fetchHistory.fulfilled, (state, action) => {
+                state.isLoading = false;
+                console.log('history fulfilled:')
+                console.log(action.payload);
+                state.items = action.payload;
+              })
+              .addCase(fetchHistory.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error.message
+              })
+              .addCase(addHistory.fulfilled, (state, action) => {
+                console.log('history added. Response is:')
+                console.log(action.payload);
+              })
+              ;
+          }
 })
 
 export const { addOrSetHistoryItem, deleteHistoryItem, clearHistory } = historySlice.actions;
