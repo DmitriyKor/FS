@@ -23,7 +23,7 @@ export const AddHistoryArea = () => {
             income: 0,
             expend: 0
         }
-        data.type=='imcome'? item.income = data.amount : item.expend = data.amount;
+        data.type=='income'? item.income = data.amount : item.expend = data.amount;
         dispatch(addHistory(item))
     }
 
