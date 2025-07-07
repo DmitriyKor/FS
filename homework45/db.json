@@ -1,31 +1,60 @@
 {
-    "users":[
-        {
-            "id": 1,
-            "name" : "John Deere",
-            "password": "",
-            "email": "johnforever@gmail.com",
-            "image": "https://cdn-icons-png.flaticon.com/512/266/266033.png",
-            "startBalance": 0
-        }
-    ],
-    "categories":[
-        {"id": 1,
-        "default": true,
-        "name": "Clothes",
-        "description": "",
-        "balanceIncome": 0,
-        "balanceExpend": 0
-        },
-        {"id": 2,
-        "default": true,
-        "name": "Foods",
-        "description": "",
-        "balanceIncome": 0,
-        "balanceExpend": 0
-        }
-    ],
-    "history":[
-
-    ]
+  "users": [
+    {
+      "id": "1",
+      "name": "John Deere",
+      "password": "",
+      "email": "johnforever@gmail.com",
+      "image": "https://cdn-icons-png.flaticon.com/512/266/266033.png",
+      "startBalance": 0
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "default": true,
+      "name": "Clothes",
+      "description": "",
+      "balanceIncome": 0,
+      "balanceExpend": 0
+    },
+    {
+      "id": "2",
+      "default": true,
+      "name": "Foods",
+      "description": "",
+      "balanceIncome": 0,
+      "balanceExpend": 0
+    }
+  ],
+  "history": [
+    {
+      "id": "033a",
+      "categoryId": "2",
+      "comment": "t-shirts - 2",
+      "income": 0,
+      "expend": "44"
+    },
+    {
+      "id": "b0df",
+      "categoryId": "2",
+      "comment": "t-shirts - 2",
+      "income": 0,
+      "expend": "333"
+    },
+    {
+      "id": "b14d",
+      "categoryId": "2",
+      "comment": "sdfsdgsg",
+      "income": 0,
+      "expend": "333"
+    },
+    {
+      "id": "00f1",
+      "categoryId": "1",
+      "comment": "sdfsdgsg",
+      "income": 0,
+      "expend": "24234"
+    }
+  ]
 }

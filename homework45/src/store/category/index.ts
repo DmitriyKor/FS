@@ -7,7 +7,7 @@ import type {ICategoryItem, ICategoryId, ICategories} from './interfaces.ts';
 //import {DEFAULT_CATEGORIES} from './consts.ts';
 
 export const fetchCategories = createAsyncThunk(
-  'user/fetchCategories',
+  'category/fetchCategories',
   async () => {
     const response = await axios('http://localhost:3005/categories');
     return response.data;

@@ -4,17 +4,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Panel, PanelToolBar } from "../../../../shared/components/panel"
 import { AddHistoryLayout } from "./index.styles"
 import type { ICategories } from '../../../../store/category';
-import { addHistory } from '../../../../store/history';
+import { addHistory, type IHistoryItem } from '../../../../store/history';
 
 export const AddHistoryArea = () => {
-    
+
     const dispatch = useDispatch();
     const categories: ICategories = useSelector(state => state.categories);
     const required = value => (value ? undefined : 'Required');
     const mustBeNumber = value => (isNaN(value) ? 'Must be a number' : undefined);
 
     const onSubmit = (data) => {
-        dispatch(addHistory(data));
+        console.log("onSubmit. data is");
+        console.log(data);
+        let item: IHistoryItem = {
+            id: "1",
+            categoryId: data.category,
+            comment: data.comment,
+            income: 0,
+            expend: 0
+        }
+        data.type=='imcome'? item.income = data.amount : item.expend = data.amount;
+        dispatch(addHistory(item))
     }
 
     return (
@@ -63,6 +73,16 @@ export const AddHistoryArea = () => {
                                 )}
                             </Field>
 
+                            <Field name="comment" validate={required}>
+                                {({ input, meta }) => (
+                                    <div>
+                                        <label>Comment</label>
+                                        <input {...input} type="text" placeholder="Comment" />
+                                        {meta.error && meta.touched && <span>{meta.error}</span>}
+                                    </div>
+                                )}
+                            </Field>
+                            
                             <Field name="amount" validate={mustBeNumber}>
                                 {({ input, meta }) => (
                                     <div>

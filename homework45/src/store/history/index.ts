@@ -6,7 +6,7 @@ import axios from 'axios';
 import type {IHistoryItem, IHistoryId, IHistory} from './interfaces.ts';
 
 export const fetchHistory = createAsyncThunk(
-  'user/fetchHistory',
+  'history/fetchHistory',
   async () => {
     const response = await axios('http://localhost:3005/history');
     return response.data;
@@ -14,8 +14,9 @@ export const fetchHistory = createAsyncThunk(
 )
 
 export const addHistory = createAsyncThunk(
-  'user/addHistory',
+  'history/addHistory',
   async (data : IHistoryItem) => {
+    delete data.id;
     const response = await axios.post('http://localhost:3005/history', JSON.stringify(data));
     return response.data;
   }
