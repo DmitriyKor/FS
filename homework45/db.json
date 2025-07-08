@@ -1,0 +1,60 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "John Deere",
+      "password": "",
+      "email": "johnforever@gmail.com",
+      "image": "https://cdn-icons-png.flaticon.com/512/266/266033.png",
+      "startBalance": 0
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "default": true,
+      "name": "Clothes",
+      "description": "",
+      "balanceIncome": 0,
+      "balanceExpend": 0
+    },
+    {
+      "id": "2",
+      "default": true,
+      "name": "Foods",
+      "description": "",
+      "balanceIncome": 0,
+      "balanceExpend": 0
+    }
+  ],
+  "history": [
+    {
+      "id": "304b",
+      "categoryId": "2",
+      "comment": "kjhkjh",
+      "income": "12",
+      "expense": 0
+    },
+    {
+      "id": "8819",
+      "categoryId": "1",
+      "comment": "kjhkjh",
+      "income": "12",
+      "expense": 0
+    },
+    {
+      "id": "c9df",
+      "categoryId": "2",
+      "comment": "lll",
+      "income": "8899",
+      "expense": 0
+    },
+    {
+      "id": "1281",
+      "categoryId": "2",
+      "comment": "ljhkkj",
+      "income": "666",
+      "expense": 0
+    }
+  ]
+}
