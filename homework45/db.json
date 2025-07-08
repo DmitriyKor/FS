@@ -55,6 +55,13 @@
       "comment": "ljhkkj",
       "income": "666",
       "expense": 0
+    },
+    {
+      "id": "a0d1",
+      "categoryId": "2",
+      "comment": "5668jhb",
+      "income": "777",
+      "expense": 0
     }
   ]
 }

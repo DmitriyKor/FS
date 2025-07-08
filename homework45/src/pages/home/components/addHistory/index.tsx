@@ -1,11 +1,14 @@
 import { Form, Field } from 'react-final-form';
 import { useDispatch, useSelector } from 'react-redux';
+import Button from '@mui/material/Button';
 
 import { Panel, PanelToolBar } from "@/shared/components/panel"
 import { AddHistoryLayout } from "./index.styles"
 import type { ICategories } from '@/store/category';
 import { addHistory, OPERATION_TYPE, type IHistoryItem } from '@/store/history';
-import {required, mustBeNumber} from '@/shared/validation';
+import { required, mustBeNumber } from '@/shared/validation';
+import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select } from '@mui/material';
+import { requiredSelect } from '../../../../shared/validation';
 
 export const AddHistoryArea = () => {
 
@@ -22,7 +25,7 @@ export const AddHistoryArea = () => {
             income: 0,
             expense: 0
         }
-        data.type==OPERATION_TYPE.income ? item.income = data.amount : item.expense = data.amount;
+        data.type == OPERATION_TYPE.income ? item.income = data.amount : item.expense = data.amount;
         dispatch(addHistory(item))
     }
 
@@ -36,22 +39,59 @@ export const AddHistoryArea = () => {
                     initialValues={{ type: OPERATION_TYPE.income }}
                     render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit}>
-                            <div>
-                                <label>Type</label>                                                          
+                            {/* <div>
+                                <label>Type</label>
                                 <label>
                                     <Field name="type" component="input"
-                                        type="radio" value={OPERATION_TYPE.income}                                  />{' '}
+                                        type="radio" value={OPERATION_TYPE.income} />{' '}
                                     Income
                                 </label>
                                 <label>
-                                    <Field name="type" component="input" 
+                                    <Field name="type" component="input"
                                         value={OPERATION_TYPE.expense} type="radio"
                                     />{' '}
                                     Expense
                                 </label>
-                            </div>
+                            </div> */}
 
-                            <Field name="category" validate={required}>
+                            <FormControl>
+                                <FormLabel id="demo-radio-buttons-group-label">Type</FormLabel>
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    defaultValue={OPERATION_TYPE.income}
+                                    name="type"                              >
+                                    <FormControlLabel value={OPERATION_TYPE.income} control={<Radio />} label="Income" />
+                                    <FormControlLabel value={OPERATION_TYPE.expense} control={<Radio />} label="Expense" />
+                                </RadioGroup>
+                            </FormControl>
+
+                            <Field name="category" validate={requiredSelect}>
+                                {({ input, meta }) => (
+                                    <FormControl FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">
+                                            Category
+                                        </InputLabel>
+                                        <Select
+                                            {...input}
+                                            error={meta.error && meta.touched}
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            // helperText='Select the category'
+                                            label="Category"
+                                        >
+                                            {categories.items?.map((item) => {
+                                                return (
+                                                    <MenuItem value={item.id} key={item.id + item.name}>{item.name}</MenuItem>
+                                                )
+                                            })}
+                                        </Select>
+                                        {meta.error && meta.touched && <span>{meta.error}</span>}
+                                    </FormControl>
+                                )}
+                            </Field>
+
+                            {/* <Field name="category" validate={required}>
                                 {({ input, meta }) => (
                                     <label>Category
                                         <select {...input}>
@@ -68,7 +108,7 @@ export const AddHistoryArea = () => {
                                         {meta.error && meta.touched && <span>{meta.error}</span>}
                                     </label>
                                 )}
-                            </Field>
+                            </Field> */}
 
                             <Field name="comment" validate={required}>
                                 {({ input, meta }) => (
@@ -79,7 +119,7 @@ export const AddHistoryArea = () => {
                                     </div>
                                 )}
                             </Field>
-                            
+
                             <Field name="amount" validate={mustBeNumber}>
                                 {({ input, meta }) => (
                                     <div>
@@ -98,6 +138,6 @@ export const AddHistoryArea = () => {
                 />
 
             </Panel>
-        </AddHistoryLayout>
+        </AddHistoryLayout >
     )
 }
