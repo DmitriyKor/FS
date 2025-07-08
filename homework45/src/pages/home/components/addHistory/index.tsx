@@ -1,17 +1,16 @@
 import { Form, Field } from 'react-final-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Panel, PanelToolBar } from "../../../../shared/components/panel"
+import { Panel, PanelToolBar } from "@/shared/components/panel"
 import { AddHistoryLayout } from "./index.styles"
-import type { ICategories } from '../../../../store/category';
-import { addHistory, type IHistoryItem } from '../../../../store/history';
+import type { ICategories } from '@/store/category';
+import { addHistory, OPERATION_TYPE, type IHistoryItem } from '@/store/history';
+import {required, mustBeNumber} from '@/shared/validation';
 
 export const AddHistoryArea = () => {
 
     const dispatch = useDispatch();
     const categories: ICategories = useSelector(state => state.categories);
-    const required = value => (value ? undefined : 'Required');
-    const mustBeNumber = value => (isNaN(value) ? 'Must be a number' : undefined);
 
     const onSubmit = (data) => {
         console.log("onSubmit. data is");
@@ -21,9 +20,9 @@ export const AddHistoryArea = () => {
             categoryId: data.category,
             comment: data.comment,
             income: 0,
-            expend: 0
+            expense: 0
         }
-        data.type=='income'? item.income = data.amount : item.expend = data.amount;
+        data.type==OPERATION_TYPE.income ? item.income = data.amount : item.expense = data.amount;
         dispatch(addHistory(item))
     }
 
@@ -34,23 +33,21 @@ export const AddHistoryArea = () => {
                 </PanelToolBar>
                 <Form
                     onSubmit={onSubmit}
-                    initialValues={{ type: 'income' }}
+                    initialValues={{ type: OPERATION_TYPE.income }}
                     render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit}>
                             <div>
-                                <label>Type</label>
+                                <label>Type</label>                                                          
                                 <label>
                                     <Field name="type" component="input"
-                                        type="radio" value="income"
-                                    />{' '}
+                                        type="radio" value={OPERATION_TYPE.income}                                  />{' '}
                                     Income
                                 </label>
                                 <label>
-                                    <Field
-                                        name="type" component="input"
-                                        value="expenditure" type="radio"
+                                    <Field name="type" component="input" 
+                                        value={OPERATION_TYPE.expense} type="radio"
                                     />{' '}
-                                    Expenditure
+                                    Expense
                                 </label>
                             </div>
 

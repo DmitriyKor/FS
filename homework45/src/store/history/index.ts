@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
-import type {IHistoryItem, IHistoryId, IHistory} from './interfaces.ts';
+import type {IHistoryItem, IHistoryId, IHistory} from './types.ts';
 
 export const fetchHistory = createAsyncThunk(
   'history/fetchHistory',
@@ -75,4 +75,4 @@ const historySlice = createSlice({
 
 export const { addOrSetHistoryItem, deleteHistoryItem, clearHistory } = historySlice.actions;
 export default historySlice.reducer;
-export * from './interfaces.ts'
+export * from './types.ts'

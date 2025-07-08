@@ -29,32 +29,32 @@
   ],
   "history": [
     {
-      "id": "033a",
+      "id": "304b",
       "categoryId": "2",
-      "comment": "t-shirts - 2",
-      "income": 0,
-      "expend": "44"
+      "comment": "kjhkjh",
+      "income": "12",
+      "expense": 0
     },
     {
-      "id": "b0df",
-      "categoryId": "2",
-      "comment": "t-shirts - 2",
-      "income": 0,
-      "expend": "333"
-    },
-    {
-      "id": "b14d",
-      "categoryId": "2",
-      "comment": "sdfsdgsg",
-      "income": 0,
-      "expend": "333"
-    },
-    {
-      "id": "00f1",
+      "id": "8819",
       "categoryId": "1",
-      "comment": "sdfsdgsg",
-      "income": 0,
-      "expend": "24234"
+      "comment": "kjhkjh",
+      "income": "12",
+      "expense": 0
+    },
+    {
+      "id": "c9df",
+      "categoryId": "2",
+      "comment": "lll",
+      "income": "8899",
+      "expense": 0
+    },
+    {
+      "id": "1281",
+      "categoryId": "2",
+      "comment": "ljhkkj",
+      "income": "666",
+      "expense": 0
     }
   ]
 }

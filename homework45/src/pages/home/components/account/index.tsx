@@ -1,4 +1,4 @@
-import { Panel, PanelToolBar} from "../../../../shared/components/panel"
+import { Panel, PanelToolBar} from "@/shared/components/panel"
 
 import { AccountLayout } from "./index.styles"
 

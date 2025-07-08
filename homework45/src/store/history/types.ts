@@ -3,7 +3,7 @@ export interface IHistoryItem {
     categoryId : String;
     comment : String;
     income: Number;
-    expend: Number;
+    expense: Number;
 }
 
 export interface IHistoryId {
@@ -13,4 +13,9 @@ export interface IHistory {
     items: IHistoryItem[];
     isLoading: boolean;
     error: string | undefined;
+}
+
+export const OPERATION_TYPE = {
+    income: "income",
+    expense: "expense"
 }

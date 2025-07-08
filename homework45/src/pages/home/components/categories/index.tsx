@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
-import { Panel, PanelToolBar, PanelToolBarButton } from "../../../../shared/components/panel";
-import type { ICategories } from "../../../../store/category";
+import { Panel, PanelToolBar, PanelToolBarButton } from "@/shared/components/panel";
+import type { ICategories } from "@/store/category";
 import { CategoriesLayout, CategoriesListStyle, CategoryItemStyle } from "./index.styles"
 
 export const CategoriesArea: React.FC = () => {
