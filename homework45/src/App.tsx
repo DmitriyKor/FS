@@ -19,6 +19,8 @@ function App() {
   useEffect(() => {
     dispatch(fetchUser());
     dispatch(fetchCategories());
+    dispatch(fetchHistory());
+
   }, []);
 
   //const [theme, setTheme] = useState(mainTheme);

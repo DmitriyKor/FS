@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import axios, { type AxiosResponse } from 'axios';
 
 import type { IUserPassword, IUserData, IUser } from './interfaces.ts';
+import { API_URL } from '../const.ts';
 
 const initialState: IUser = {
   data: null,
@@ -14,7 +15,7 @@ const initialState: IUser = {
 export const fetchUser = createAsyncThunk(
   'user/fetchUser',
   async () => {
-    const response = await axios('http://localhost:3005/users/1');
+    const response = await axios(API_URL+'/users/1');
     return response.data;
   }
 )

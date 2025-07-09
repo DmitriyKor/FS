@@ -7,9 +7,6 @@ import { CategoriesLayout, CategoriesListStyle, CategoryItemStyle } from "./inde
 export const CategoriesArea: React.FC = () => {
     const categories: ICategories = useSelector(state => state.categories);
 
-    console.log('CategoriesArea:');
-    console.log(categories);
-
     return (
         <CategoriesLayout>
             <Panel>
@@ -21,6 +18,9 @@ export const CategoriesArea: React.FC = () => {
                         return (
                             <CategoryItemStyle key={item.id + item.name}>
                                 <h5>{item.name}</h5>
+                                <p>{item.description}</p>
+                                <p>Income: {item.balanceIncome}</p>
+                                <p>Expense: {item.balanceExpense}</p>
                             </CategoryItemStyle>
                         )
                     })}

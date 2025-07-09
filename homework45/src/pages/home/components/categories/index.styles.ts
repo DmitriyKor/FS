@@ -13,6 +13,7 @@ export const CategoriesListStyle = styled.div`
 `
 export const CategoryItemStyle = styled.div`
     display: flex;
+    flex-direction: column;
     border: 1px solid ${props => props.theme.panel.borderColor};
     height: 100%;
     background-color: ${props => props.theme.panel.backgroundColor};

@@ -4,12 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 import axios, { type AxiosResponse } from 'axios';
 
 import type {ICategoryItem, ICategoryId, ICategories} from './interfaces.ts';
+import { API_URL } from '../const.ts';
 //import {DEFAULT_CATEGORIES} from './consts.ts';
 
 export const fetchCategories = createAsyncThunk(
   'category/fetchCategories',
   async () => {
-    const response = await axios('http://localhost:3005/categories');
+    const response = await axios(API_URL+'/categories');
     return response.data;
   }
 )

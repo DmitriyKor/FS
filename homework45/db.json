@@ -13,54 +13,83 @@
     {
       "id": "1",
       "default": true,
-      "name": "Clothes",
-      "description": "",
+      "name": "Salary",
+      "description": "Revenues",
       "balanceIncome": 0,
-      "balanceExpend": 0
+      "balanceExpense": 0
     },
     {
       "id": "2",
       "default": true,
-      "name": "Foods",
-      "description": "",
+      "name": "Clothes",
+      "description": "Your wardrobe",
       "balanceIncome": 0,
-      "balanceExpend": 0
+      "balanceExpense": 0
+    },
+    {
+      "id": "3",
+      "default": true,
+      "name": "Foods",
+      "description": "Provisions, etc.",
+      "balanceIncome": 0,
+      "balanceExpense": 0
     }
   ],
   "history": [
     {
-      "id": "304b",
-      "categoryId": "2",
-      "comment": "kjhkjh",
-      "income": "12",
-      "expense": 0
-    },
-    {
-      "id": "8819",
+      "id": "d6fc",
       "categoryId": "1",
-      "comment": "kjhkjh",
+      "comment": "May",
+      "income": "1460",
+      "expense": 0
+    },
+    {
+      "id": "de0e",
+      "categoryId": "2",
+      "comment": "H&M t-shirt",
+      "income": "35",
+      "expense": 0
+    },
+    {
+      "id": "cf74",
+      "categoryId": "2",
+      "comment": "H&M t-shirt",
+      "income": "35",
+      "expense": 0
+    },
+    {
+      "id": "ea61",
+      "categoryId": "2",
+      "comment": "H&M t-shirt",
+      "income": "35",
+      "expense": 0
+    },
+    {
+      "id": "a145",
+      "categoryId": "2",
+      "comment": "kjhkhkjh",
+      "income": "45",
+      "expense": 0
+    },
+    {
+      "id": "2955",
+      "categoryId": "2",
+      "comment": "yyyy",
       "income": "12",
       "expense": 0
     },
     {
-      "id": "c9df",
+      "id": "2d4d",
       "categoryId": "2",
-      "comment": "lll",
-      "income": "8899",
+      "comment": "yyyy",
+      "income": "44",
       "expense": 0
     },
     {
-      "id": "1281",
+      "id": "528d",
       "categoryId": "2",
-      "comment": "ljhkkj",
-      "income": "666",
-      "expense": 0
-    },
-    {
-      "id": "a0d1",
-      "categoryId": "2",
-      "comment": "5668jhb",
-      "income": "777",
+      "comment": "kjhkjh",
+      "income": "77",
       "expense": 0
     }
   ]

@@ -57,13 +57,11 @@ const historySlice = createSlice({
               .addCase(fetchHistory.pending, (state) => { state.isLoading = true })
               .addCase(fetchHistory.fulfilled, (state, action) => {
                 state.isLoading = false;
-                console.log('history fulfilled:')
-                console.log(action.payload);
                 state.items = action.payload;
               })
               .addCase(fetchHistory.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error.message
+                state.error = action.error.message;
               })
               .addCase(addHistory.fulfilled, (state, action) => {
                 console.log('history added. Response is:')
