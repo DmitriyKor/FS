@@ -5,15 +5,18 @@ import Button from '@mui/material/Button';
 import { Panel, PanelToolBar } from "@/shared/components/panel"
 import { AddHistoryLayout } from "./index.styles"
 import type { ICategories } from '@/store/category';
-import { addHistory, OPERATION_TYPE, type IHistoryItem } from '@/store/history';
+import { addHistory, fetchHistory, OPERATION_TYPE, type IHistoryItem } from '@/store/history';
 import { required, mustBeNumber } from '@/shared/validation';
 import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from '@mui/material';
 import { requiredSelect } from '../../../../shared/validation';
+import type { IHistory } from '../../../../store/history';
+import { updateCategoriesBalance } from '../../../../store/category';
 
 export const AddHistoryArea = () => {
 
     const dispatch = useDispatch();
     const categories: ICategories = useSelector(state => state.categories);
+    const history: IHistory = useSelector(state => state.history);
 
     const onSubmit = async (data, form) => {
         let item: IHistoryItem = {
@@ -26,6 +29,9 @@ export const AddHistoryArea = () => {
         data.type == OPERATION_TYPE.income ? item.income = data.amount : item.expense = data.amount;
         await dispatch(addHistory(item));       
         form.restart();
+        await dispatch(fetchHistory());   
+        
+        dispatch(updateCategoriesBalance(history));
     }
 
     return (

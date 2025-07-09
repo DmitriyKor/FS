@@ -9,7 +9,7 @@
       "startBalance": 0
     }
   ],
-  "categories": [
+  "category": [
     {
       "id": "1",
       "default": true,
@@ -37,59 +37,38 @@
   ],
   "history": [
     {
-      "id": "d6fc",
-      "categoryId": "1",
-      "comment": "May",
-      "income": "1460",
-      "expense": 0
-    },
-    {
-      "id": "de0e",
+      "id": "64c7",
       "categoryId": "2",
-      "comment": "H&M t-shirt",
-      "income": "35",
-      "expense": 0
-    },
-    {
-      "id": "cf74",
-      "categoryId": "2",
-      "comment": "H&M t-shirt",
-      "income": "35",
-      "expense": 0
-    },
-    {
-      "id": "ea61",
-      "categoryId": "2",
-      "comment": "H&M t-shirt",
-      "income": "35",
-      "expense": 0
-    },
-    {
-      "id": "a145",
-      "categoryId": "2",
-      "comment": "kjhkhkjh",
+      "comment": "H&M",
       "income": "45",
       "expense": 0
     },
     {
-      "id": "2955",
-      "categoryId": "2",
-      "comment": "yyyy",
+      "id": "2278",
+      "categoryId": "3",
+      "comment": "Salad",
       "income": "12",
       "expense": 0
     },
     {
-      "id": "2d4d",
-      "categoryId": "2",
-      "comment": "yyyy",
-      "income": "44",
+      "id": "a3bf",
+      "categoryId": "1",
+      "comment": "ttt",
+      "income": "10000",
       "expense": 0
     },
     {
-      "id": "528d",
-      "categoryId": "2",
-      "comment": "kjhkjh",
-      "income": "77",
+      "id": "5f98",
+      "categoryId": "1",
+      "comment": "tttt",
+      "income": "2000",
+      "expense": 0
+    },
+    {
+      "id": "162a",
+      "categoryId": "1",
+      "comment": "hhhh",
+      "income": "500",
       "expense": 0
     }
   ]

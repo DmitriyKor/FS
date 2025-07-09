@@ -5,12 +5,14 @@ import axios, { type AxiosResponse } from 'axios';
 
 import type {ICategoryItem, ICategoryId, ICategories} from './interfaces.ts';
 import { API_URL } from '../const.ts';
+import type { IHistory } from '../history/types.ts';
+import { useSelector } from 'react-redux';
 //import {DEFAULT_CATEGORIES} from './consts.ts';
 
 export const fetchCategories = createAsyncThunk(
   'category/fetchCategories',
   async () => {
-    const response = await axios(API_URL+'/categories');
+    const response = await axios(API_URL+'/category');
     return response.data;
   }
 )
@@ -25,6 +27,16 @@ const categoriesSlice = createSlice({
     name: 'category',
     initialState, 
     reducers: {
+        updateCategoriesBalance: (state, action) => {      
+            console.log('updateBalance: state, payload_________________');
+            console.log(state.items);
+            console.log(action.payload);
+            state.items?.map((item_c)=>{
+                item_c.balanceExpense=action.payload.items.reduce(
+                    (accum, item)=> {item.categoryId==item_c.id? accum + item.expense: 0}, 
+                0)
+            })
+        },
         addOrSetCategory: (state, action: PayloadAction<ICategoryItem>) => {
             const idx: number = state.items.findIndex((el) => el.id === action.payload.id);
             if (idx < 0) {
@@ -51,8 +63,6 @@ const categoriesSlice = createSlice({
           .addCase(fetchCategories.pending, (state) => { state.isLoading = true })
           .addCase(fetchCategories.fulfilled, (state, action) => {
             state.isLoading = false;
-            console.log('categories fulfilled:')
-            console.log(action.payload);
             state.items = action.payload;
           })
           .addCase(fetchCategories.rejected, (state, action) => {
@@ -62,6 +72,6 @@ const categoriesSlice = createSlice({
       }
 })
 
-export const { addOrSetCategory, deleteCategory, clearCategories } = categoriesSlice.actions;
+export const { updateCategoriesBalance, addOrSetCategory, deleteCategory, clearCategories } = categoriesSlice.actions;
 export default categoriesSlice.reducer;
 export * from './interfaces.ts'

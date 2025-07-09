@@ -4,7 +4,7 @@ export const HistoryLayout = styled.div`
     grid-area: history;   
 `
 
-export const HistorylistStyle = styled.div`
+export const HistoryListStyle = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
