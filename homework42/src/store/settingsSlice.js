@@ -10,7 +10,7 @@ export const settingsSlice = createSlice({
   initialState,
   reducers: {
     setDisplayPosts: (state, action) => {
-        state.displayPosts = action.payload;
+      state.displayPosts = action.payload;
     },
     setDisplayPhotos: (state, action) => {
       state.displayPhotos = action.payload;

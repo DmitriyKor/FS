@@ -37,39 +37,18 @@
   ],
   "history": [
     {
-      "id": "64c7",
-      "categoryId": "2",
-      "comment": "H&M",
-      "income": "45",
-      "expense": 0
-    },
-    {
-      "id": "2278",
-      "categoryId": "3",
-      "comment": "Salad",
-      "income": "12",
-      "expense": 0
-    },
-    {
-      "id": "a3bf",
+      "id": "4b66",
       "categoryId": "1",
-      "comment": "ttt",
-      "income": "10000",
-      "expense": 0
-    },
-    {
-      "id": "5f98",
-      "categoryId": "1",
-      "comment": "tttt",
+      "comment": "Salary",
       "income": "2000",
       "expense": 0
     },
     {
-      "id": "162a",
-      "categoryId": "1",
-      "comment": "hhhh",
-      "income": "500",
-      "expense": 0
+      "id": "2abf",
+      "categoryId": "2",
+      "comment": "t-shirt",
+      "income": 0,
+      "expense": "50"
     }
   ]
 }

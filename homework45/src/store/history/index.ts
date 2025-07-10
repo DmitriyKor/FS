@@ -9,8 +9,10 @@ import { useDispatch } from 'react-redux';
 
 export const fetchHistory = createAsyncThunk(
   'history/fetchHistory',
-  async () => {
+  async (_, thunkAPI) => {
     const response = await axios('http://localhost:3005/history');
+    //recalculate categories
+    thunkAPI.dispatch(updateCategoriesBalance(response.data));
     return response.data;
   }
 )
@@ -57,9 +59,6 @@ const historySlice = createSlice({
     builder
       .addCase(fetchHistory.pending, (state) => { state.isLoading = true })
       .addCase(fetchHistory.fulfilled, (state, action) => {
-        console.log('fetchHistory fulfilled:')
-        console.log(action.payload);
-
         state.isLoading = false;
         state.items = action.payload;        
       })
@@ -68,8 +67,6 @@ const historySlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addHistory.fulfilled, (state, action) => {
-        console.log('history added. Response is:')
-        console.log(action.payload);
         //update categories
       })
       ;

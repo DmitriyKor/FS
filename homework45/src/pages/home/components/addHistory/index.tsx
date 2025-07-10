@@ -27,11 +27,11 @@ export const AddHistoryArea = () => {
             expense: 0
         }
         data.type == OPERATION_TYPE.income ? item.income = data.amount : item.expense = data.amount;
-        await dispatch(addHistory(item));       
+        console.log('OnSubmit. data:');
+        console.log(data);
+        await dispatch(addHistory(item));
         form.restart();
-        await dispatch(fetchHistory());   
-        
-        dispatch(updateCategoriesBalance(history));
+        await dispatch(fetchHistory());
     }
 
     return (
@@ -44,19 +44,24 @@ export const AddHistoryArea = () => {
                     initialValues={{ type: OPERATION_TYPE.income }}
                     render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit}>
-                           
+
                             <Stack spacing={2}>
-                                <FormControl>
-                                    {/* <FormLabel id="demo-radio-buttons-group-label">Type</FormLabel> */}
-                                    <RadioGroup
-                                        row
-                                        aria-labelledby="demo-radio-buttons-group-label"
-                                        defaultValue={OPERATION_TYPE.income}
-                                        name="type"                              >
-                                        <FormControlLabel value={OPERATION_TYPE.income} control={<Radio size="small"/>} label="Income" />
-                                        <FormControlLabel value={OPERATION_TYPE.expense} control={<Radio size="small"/>} label="Expense" />
-                                    </RadioGroup>
-                                </FormControl>
+                                <Field name="type" type='radio'>
+                                    {({ input, meta }) => (
+                                        <FormControl>
+                                            {/* <FormLabel id="demo-radio-buttons-group-label">Type</FormLabel> */}
+                                            <RadioGroup
+                                                 {...input}
+                                                row
+                                                aria-labelledby="demo-radio-buttons-group-label"
+                                                defaultValue={OPERATION_TYPE.income}
+                                                name="type"                              >
+                                                <FormControlLabel value={OPERATION_TYPE.income} control={<Radio size="small" />} label="Income" />
+                                                <FormControlLabel value={OPERATION_TYPE.expense} control={<Radio size="small" />} label="Expense" />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    )}
+                                </Field>
 
                                 <Field name="category" validate={requiredSelect}>
                                     {({ input, meta }) => (
@@ -115,7 +120,7 @@ export const AddHistoryArea = () => {
                                     )}
                                 </Field>
                             </Stack>
-                             <Button variant="outlined" type='submit'>Add</Button>
+                            <Button variant="outlined" type='submit'>Add</Button>
                         </form>
                     )}
                 />
