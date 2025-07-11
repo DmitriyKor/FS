@@ -5,33 +5,26 @@ import Button from '@mui/material/Button';
 import { Panel, PanelToolBar } from "@/shared/components/panel"
 import { AddHistoryLayout } from "./index.styles"
 import type { ICategories } from '@/store/category';
-import { addHistory, fetchHistory, OPERATION_TYPE, type IHistoryItem } from '@/store/history';
+import { addHistory, OPERATION_TYPE, type IHistoryItem } from '@/store/history';
 import { required, mustBeNumber } from '@/shared/validation';
-import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from '@mui/material';
-import { requiredSelect } from '../../../../shared/validation';
-import type { IHistory } from '../../../../store/history';
-import { updateCategoriesBalance } from '../../../../store/category';
+import { FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from '@mui/material';
+import { requiredSelect } from '@/shared/validation';
 
 export const AddHistoryArea = () => {
 
     const dispatch = useDispatch();
     const categories: ICategories = useSelector(state => state.categories);
-    const history: IHistory = useSelector(state => state.history);
 
     const onSubmit = async (data, form) => {
         let item: IHistoryItem = {
-            id: "1",
+            id: "",
             categoryId: data.category,
             comment: data.comment,
-            income: 0,
-            expense: 0
+            income: data.type == OPERATION_TYPE.income ? data.amount: 0,
+            expense: data.type == OPERATION_TYPE.expense ? data.amount: 0,
         }
-        data.type == OPERATION_TYPE.income ? item.income = data.amount : item.expense = data.amount;
-        console.log('OnSubmit. data:');
-        console.log(data);
         await dispatch(addHistory(item));
         form.restart();
-        await dispatch(fetchHistory());
     }
 
     return (
@@ -49,7 +42,6 @@ export const AddHistoryArea = () => {
                                 <Field name="type" type='radio'>
                                     {({ input, meta }) => (
                                         <FormControl>
-                                            {/* <FormLabel id="demo-radio-buttons-group-label">Type</FormLabel> */}
                                             <RadioGroup
                                                  {...input}
                                                 row
@@ -124,7 +116,6 @@ export const AddHistoryArea = () => {
                         </form>
                     )}
                 />
-
             </Panel>
         </AddHistoryLayout >
     )
