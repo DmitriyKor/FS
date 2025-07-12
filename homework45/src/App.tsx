@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { fetchUser } from './store/user';
 import { fetchCategories } from './store/category';
 import { mainTheme } from './shared/themes'
+import { fetchHistory } from './store/history';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchUser());
     dispatch(fetchCategories());
+    dispatch(fetchHistory());
   }, []);
 
   //const [theme, setTheme] = useState(mainTheme);

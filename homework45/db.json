@@ -9,51 +9,46 @@
       "startBalance": 0
     }
   ],
-  "categories": [
+  "category": [
     {
       "id": "1",
       "default": true,
-      "name": "Clothes",
-      "description": "",
+      "name": "Salary",
+      "description": "Revenues",
       "balanceIncome": 0,
-      "balanceExpend": 0
+      "balanceExpense": 0
     },
     {
       "id": "2",
       "default": true,
-      "name": "Foods",
-      "description": "",
+      "name": "Clothes",
+      "description": "Your wardrobe",
       "balanceIncome": 0,
-      "balanceExpend": 0
+      "balanceExpense": 0
+    },
+    {
+      "id": "3",
+      "default": true,
+      "name": "Foods",
+      "description": "Provisions, etc.",
+      "balanceIncome": 0,
+      "balanceExpense": 0
+    },
+    {
+      "id": "4676",
+      "name": "yyyy",
+      "description": "uuuu",
+      "default": false,
+      "balanceIncome": 0,
+      "balanceExpense": 0
     }
   ],
   "history": [
     {
-      "id": "304b",
-      "categoryId": "2",
-      "comment": "kjhkjh",
-      "income": "12",
-      "expense": 0
-    },
-    {
-      "id": "8819",
+      "id": "dd0c",
       "categoryId": "1",
-      "comment": "kjhkjh",
-      "income": "12",
-      "expense": 0
-    },
-    {
-      "id": "c9df",
-      "categoryId": "2",
-      "comment": "lll",
-      "income": "8899",
-      "expense": 0
-    },
-    {
-      "id": "1281",
-      "categoryId": "2",
-      "comment": "ljhkkj",
-      "income": "666",
+      "comment": "august",
+      "income": "3000",
       "expense": 0
     }
   ]

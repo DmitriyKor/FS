@@ -4,7 +4,7 @@ export interface ICategoryItem {
     name: string;
     description: string;
     balanceIncome: number;
-    balanceExpend: number;
+    balanceExpense: number;
 }
 
 export interface ICategoryId {
