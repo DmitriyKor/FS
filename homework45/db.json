@@ -33,6 +33,14 @@
       "description": "Provisions, etc.",
       "balanceIncome": 0,
       "balanceExpense": 0
+    },
+    {
+      "id": "4676",
+      "name": "yyyy",
+      "description": "uuuu",
+      "default": false,
+      "balanceIncome": 0,
+      "balanceExpense": 0
     }
   ],
   "history": [
@@ -42,13 +50,6 @@
       "comment": "august",
       "income": "3000",
       "expense": 0
-    },
-    {
-      "id": "b975",
-      "categoryId": "2",
-      "comment": "t-shirt",
-      "income": 0,
-      "expense": "20"
     }
   ]
 }

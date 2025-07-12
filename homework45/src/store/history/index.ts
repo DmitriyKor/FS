@@ -6,11 +6,12 @@ import axios from 'axios';
 import type { IHistoryItem, IHistoryId, IHistory } from './types.ts';
 import { updateCategoriesBalance } from '../category/index.ts';
 import { API_URL } from '../const.ts';
+import { HISTORY_URI, initialState } from './const.ts';
 
 export const fetchHistory = createAsyncThunk(
   'history/fetchHistory',
   async (_, thunkAPI) => {
-    const response = await axios(API_URL+'/history');
+    const response = await axios(API_URL+HISTORY_URI);
     //recalculate categories while we mock the backend
     thunkAPI.dispatch(updateCategoriesBalance(response.data));
     return response.data;
@@ -21,7 +22,7 @@ export const setHistory = createAsyncThunk(
   'history/setHistory',
   async (data: IHistoryItem, thunkAPI) => {
     const {id, ...dataToPost} = data;
-    const response = await axios.put(API_URL+'/history/'+id, JSON.stringify(dataToPost));
+    const response = await axios.put(API_URL+HISTORY_URI+'/'+id, JSON.stringify(dataToPost));
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 
   }
@@ -31,17 +32,20 @@ export const addHistory = createAsyncThunk(
   'history/addHistory',
   async (data: IHistoryItem, thunkAPI) => {
     delete data.id;
-    const response = await axios.post(API_URL+'/history', JSON.stringify(data));
+    const response = await axios.post(API_URL+HISTORY_URI, JSON.stringify(data));
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 
   }
 )
 
-const initialState: IHistory = {
-  items: [],
-  isLoading: false,
-  error: "",
-} satisfies IHistory as IHistory;
+export const deleteHistory = createAsyncThunk(
+  'history/deleteHistory',
+  async (data: IHistoryId, thunkAPI) => {
+    const response = await axios.delete(API_URL+HISTORY_URI+'/'+data.id);
+    //refetch full history and recalulate categories there
+    await thunkAPI.dispatch(fetchHistory()); 
+  }
+)
 
 const historySlice = createSlice({
   name: 'history',
@@ -82,6 +86,9 @@ const historySlice = createSlice({
       })
       .addCase(setHistory.fulfilled, (state, action) => {
       })
+      .addCase(deleteHistory.fulfilled, (state, action) => {
+      })
+
       ;
   }
 })
