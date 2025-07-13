@@ -1,4 +1,5 @@
 import React, { type AnyActionArg } from "react";
+import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, IconButton, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from "@mui/material";
 import { Delete, EditDocument } from '@mui/icons-material';
@@ -10,13 +11,19 @@ import { OPERATION_TYPE } from "@/store/history";
 import { EditHistoryDialog } from "./editHistoryDialog";
 import { useDialog } from "@/shared/hooks/useDialog";
 import { deleteHistory, type IHistoryId } from "../../../../store/history";
-
+import ConfirmDialog from "../../../../shared/components/confirmDialog";
 
 export const HistoryArea = () => {
     const history: IHistory = useSelector(state => state.history);
-    const dispatch = useDispatch();
+    const dispatch : Dispatch = useDispatch();
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
 
+    const deleteConfirmCallback = (context:any):void => {
+        const historyId: IHistoryId = {id: history.items[context].id};
+        dispatch(deleteHistory(historyId));
+    }
+    const { open:openC, openDialog: openCDialog, closeDialog:closeCDialog, dialogValues:dialogCValues } = useDialog(deleteConfirmCallback);
+    
     const handleEditClick = (e) => {
         const idx: number = history.items.findIndex(item => item.id == e.currentTarget.value);
         if (idx >= 0) {
@@ -34,8 +41,7 @@ export const HistoryArea = () => {
     const handleDeleteClick = (e) => {
         const idx: number = history.items.findIndex(item => item.id == e.currentTarget.value);
         if (idx >= 0) {
-            const historyId: IHistoryId = {id: history.items[idx].id}
-            dispatch(deleteHistory(historyId))
+            openCDialog({}, idx);
         }
     }
 
@@ -80,6 +86,7 @@ export const HistoryArea = () => {
                 </PanelToolBar>
                 {historyList()}
                 {EditHistoryDialog({ open, closeDialog, dialogValues })};
+                {ConfirmDialog({open:openC, closeDialog:closeCDialog, title:"Delete", message:"Delete history item?"})}
             </Panel >
         </HistoryLayout>
     )
