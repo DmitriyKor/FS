@@ -4,15 +4,28 @@ import { Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActio
 import { Panel, PanelToolBar } from "@/shared/components/panel";
 import type { ICategories } from "@/store/category";
 import { CategoriesLayout, CategoriesListStyle, CategoryItemStyle } from "./index.styles"
-import { Add } from '@mui/icons-material';
+import { Add, Delete } from '@mui/icons-material';
 import { AddCategoryDialog } from './addCategoryDialog';
 import { useDialog } from '../../../../shared/hooks/useDialog';
+import ConfirmDialog from '../../../../shared/components/confirmDialog';
 
 export const CategoriesArea: React.FC = () => {
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
 
-    const handleAddClick = ()=>{
+    const deleteConfirmCallback = (context:any)=> {
+        console.log('Requested to confirm category: ', context);
+    }
+
+    const { open: openConfirm, openDialog: openDialogConfirm, closeDialog: closeDialogConfirm, 
+        dialogValues: dialogValuesConfirm } = useDialog(deleteConfirmCallback);
+
+
+    const handleAddClick = () => {
         openDialog(null);
+    }
+
+    const handleDeleteClick = (e) => {
+        openDialogConfirm({}, e.currentTarget.value);
     }
 
     const categories: ICategories = useSelector(state => state.categories);
@@ -32,12 +45,16 @@ export const CategoriesArea: React.FC = () => {
                                 <p>{item.description}</p>
                                 <p>Income: {item.balanceIncome}</p>
                                 <p>Expense: {item.balanceExpense}</p>
+                                <IconButton value={item.id} disabled={item.default} aria-label="delete" onClick={handleDeleteClick}>
+                                    <Delete />
+                                </IconButton>
                             </CategoryItemStyle>
                         )
                     })}
                 </CategoriesListStyle>
             </Panel>
             {AddCategoryDialog({ open, closeDialog, dialogValues })}
+            {ConfirmDialog({open:openConfirm, closeDialog:closeDialogConfirm, title:"Delete", message:"Delete category?"})}
         </CategoriesLayout>
     )
 }
