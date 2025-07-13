@@ -17,6 +17,7 @@ export const StyledSideBar = styled.div`
     padding: 10px;
 `
 export const SideBarNav = styled.nav`    
+    color: black;
     ul {  
         list-style-type: none;
         li {
