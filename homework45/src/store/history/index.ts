@@ -21,8 +21,8 @@ export const fetchHistory = createAsyncThunk(
 export const setHistory = createAsyncThunk(
   'history/setHistory',
   async (data: IHistoryItem, thunkAPI) => {
-    const {id, ...dataToPost} = data;
-    const response = await axios.put(API_URL+HISTORY_URI+'/'+id, JSON.stringify(dataToPost));
+    const {id, ...dataToPost} = data;   
+    const response = await axios.put(API_URL+HISTORY_URI+'/'+id, dataToPost);
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 
   }
@@ -31,8 +31,7 @@ export const setHistory = createAsyncThunk(
 export const addHistory = createAsyncThunk(
   'history/addHistory',
   async (data: IHistoryItem, thunkAPI) => {
-    delete data.id;
-    const response = await axios.post(API_URL+HISTORY_URI, JSON.stringify(data));
+    const response = await axios.post(API_URL+HISTORY_URI, data);
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 
   }

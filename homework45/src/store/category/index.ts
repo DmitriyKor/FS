@@ -1,12 +1,9 @@
 import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 import axios, { type AxiosResponse } from 'axios';
 
 import type { ICategoryItem, ICategoryId, ICategories } from './interfaces.ts';
 import { API_URL } from '../const.ts';
-
-//import {DEFAULT_CATEGORIES} from './consts.ts';
+import { initialState } from './consts.ts';
 
 export const fetchCategories = createAsyncThunk(
     'category/fetchCategories',
@@ -19,22 +16,18 @@ export const fetchCategories = createAsyncThunk(
 export const addCategory = createAsyncThunk(
   'category/addCategory',
   async (data: ICategoryItem, thunkAPI) => {
-    delete data.id;
-    console.log('Posting new category:');
-    console.log(data);
-    const response  : AxiosResponse = await axios.post(API_URL+'/category', JSON.stringify(data));
-    console.log('Response is:');
-    console.log(response.data);
-    
-    await thunkAPI.dispatch(fetchCategories());
+    const response  : AxiosResponse = await axios.post(API_URL+'/category', data);
+    return response.data;
   }
 )
 
-const initialState: ICategories = {
-    items: null,
-    isLoading: false,
-    error: ""
-}
+export const deleteCategory = createAsyncThunk(
+  'category/deleteCategory',
+  async (data: ICategoryId, thunkAPI) => {
+    const response = await axios.delete(API_URL+'/category'+'/'+data.id);
+    return response.data;
+  }
+)
 
 const categoriesSlice = createSlice({
     name: 'category',
@@ -53,26 +46,6 @@ const categoriesSlice = createSlice({
                 }
             })
         },
-        addOrSetCategory: (state, action: PayloadAction<ICategoryItem>) => {
-            const idx: number = state.items.findIndex((el) => el.id === action.payload.id);
-            if (idx < 0) {
-                state.items?.push({ ...action.payload, id: uuidv4(), default: false });
-            } else {
-                if (!state.items[idx]?.default) {
-                    const current_id = state.items[idx]?.id;
-                    state.items[idx] = { ...action.payload, id: current_id, default: false }
-                }
-            }
-        },
-        deleteCategory: (state, action: PayloadAction<ICategoryId>) => {
-            const idx: number = state.items.findIndex((el) => el.id === action.payload.id);
-            if (idx >= 0 && !state.items[idx].default) {
-                state.items = state.items.filter((el) => el.id !== action.payload.id)
-            }
-        },
-        clearCategories: (state) => {
-            //state = DEFAULT_CATEGORIES;   
-        }
     },
     extraReducers: (builder) => {
         builder
@@ -86,11 +59,18 @@ const categoriesSlice = createSlice({
                 state.error = action.error.message
             })
             .addCase(addCategory.fulfilled, (state, action) => {
+                state.items?.push(action.payload);
+            })
+            .addCase(deleteCategory.fulfilled, (state, action) => {
+                const idx = state.items.findIndex(item => item.id == action.meta.arg.id);
+                if (idx>-1) {
+                    state.items?.splice(idx, 1);
+                }
             })
             ;
     }
 })
 
-export const { updateCategoriesBalance, addOrSetCategory, deleteCategory, clearCategories } = categoriesSlice.actions;
+export const { updateCategoriesBalance } = categoriesSlice.actions;
 export default categoriesSlice.reducer;
 export * from './interfaces.ts'

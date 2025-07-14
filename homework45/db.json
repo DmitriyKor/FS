@@ -33,14 +33,6 @@
       "description": "Provisions, etc.",
       "balanceIncome": 0,
       "balanceExpense": 0
-    },
-    {
-      "id": "4676",
-      "name": "yyyy",
-      "description": "uuuu",
-      "default": false,
-      "balanceIncome": 0,
-      "balanceExpense": 0
     }
   ],
   "history": []
