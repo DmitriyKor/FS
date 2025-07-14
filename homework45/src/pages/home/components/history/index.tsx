@@ -85,7 +85,7 @@ export const HistoryArea = () => {
                 <PanelToolBar title="History">
                 </PanelToolBar>
                 {historyList()}
-                {EditHistoryDialog({ open, closeDialog, dialogValues })};
+                <EditHistoryDialog open={open} closeDialog={closeDialog} dialogValues={dialogValues} />
                 {ConfirmDialog({open:openC, closeDialog:closeCDialog, title:"Delete", message:"Delete history item?"})}
             </Panel >
         </HistoryLayout>

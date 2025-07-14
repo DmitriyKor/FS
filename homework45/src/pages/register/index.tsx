@@ -30,7 +30,7 @@ export const Register = () => {
         <LoginFormStyle>
             <Form
                 onSubmit={onSubmit}
-                initialValues={{name:'', email:'', password:'', startBalance:0, photo:''}}
+                initialValues={{id:'', name:'', email:'', password:'', startBalance:0, photo:''}}
                 render={({ handleSubmit }) => (
                     <form onSubmit={handleSubmit}>
                         <Stack spacing={2}>

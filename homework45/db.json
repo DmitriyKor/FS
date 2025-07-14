@@ -1,5 +1,5 @@
 {
-  "user": [
+  "users": [
     {
       "id": "1",
       "name": "John Deere",
@@ -7,6 +7,14 @@
       "email": "johnforever@gmail.com",
       "image": "https://cdn-icons-png.flaticon.com/512/266/266033.png",
       "startBalance": 0
+    },
+    {
+      "email": "ff@gmail.com",
+      "password": "$2a$10$4/plpE7HmyTqmfGLY1oeE.OBsGYfeaCT/GmvnE6ZP15Z2UMzJUC5e",
+      "id": "vYYJzEV",
+      "name": "sgsdg",
+      "startBalance": 0,
+      "photo": ""
     }
   ],
   "category": [
@@ -35,5 +43,13 @@
       "balanceExpense": 0
     }
   ],
-  "history": []
+  "history": [
+    {
+      "categoryId": "2",
+      "comment": "dgdg ffedgfgg",
+      "income": 0,
+      "expense": 12,
+      "id": 1
+    }
+  ]
 }
