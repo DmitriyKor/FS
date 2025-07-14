@@ -11,6 +11,7 @@ import { fetchCategories } from './store/category';
 import { mainTheme } from './shared/themes'
 import { fetchHistory } from './store/history';
 import { Login } from './pages/login';
+import { Register } from './pages/register';
 
 
 function App() {
@@ -34,9 +35,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} /> 
             <Route path='/login' element={<Login />} />
-            <Route path='/sign-up' element={<Home />} />
-            <Route path='/profile' element={<Profile />} />
-
+            <Route path='/register' element={<Register />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </Router>

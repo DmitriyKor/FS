@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start:api": "json-server --watch db.json -m ./node_modules/json-server-auth --port 3005"
+    "start:api": "json-server --watch db.json --port 3005 -m ./node_modules/json-server-auth"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

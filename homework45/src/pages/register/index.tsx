@@ -3,26 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { Alert, FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from '@mui/material';
 import { required } from '../../shared/validation';
-import { SideBar } from '../../shared/components/sideBar';
-import { LoginLayout, LoginFormStyle } from './index.styles';
 import type { AxiosResponse } from 'axios';
 import axios from 'axios';
 import { API_URL } from '../../store/const';
 import { useState } from 'react';
+import { LoginFormStyle } from '../login/index.styles';
 
-export const Login = () => {
+export const Register = () => {
 
     const [loginError, setLoginError] = useState('');
 
     const onSubmit = async (values:any) => {
         try {
             console.log(values);
-            const response  : AxiosResponse = await axios(API_URL+'/login', values);
+            const response  : AxiosResponse = await axios(API_URL+'/register', {data: values, method:'post'});
             console.log(response); 
-
-
-     //        localStorage.setItem('authToken', token);
-     //   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // Set default header
+            setLoginError("");
 
         } catch (e) {
             setLoginError(e.message);
@@ -34,9 +30,26 @@ export const Login = () => {
         <LoginFormStyle>
             <Form
                 onSubmit={onSubmit}
+                initialValues={{name:'', email:'', password:'', startBalance:0, photo:''}}
                 render={({ handleSubmit }) => (
                     <form onSubmit={handleSubmit}>
                         <Stack spacing={2}>
+
+                            <Field name="name" validate={required}>
+                                {({ input, meta }) => (
+                                    <FormControl size="small">
+                                        <TextField
+                                            {...input}
+                                            size="small"
+                                            error={meta.error && meta.touched}
+                                            id="outlined-required"
+                                            label="Name"
+                                        />
+                                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                                    </FormControl>
+                                )}
+                            </Field>
+
                             <Field name="email" validate={required}>
                                 {({ input, meta }) => (
                                     <FormControl size="small">
@@ -47,6 +60,7 @@ export const Login = () => {
                                             id="outlined-required"
                                             label="Email"
                                         />
+                                    {meta.error && meta.touched && <span>{meta.error}</span>}
                                     </FormControl>
                                 )}
                             </Field>
@@ -62,11 +76,27 @@ export const Login = () => {
                                             id="outlined-required"
                                             label="Password"
                                         />
+                                    {meta.error && meta.touched && <span>{meta.error}</span>}
                                     </FormControl>
                                 )}
                             </Field>
+
+                            <Field name="startBalance">
+                                {({ input, meta }) => (
+                                    <FormControl size="small">
+                                        <TextField
+                                            {...input}
+                                            type='number'
+                                            size="small"
+                                            id="outlined-required"
+                                            label="Start balance"
+                                        />
+                                    </FormControl>
+                                )}
+                            </Field>
+
                         </Stack>
-                        <Button sx={{mt: 2}} variant="outlined" type='submit'>Login</Button>
+                        <Button sx={{mt: 2}} variant="outlined" type='submit'>Register</Button>
                         {loginError!="" && <Alert severity="error">{loginError}</Alert>}
                     </form>
                 )}
