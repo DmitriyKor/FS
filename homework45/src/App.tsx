@@ -10,6 +10,8 @@ import { fetchUser } from './store/user';
 import { fetchCategories } from './store/category';
 import { mainTheme } from './shared/themes'
 import { fetchHistory } from './store/history';
+import { Login } from './pages/login';
+
 
 function App() {
 
@@ -31,9 +33,10 @@ function App() {
         <Router>
           <Routes>
             <Route path='/' element={<Home />} /> 
-            <Route path='/sign-in' element={<Home />} />
+            <Route path='/login' element={<Login />} />
             <Route path='/sign-up' element={<Home />} />
             <Route path='/profile' element={<Profile />} />
+
             <Route path='*' element={<NotFound />} />
           </Routes>
         </Router>

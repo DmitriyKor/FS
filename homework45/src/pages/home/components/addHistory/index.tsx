@@ -1,13 +1,13 @@
 import { Form, Field } from 'react-final-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
+import { FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from '@mui/material';
 
 import { Panel, PanelToolBar } from "@/shared/components/panel"
 import { AddHistoryLayout } from "./index.styles"
 import type { ICategories } from '@/store/category';
 import { addHistory, OPERATION_TYPE, type IHistoryItem } from '@/store/history';
 import { required, mustBeNumber } from '@/shared/validation';
-import { FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from '@mui/material';
 import { requiredSelect } from '@/shared/validation';
 
 export const AddHistoryArea = () => {

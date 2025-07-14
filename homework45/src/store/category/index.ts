@@ -16,6 +16,20 @@ export const fetchCategories = createAsyncThunk(
     }
 )
 
+export const addCategory = createAsyncThunk(
+  'category/addCategory',
+  async (data: ICategoryItem, thunkAPI) => {
+    delete data.id;
+    console.log('Posting new category:');
+    console.log(data);
+    const response  : AxiosResponse = await axios.post(API_URL+'/category', JSON.stringify(data));
+    console.log('Response is:');
+    console.log(response.data);
+    
+    await thunkAPI.dispatch(fetchCategories());
+  }
+)
+
 const initialState: ICategories = {
     items: null,
     isLoading: false,
@@ -70,7 +84,10 @@ const categoriesSlice = createSlice({
             .addCase(fetchCategories.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.error.message
-            });
+            })
+            .addCase(addCategory.fulfilled, (state, action) => {
+            })
+            ;
     }
 })
 
