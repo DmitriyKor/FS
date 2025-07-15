@@ -8,7 +8,7 @@ import { NotFound } from './pages/notFound';
 import { useEffect } from 'react';
 import { fetchUser } from './store/user';
 import { fetchCategories } from './store/category';
-import { mainTheme } from './shared/themes'
+import { mainTheme } from './shared/styles/theme'
 import { fetchHistory } from './store/history';
 import { Login } from './pages/login';
 import { Register } from './pages/register';

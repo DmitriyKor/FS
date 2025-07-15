@@ -1,42 +1,47 @@
-import { Form, Field } from 'react-final-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from '@mui/material/Button';
-import { Alert, FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from '@mui/material';
-import { required } from '../../shared/validation';
-import { SideBar } from '../../shared/components/sideBar';
-import { LoginLayout, LoginFormStyle } from './index.styles';
+import { useState } from 'react';
 import type { AxiosResponse } from 'axios';
 import axios from 'axios';
-import { API_URL } from '../../store/const';
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { Form, Field } from 'react-final-form';
+import Button from '@mui/material/Button';
+import { Alert, FormControl, Stack, TextField } from '@mui/material';
+import { required } from '../../shared/validation';
+import { API_URL, AUTH_TOKEN_STORAGE_NAME } from '../../store/const';
+import { setUser } from '../../store/user';
+import { LoginFormElementsStyle, LoginFormStyle, LoginStack, StyledRouterLink } from '../../shared/styles/styles';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Login = () => {
 
     const [loginError, setLoginError] = useState('');
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const onSubmit = async (values:any) => {
         try {
-            console.log(values);
-            const response  : AxiosResponse = await axios(API_URL+'/login', values);
-            console.log(response); 
-
-
-     //        localStorage.setItem('authToken', token);
-     //   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // Set default header
-
+            const response  : AxiosResponse = await axios.post(API_URL+'/login', values);
+            if (response.request.status==200) {                
+                console.log(response.data);
+                dispatch(setUser(response.data.user));         
+                localStorage.setItem(AUTH_TOKEN_STORAGE_NAME, response.data.accessToken);
+                navigate('/');
+                //axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`; // Set default header
+            } else setLoginError(response.request.statusText);
         } catch (e) {
             setLoginError(e.message);
         }
-
     }
 
     return (
         <LoginFormStyle>
             <Form
                 onSubmit={onSubmit}
+                initialValues={{email:'', password:''}}
                 render={({ handleSubmit }) => (
                     <form onSubmit={handleSubmit}>
-                        <Stack spacing={2}>
+                        <LoginFormElementsStyle>
+                        <Stack sx={{ width: 1/1 }} spacing={2}>
                             <Field name="email" validate={required}>
                                 {({ input, meta }) => (
                                     <FormControl size="small">
@@ -44,7 +49,6 @@ export const Login = () => {
                                             {...input}
                                             size="small"
                                             error={meta.error && meta.touched}
-                                            id="outlined-required"
                                             label="Email"
                                         />
                                     </FormControl>
@@ -59,15 +63,16 @@ export const Login = () => {
                                             type='password'
                                             size="small"
                                             error={meta.error && meta.touched}
-                                            id="outlined-required"
                                             label="Password"
                                         />
                                     </FormControl>
                                 )}
                             </Field>
                         </Stack>
-                        <Button sx={{mt: 2}} variant="outlined" type='submit'>Login</Button>
+                        <Button sx={{mt:2}} variant="outlined" type='submit'>Login</Button>
                         {loginError!="" && <Alert severity="error">{loginError}</Alert>}
+                        <Link to='/register'><Button sx={{mt:2}}>Register</Button></Link> 
+                        </LoginFormElementsStyle>
                     </form>
                 )}
             />

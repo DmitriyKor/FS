@@ -7,33 +7,37 @@ import type { AxiosResponse } from 'axios';
 import axios from 'axios';
 import { API_URL } from '../../store/const';
 import { useState } from 'react';
-import { LoginFormStyle } from '../login/index.styles';
+import { Link } from 'react-router-dom';
+import { LoginFormElementsStyle, LoginFormStyle, StyledRouterLink } from '../../shared/styles/styles';
 
 export const Register = () => {
 
     const [loginError, setLoginError] = useState('');
 
     const onSubmit = async (values:any) => {
-        try {
-            console.log(values);
-            const response  : AxiosResponse = await axios(API_URL+'/register', {data: values, method:'post'});
+        try {           
+            if (values.password!=values.password2) {
+                setLoginError("Passwords are not equal");
+                return;
+            }
+            const {password2, ...valuesToSend} = values;
+            const response  : AxiosResponse = await axios.post(API_URL+'/register', valuesToSend);
             console.log(response); 
             setLoginError("");
-
         } catch (e) {
             setLoginError(e.message);
         }
-
     }
 
     return (
         <LoginFormStyle>
             <Form
                 onSubmit={onSubmit}
-                initialValues={{id:'', name:'', email:'', password:'', startBalance:0, photo:''}}
+                initialValues={{id:'', name:'', email:'', password:'', startBalance:0, image:''}}
                 render={({ handleSubmit }) => (
                     <form onSubmit={handleSubmit}>
-                        <Stack spacing={2}>
+                        <LoginFormElementsStyle>
+                        <Stack sx={{ width: 1/1 }} spacing={2}>
 
                             <Field name="name" validate={required}>
                                 {({ input, meta }) => (
@@ -65,6 +69,20 @@ export const Register = () => {
                                 )}
                             </Field>
 
+                            <Field name="startBalance">
+                                {({ input, meta }) => (
+                                    <FormControl size="small">
+                                        <TextField
+                                            {...input}
+                                            type='number'
+                                            size="small"
+                                            id="outlined-required"
+                                            label="Start balance"
+                                        />
+                                    </FormControl>
+                                )}
+                            </Field>
+
                             <Field name="password" validate={required}>
                                 {({ input, meta }) => (
                                     <FormControl>
@@ -81,16 +99,18 @@ export const Register = () => {
                                 )}
                             </Field>
 
-                            <Field name="startBalance">
+                            <Field name="password2" validate={required}>
                                 {({ input, meta }) => (
-                                    <FormControl size="small">
+                                    <FormControl>
                                         <TextField
                                             {...input}
-                                            type='number'
+                                            type='password'
                                             size="small"
+                                            error={meta.error && meta.touched}
                                             id="outlined-required"
-                                            label="Start balance"
+                                            label="Re-enter password"
                                         />
+                                    {meta.error && meta.touched && <span>{meta.error}</span>}
                                     </FormControl>
                                 )}
                             </Field>
@@ -98,6 +118,8 @@ export const Register = () => {
                         </Stack>
                         <Button sx={{mt: 2}} variant="outlined" type='submit'>Register</Button>
                         {loginError!="" && <Alert severity="error">{loginError}</Alert>}
+                        <Link to='/login'><Button sx={{mt:2}}>Login</Button></Link> 
+                        </LoginFormElementsStyle>
                     </form>
                 )}
             />
