@@ -9,15 +9,18 @@ import type { ICategories } from '@/store/category';
 import { addHistory, OPERATION_TYPE, type IHistoryItem } from '@/store/history';
 import { required, mustBeNumber } from '@/shared/validation';
 import { requiredSelect } from '@/shared/validation';
+import type { IUser } from '../../../../store/user';
 
 export const AddHistoryArea = () => {
 
     const dispatch = useDispatch();
     const categories: ICategories = useSelector(state => state.categories);
+    const user: IUser = useSelector(state => state.users);
 
     const onSubmit = async (data, form) => {
         let item: IHistoryItem = {
             id: "",
+            userId: user.data?.id,
             categoryId: data.category,
             comment: data.comment,
             income: data.type == OPERATION_TYPE.income ? data.amount: 0,

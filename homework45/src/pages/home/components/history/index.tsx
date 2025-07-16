@@ -12,9 +12,12 @@ import { EditHistoryDialog } from "./editHistoryDialog";
 import { useDialog } from "@/shared/hooks/useDialog";
 import { deleteHistory, type IHistoryId } from "../../../../store/history";
 import ConfirmDialog from "../../../../shared/components/confirmDialog";
+import type { IUser } from "../../../../store/user";
 
 export const HistoryArea = () => {
     const history: IHistory = useSelector(state => state.history);
+    const user: IUser = useSelector(state => state.users);
+
     const dispatch : Dispatch = useDispatch();
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
 
@@ -33,6 +36,7 @@ export const HistoryArea = () => {
                 category: history.items[idx].categoryId,
                 comment: history.items[idx].comment,
                 amount: Math.max(Number(history.items[idx].income), Number(history.items[idx].expense)),
+                userId: user.data?.id,
             }
             openDialog(initialValues);
         }

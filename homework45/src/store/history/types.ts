@@ -1,6 +1,7 @@
 export interface IHistoryItem {
     id: String;
     categoryId : String;
+    userId : String;
     comment : String;
     income: Number;
     expense: Number;
