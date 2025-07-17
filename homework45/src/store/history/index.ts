@@ -50,25 +50,25 @@ const historySlice = createSlice({
   name: 'history',
   initialState,
   reducers: {
-    addOrSetHistoryItem: (state, action: PayloadAction<IHistoryItem>) => {
-      const idx: number = (action.payload.id === null) ?
-        -1 : state.items.findIndex((el) => el.id === action.payload.id);
-      if (idx < 0) {
-        state.items.push({ ...action.payload, id: uuidv4() });
-      } else {
-        const current_id = state.items[idx].id;
-        state.items[idx] = { ...action.payload, id: current_id }
-      }
-    },
-    deleteHistoryItem: (state, action: PayloadAction<IHistoryId>) => {
-      const idx: number = state.items.findIndex((el) => el.id === action.payload.id);
-      if (idx >= 0) {
-        state.items = state.items.filter((el) => el.id !== action.payload.id)
-      }
-    },
-    clearHistory: (state) => {
-      state = initialState;
-    }
+    // addOrSetHistoryItem: (state, action: PayloadAction<IHistoryItem>) => {
+    //   const idx: number = (action.payload.id === null) ?
+    //     -1 : state.items.findIndex((el) => el.id === action.payload.id);
+    //   if (idx < 0) {
+    //     state.items.push({ ...action.payload, id: uuidv4() });
+    //   } else {
+    //     const current_id = state.items[idx].id;
+    //     state.items[idx] = { ...action.payload, id: current_id }
+    //   }
+    // },
+    // deleteHistoryItem: (state, action: PayloadAction<IHistoryId>) => {
+    //   const idx: number = state.items.findIndex((el) => el.id === action.payload.id);
+    //   if (idx >= 0) {
+    //     state.items = state.items.filter((el) => el.id !== action.payload.id)
+    //   }
+    // },
+    // clearHistory: (state) => {
+    //   state = initialState;
+    // }
   },
   extraReducers: (builder) => {
     builder

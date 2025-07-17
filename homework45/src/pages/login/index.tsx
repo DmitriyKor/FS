@@ -7,10 +7,11 @@ import { Form, Field } from 'react-final-form';
 import Button from '@mui/material/Button';
 import { Alert, FormControl, Stack, TextField } from '@mui/material';
 import { required } from '../../shared/validation';
-import { API_URL, AUTH_TOKEN_STORAGE_NAME } from '../../store/const';
+import { API_URL } from '../../store/const';
 import { setUser } from '../../store/user';
 import { LoginFormElementsStyle, LoginFormStyle, LoginStack, StyledRouterLink } from '../../shared/styles/styles';
 import { Link, useNavigate } from 'react-router-dom';
+import { setToken, useToken } from '../../helpers/auth';
 
 export const Login = () => {
 
@@ -22,11 +23,11 @@ export const Login = () => {
         try {
             const response  : AxiosResponse = await axios.post(API_URL+'/login', values);
             if (response.request.status==200) {                
-                console.log(response.data);
-                dispatch(setUser(response.data.user));         
-                localStorage.setItem(AUTH_TOKEN_STORAGE_NAME, response.data.accessToken);
+                if (response.data.user.image=='') {response.data.user.image=null}
+                setToken(response.data.accessToken);
+                dispatch(setUser(response.data.user));    
+                setLoginError("");
                 navigate('/');
-                //axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`; // Set default header
             } else setLoginError(response.request.statusText);
         } catch (e) {
             setLoginError(e.message);

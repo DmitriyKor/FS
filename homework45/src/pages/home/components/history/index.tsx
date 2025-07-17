@@ -1,4 +1,4 @@
-import React, { type AnyActionArg } from "react";
+import React, { useEffect, type AnyActionArg } from "react";
 import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, IconButton, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from "@mui/material";
@@ -10,33 +10,35 @@ import { HistoryLayout, HistoryListStyle } from "./index.styles";
 import { OPERATION_TYPE } from "@/store/history";
 import { EditHistoryDialog } from "./editHistoryDialog";
 import { useDialog } from "@/shared/hooks/useDialog";
-import { deleteHistory, type IHistoryId } from "../../../../store/history";
+import { deleteHistory, fetchHistory, type IHistoryId } from "../../../../store/history";
 import ConfirmDialog from "../../../../shared/components/confirmDialog";
 import type { IUser } from "../../../../store/user";
 
 export const HistoryArea = () => {
     const history: IHistory = useSelector(state => state.history);
-    const user: IUser = useSelector(state => state.users);
 
-    const dispatch : Dispatch = useDispatch();
+    const user: IUser = useSelector(state => state.user);
+
+    const dispatch: Dispatch = useDispatch();
+
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
 
-    const deleteConfirmCallback = (context:any):void => {
-        const historyId: IHistoryId = {id: history.items[context].id};
+    const deleteConfirmCallback = (context: any): void => {
+        const historyId: IHistoryId = { id: history.items[context].id };
         dispatch(deleteHistory(historyId));
     }
-    const { open:openC, openDialog: openCDialog, closeDialog:closeCDialog, dialogValues:dialogCValues } = useDialog(deleteConfirmCallback);
-    
+    const { open: openC, openDialog: openCDialog, closeDialog: closeCDialog, dialogValues: dialogCValues } = useDialog(deleteConfirmCallback);
+
     const handleEditClick = (e) => {
         const idx: number = history.items.findIndex(item => item.id == e.currentTarget.value);
-        if (idx >= 0) {
+        if (idx >= 0 && user.data) {
             const initialValues = {
                 id: history.items[idx].id,
+                userId: user.data.id,
                 type: (history.items[idx].income > 0) ? OPERATION_TYPE.income : OPERATION_TYPE.expense,
                 category: history.items[idx].categoryId,
                 comment: history.items[idx].comment,
                 amount: Math.max(Number(history.items[idx].income), Number(history.items[idx].expense)),
-                userId: user.data?.id,
             }
             openDialog(initialValues);
         }
@@ -49,7 +51,7 @@ export const HistoryArea = () => {
         }
     }
 
-    const historyList = () => {
+    const HistoryList = () => {
         return (
             <HistoryListStyle>
                 {history.items?.toReversed().map(
@@ -61,12 +63,12 @@ export const HistoryArea = () => {
                                     subheader={"Category id:" + item.categoryId}
                                     action={
                                         <>
-                                        <IconButton aria-label="edit" value={item.id} onClick={handleEditClick}>
-                                            <EditDocument />
-                                        </IconButton>
-                                        <IconButton aria-label="delete" value={item.id} onClick={handleDeleteClick}>
-                                            <Delete />
-                                        </IconButton>
+                                            <IconButton aria-label="edit" value={item.id} onClick={handleEditClick}>
+                                                <EditDocument />
+                                            </IconButton>
+                                            <IconButton aria-label="delete" value={item.id} onClick={handleDeleteClick}>
+                                                <Delete />
+                                            </IconButton>
                                         </>
                                     }
                                 />
@@ -80,7 +82,8 @@ export const HistoryArea = () => {
                         )
                     }
                 )}
-            </HistoryListStyle>)
+            </HistoryListStyle>
+        )
     }
 
     return (
@@ -88,10 +91,10 @@ export const HistoryArea = () => {
             <Panel>
                 <PanelToolBar title="History">
                 </PanelToolBar>
-                {historyList()}
+                <HistoryList/>
                 <EditHistoryDialog open={open} closeDialog={closeDialog} dialogValues={dialogValues} />
-                {ConfirmDialog({open:openC, closeDialog:closeCDialog, title:"Delete", message:"Delete history item?"})}
-            </Panel >
+                <ConfirmDialog open={openC} closeDialog={closeCDialog} title="Delete" message="Delete history item?" />
+            </Panel>
         </HistoryLayout>
     )
 }

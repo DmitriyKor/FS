@@ -21,6 +21,7 @@ export const EditHistoryDialog = ({ open, closeDialog, dialogValues }) => {
     const OnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         const historyItem: IHistoryItem = {
             id: event.id,
+            userId: event.userId,
             categoryId: event.category,
             comment: event.comment,
             income: event.type == OPERATION_TYPE.income ? event.amount : 0,

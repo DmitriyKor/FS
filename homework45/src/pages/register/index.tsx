@@ -7,12 +7,17 @@ import type { AxiosResponse } from 'axios';
 import axios from 'axios';
 import { API_URL } from '../../store/const';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { LoginFormElementsStyle, LoginFormStyle, StyledRouterLink } from '../../shared/styles/styles';
+import { setToken } from '../../helpers/auth';
+import { setUser } from '../../store/user';
 
 export const Register = () => {
 
     const [loginError, setLoginError] = useState('');
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const onSubmit = async (values:any) => {
         try {           
@@ -22,8 +27,13 @@ export const Register = () => {
             }
             const {password2, ...valuesToSend} = values;
             const response  : AxiosResponse = await axios.post(API_URL+'/register', valuesToSend);
-            console.log(response); 
-            setLoginError("");
+            if (response.request.status==200) {                
+                if (response.data.user.image=='') {response.data.user.image=null}
+                setToken(response.data.accessToken);
+                dispatch(setUser(response.data.user));         
+                setLoginError("");
+                navigate('/');
+            } else setLoginError(response.request.statusText);            
         } catch (e) {
             setLoginError(e.message);
         }

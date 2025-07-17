@@ -8,12 +8,15 @@ import { Add, Delete } from '@mui/icons-material';
 import { AddCategoryDialog } from './addCategoryDialog';
 import { useDialog } from '../../../../shared/hooks/useDialog';
 import ConfirmDialog from '../../../../shared/components/confirmDialog';
-import { deleteCategory } from '../../../../store/category';
+import { deleteCategory, fetchCategories } from '../../../../store/category';
+import { useEffect } from 'react';
 
 export const CategoriesArea: React.FC = () => {
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
-    const categories: ICategories = useSelector(state => state.categories);
     const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);   
+
+    const categories: ICategories = useSelector(state => state.categories);
     
     const deleteConfirmCallback = (context:any)=> {
         console.log('Requested to delete category: ', context);

@@ -8,9 +8,6 @@ export interface IUserData {
 
 export interface IUser {
   data: IUserData | null;
-  password: string | null;
-  isLoading: boolean;
-  error: string | null | undefined;
 };
 
 export interface IUserPassword {

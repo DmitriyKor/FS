@@ -15,9 +15,13 @@ export const AddHistoryArea = () => {
 
     const dispatch = useDispatch();
     const categories: ICategories = useSelector(state => state.categories);
-    const user: IUser = useSelector(state => state.users);
+    const user: IUser = useSelector(state => state.user);
 
     const onSubmit = async (data, form) => {
+        console.log('AddHistory onSubmit, data is');
+        console.log(data);
+        console.log(user);
+
         let item: IHistoryItem = {
             id: "",
             userId: user.data?.id,
@@ -26,6 +30,8 @@ export const AddHistoryArea = () => {
             income: data.type == OPERATION_TYPE.income ? data.amount: 0,
             expense: data.type == OPERATION_TYPE.expense ? data.amount: 0,
         }
+
+        console.log(item);
         await dispatch(addHistory(item));
         form.restart();
     }
@@ -115,7 +121,7 @@ export const AddHistoryArea = () => {
                                     )}
                                 </Field>
                             </Stack>
-                            <Button variant="outlined" type='submit'>Add</Button>
+                            <Button sx={{mt: 2}} variant="outlined" type='submit'>Add</Button>
                         </form>
                     )}
                 />
