@@ -6,8 +6,13 @@ export const HomeLayout = styled.div`
     box-sizing: border-box;
     background-color: ${props => props.theme.backgroundColor}
 `
+
+export const HomeAreaStyle = styled.div`
+    width: 100%;
+`
+
 export const HomeGridLayout = styled.section`
-    width: 80%; 
+    width: 100%; 
     color: black;
     display: grid;
     box-sizing: border-box;
