@@ -1,18 +1,8 @@
 import styled from 'styled-components';
 
-export const HomeLayout = styled.div`
-    display: flex;
-    min-height: 100vh;   
-    box-sizing: border-box;
-    background-color: ${props => props.theme.backgroundColor}
-`
-
-export const HomeAreaStyle = styled.div`
-    width: 100%;
-`
-
 export const HomeGridLayout = styled.section`
     width: 100%; 
+    height: 100%;
     color: black;
     display: grid;
     box-sizing: border-box;

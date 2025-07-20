@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useEffect } from 'react';
 
-import { Home } from './pages/home';
+import { Wallet } from './pages/wallet';
 import { NotFound } from './pages/notFound';
 import { fetchCategories } from './store/category';
 import { mainTheme } from './shared/styles/theme'
 import { fetchHistory } from './store/history';
 import { Login } from './pages/login';
+import { Home } from './pages/home';
 import { Register } from './pages/register';
 import { useToken } from './helpers/auth';
 import { Logout } from './pages/logout';
@@ -40,6 +41,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/logout' element={<Logout />} />
+            <Route path='/wallet' element={<Wallet />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </Router>

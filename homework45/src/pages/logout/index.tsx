@@ -7,7 +7,7 @@ export const Logout = ()=> {
 
     useEffect(() => {
         removeToken();
-        navigate('/login');
+        navigate('/');
     }, []);
 
     return (

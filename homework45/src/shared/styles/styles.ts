@@ -24,10 +24,27 @@ export const LoginFormElementsStyle = styled.div`
 
 export const LoginStack = styled(Stack)`
 `
-
 export const StyledRouterLink = styled(Link)`
+  color: black;
   text-decoration: none;
-  &:focus, &:visited, &:link, &:active {
-    text-decoration: none;
+  &:active {
+    background-color: blue;
   }
+`
+export const PageLayout = styled.div`
+    width: 100%;
+    min-height: 100vh;   
+    box-sizing: border-box;
+    background-color: ${props => props.theme.backgroundColor}
+`
+export const PageInternalLayout = styled.div`
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 48px); 
+`
+
+export const PageMainArea = styled.div`
+    width: 100%;
+    min-height: 100%;
+    color: black;
 `

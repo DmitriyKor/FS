@@ -1,20 +1,14 @@
 import styled from 'styled-components';
+import { DrawerState } from '../../../store/drawer';
 
-export const Avatar = styled.img`
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-`
-export const ProfileContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-export const StyledSideBar = styled.div`
-    width: 20%;
+export const StyledSideBar = styled.div<{displayMode : DrawerState}>`
     background-color: lightgray;
     color: black;
-    padding: 10px;
+    width: ${p => (p.displayMode == DrawerState.extended? 280 : 
+        p.displayMode == DrawerState.narrow? 60 : 0
+    )}px;
+    display: ${p => (p.displayMode == DrawerState.extended || p.displayMode == DrawerState.narrow? 'unset' : 'none')};
+    min-height: 100%;
 `
 export const SideBarNav = styled.nav`    
     color: black;
