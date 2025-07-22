@@ -40,6 +40,8 @@ export const addHistory = createAsyncThunk(
 export const deleteHistory = createAsyncThunk(
   'history/deleteHistory',
   async (data: IHistoryId, thunkAPI) => {
+    console.log('delete history item')
+    console.log(data);
     const response = await axios.delete(API_URL+HISTORY_URI+'/'+data.id);
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 

@@ -17,6 +17,8 @@
       "image": ""
     }
   ],
+  "userinfo": [
+  ],
   "category": [
     {
       "id": "1",
@@ -44,41 +46,7 @@
       "description": "Provisions, etc.",
       "balanceIncome": 0,
       "balanceExpense": 0
-    },
-    {
-      "name": "My category",
-      "description": "kjj",
-      "default": false,
-      "balanceIncome": 0,
-      "balanceExpense": 0,
-      "userId": 1,
-      "id": "dpHJc5U"
     }
   ],
-  "history": [
-    {
-      "id": 1,
-      "userId": 2,
-      "categoryId": "2",
-      "comment": "eqweqw",
-      "income": 0,
-      "expense": "50"
-    },
-    {
-      "id": 2,
-      "userId": 2,
-      "categoryId": "2",
-      "comment": "t-shirt for John",
-      "income": 0,
-      "expense": "50"
-    },
-    {
-      "id": 3,
-      "userId": 1,
-      "categoryId": "2",
-      "comment": "jhgjh",
-      "income": 0,
-      "expense": "12"
-    }
-  ]
+  "history": []
 }

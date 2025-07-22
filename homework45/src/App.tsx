@@ -13,6 +13,7 @@ import { Home } from './pages/home';
 import { Register } from './pages/register';
 import { useToken } from './helpers/auth';
 import { Logout } from './pages/logout';
+import { fetchUser } from './store/user';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
 
   useEffect(() => {
     useToken();
+    dispatch(fetchUser());
   }, []);
 
   useEffect(() => {
@@ -37,12 +39,20 @@ function App() {
       <ThemeProvider theme={mainTheme}>
         <Router>
           <Routes>
-            <Route path='/' element={<Home />} /> 
+            <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path='/logout' element={<Logout />} />
-            <Route path='/wallet' element={<Wallet />} />
             <Route path='*' element={<NotFound />} />
+            {user.data ?
+              <>
+                <Route path='/logout' element={<Logout />} />
+                <Route path='/wallet' element={<Wallet />} />
+              </> :               
+              <>            
+                <Route path='/logout' element={<Logout />} />
+                <Route path='/wallet' element={<Logout />} />
+              </>
+            }
           </Routes>
         </Router>
       </ThemeProvider>

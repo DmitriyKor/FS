@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const LoginLayout = styled.div`
@@ -24,12 +24,9 @@ export const LoginFormElementsStyle = styled.div`
 
 export const LoginStack = styled(Stack)`
 `
-export const StyledRouterLink = styled(Link)`
-  color: black;
-  text-decoration: none;
-  &:active {
-    background-color: blue;
-  }
+export const StyledRouterNavLink = styled(NavLink)`
+    color: black;
+    text-decoration: none;
 `
 export const PageLayout = styled.div`
     width: 100%;

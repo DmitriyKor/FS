@@ -58,10 +58,10 @@ export const TopBar = () => {
     function stringAvatar(name: string) {
         return {
             sx: {
-                bgcolor: stringToColor(name),
+                bgcolor: name? stringToColor(name):'lightblue',
                 mr: 2 
             },
-            children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+            children: name?`${name.split(' ')[0][0]}${name.split(' ')[1][0]}`:'',
         };
     }
 
@@ -112,15 +112,17 @@ export const TopBar = () => {
 
     return (
         <TopBarStyle>          
+            
             <IconButton
                 size="large"
                 edge="start"
                 aria-label="menu"
-                sx={{ m: 0}}//, visibility: { xs: 'visible', md: 'hidden' }
+                sx={{ ml: 1, visibility: user.data? 'visible' : 'hidden' }}
                 onClick={handleMenuClick}
             >
                 <MenuIcon />
             </IconButton>
+            
             {user.data ?
                 <Avatar {...stringAvatar(user.data.name)} onClick={handleOpenUserMenu}/>
                 :

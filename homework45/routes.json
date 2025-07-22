@@ -1,4 +1,5 @@
 {
+    "/users*": "/600/users$1",    
     "/category*": "/600/category$1",
     "/history*": "/600/history$1"
 }

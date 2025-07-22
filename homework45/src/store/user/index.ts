@@ -9,13 +9,16 @@ const initialState: IUser = {
   data: null,
 }
 
-// export const fetchUser = createAsyncThunk(
-//   'user/fetchUser',
-//   async () => {
-//     const response = await axios(API_URL+'/users/1');
-//     return response.data;
-//   }
-// )
+export const fetchUser = createAsyncThunk(
+  'user/fetchUser',
+  async () => {
+    console.log('fetch user:')
+    const response = await axios(API_URL+'/users/1');
+   
+    console.log(response.data);
+    return response.data;
+  }
+)
 
 const userSlice = createSlice({
   name: 'user',
@@ -26,26 +29,24 @@ const userSlice = createSlice({
       console.log(action.payload);
       state.data = action.payload;
     },
-    // setPassword: (state, action: PayloadAction<IUserPassword>) => {
-    //   if (state.password === action.payload.oldPassword) { state.password = action.payload.password }
-    // },
+    resetUser: (state)=>{
+      state.data = null;
+    }
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(fetchUser.pending, (state) => { state.isLoading = true })
-  //     .addCase(fetchUser.fulfilled, (state, action) => {
-  //       state.isLoading = false;
-  //       console.log('fetchUser.fulfilled:');
-  //       console.log(action.payload);
-  //       state.data = action.payload;
-  //     })
-  //     .addCase(fetchUser.rejected, (state, action) => {
-  //       state.isLoading = false;
-  //       state.error = action.error.message
-  //     });
-  // }
+ extraReducers: (builder) => {
+    builder
+      .addCase(fetchUser.pending, (state) => {})
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.data = action.payload;        
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.data = null;
+      })
+      ;
+  }
+
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, resetUser } = userSlice.actions;
 export type { IUser, IUserData } from './interfaces';
 export default userSlice.reducer;
