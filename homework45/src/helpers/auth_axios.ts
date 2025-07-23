@@ -39,7 +39,7 @@ export class AuthAxios {
   public setToken(token:string):void {
     this.token=token;
     localStorage.setItem(AUTH_TOKEN_STORAGE_NAME, this.token);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+    this.instance.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
   }
 
 }
