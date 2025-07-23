@@ -3,7 +3,7 @@ import { AccountArea } from "./components/account"
 import { AddHistoryArea } from "./components/addHistory"
 import { CategoriesArea } from "./components/categories"
 import { HistoryArea } from "./components/history"
-import { HomeGridLayout } from "./index.styles"
+import { WalletGridLayout } from "./index.styles"
 import { TopBar } from "../../shared/components/topBar"
 import { PageInternalLayout, PageLayout, PageMainArea } from "../../shared/styles/styles"
 
@@ -14,12 +14,12 @@ export const Wallet = () => {
             <PageInternalLayout>
                 <SideBar />
                 <PageMainArea>
-                    <HomeGridLayout>
+                    <WalletGridLayout>
                         <AccountArea />
                         <AddHistoryArea />
                         <CategoriesArea />
                         <HistoryArea />
-                    </HomeGridLayout>
+                    </WalletGridLayout>
                 </PageMainArea>
             </PageInternalLayout>
         </PageLayout>

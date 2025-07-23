@@ -14,6 +14,7 @@ import { Register } from './pages/register';
 import { useToken } from './helpers/auth';
 import { Logout } from './pages/logout';
 import { fetchUser } from './store/user';
+import { GlobalStyle } from './shared/styles/styles';
 
 
 function App() {
@@ -23,8 +24,7 @@ function App() {
   const categories = useSelector((state) => state.categories);
 
   useEffect(() => {
-    useToken();
-    dispatch(fetchUser());
+    if (useToken()) {dispatch(fetchUser())};
   }, []);
 
   useEffect(() => {
@@ -32,24 +32,22 @@ function App() {
     dispatch(fetchHistory());
   }, [user]);
 
-  //const [theme, setTheme] = useState(mainTheme);
-  // to pass setTheme as a props to where the theme is selected
   return (
     <>
       <ThemeProvider theme={mainTheme}>
+        <GlobalStyle/>
         <Router>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='*' element={<NotFound />} />
+            <Route path='/logout' element={<Logout />} />
             {user.data ?
               <>
-                <Route path='/logout' element={<Logout />} />
                 <Route path='/wallet' element={<Wallet />} />
               </> :               
               <>            
-                <Route path='/logout' element={<Logout />} />
                 <Route path='/wallet' element={<Logout />} />
               </>
             }

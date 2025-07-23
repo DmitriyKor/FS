@@ -1,6 +1,28 @@
 import { Stack } from '@mui/material';
-import { Link, NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import styled, { createGlobalStyle } from 'styled-components';
+
+export const GlobalStyle = createGlobalStyle`
+    :root {
+        font-family: Roboto, sans-serif;
+        line-height: 1.5;
+        font-weight: 400;
+    }  
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    p {
+        padding: 0;
+        margin: 0;
+    }
+`;
 
 export const LoginLayout = styled.div`
     display: flex;
@@ -22,8 +44,6 @@ export const LoginFormElementsStyle = styled.div`
     min-width: 400px;
 `
 
-export const LoginStack = styled(Stack)`
-`
 export const StyledRouterNavLink = styled(NavLink)`
     color: black;
     text-decoration: none;
@@ -39,9 +59,9 @@ export const PageInternalLayout = styled.div`
     width: 100%;
     min-height: calc(100vh - 48px); 
 `
-
 export const PageMainArea = styled.div`
     width: 100%;
     min-height: 100%;
     color: black;
+    padding: 10px;
 `

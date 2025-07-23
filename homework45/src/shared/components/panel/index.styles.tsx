@@ -7,7 +7,7 @@ export const PanelStyle = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${props => props.theme.panel.backgroundColor};
-    box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.1);
+    box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2);
     border-radius: ${props => props.theme.panel.borderRadius};
     box-sizing: border-box;
     display: flex;

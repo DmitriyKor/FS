@@ -1,30 +1,20 @@
 import { BrowserRouter as Router, Routes, Route, Link, NavLink, useLocation } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-import WalletIcon from '@mui/icons-material/Wallet';
-import RealEstateAgentIcon from '@mui/icons-material/RealEstateAgent';
-import AddReactionIcon from '@mui/icons-material/AddReaction';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import HomeIcon from '@mui/icons-material/Home';
-
-import { SideBarNav, StyledSideBar } from './index.styles';
+import { useTheme } from 'styled-components'
 import { Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, Toolbar } from '@mui/material';
+
+import { StyledSideBar } from './index.styles';
 import { StyledRouterNavLink } from '../../styles/styles';
 import { DrawerState } from '../../../store/drawer';
-
-const SIDEBAR_MENU = [
-    { icon: <HomeIcon />, text: "Home", link: "/" },
-    { icon: <WalletIcon />, text: "Wallet", link: "/wallet" },
-    { icon: <RealEstateAgentIcon />, text: "Housekeeping", link: "*" },
-    { icon: <AddReactionIcon />, text: "Wishes", link: "*" },
-    { icon: <AssignmentTurnedInIcon />, text: "Necessities", link: "*" }
-]
+import {SIDEBAR_MENU} from './const';
 
 export const SideBar: React.FC = () => {
 
     const drawer = useSelector(state => state.drawer);
     const location = useLocation();
     const user = useSelector(state => state.user);
+    const theme = useTheme();
     
     return user.data? 
      (
@@ -33,7 +23,7 @@ export const SideBar: React.FC = () => {
                 {SIDEBAR_MENU.map((item) => {
                     return (
                         <ListItemButton key={item.text} component={StyledRouterNavLink} to={item.link}
-                            sx={location.pathname == item.link ? { background: 'gray' } : null}
+                            sx={location.pathname == item.link ? { background: theme.sideBar.selectedLinkColor } : null}
                         >
                             <ListItemIcon>
                                 {item.icon}
@@ -45,7 +35,6 @@ export const SideBar: React.FC = () => {
                 }
             </List>
         </StyledSideBar>
-        
     ):
     <></>
 }

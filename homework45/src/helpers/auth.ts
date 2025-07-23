@@ -1,9 +1,6 @@
 import axios, { type AxiosResponse } from "axios";
-import { useDispatch } from "react-redux";
-import { setUser } from "../store/user";
-import { API_URL } from "../store/const";
 
-const AUTH_TOKEN_STORAGE_NAME = 'authToken';
+export const AUTH_TOKEN_STORAGE_NAME = 'authToken';
 
 export const setToken = (token: string): void => {
     localStorage.setItem(AUTH_TOKEN_STORAGE_NAME, token);
