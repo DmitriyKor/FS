@@ -12,6 +12,7 @@ import { setUser } from '../../store/user';
 import { LoginFormElementsStyle, LoginFormStyle } from '../../shared/styles/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import { setToken, useToken } from '../../helpers/auth';
+import { authAxios } from '../../helpers/authAxios';
 
 export const Login = () => {
 
@@ -27,6 +28,8 @@ export const Login = () => {
             if (response.request.status == 200) {
                 if (response.data.user.image == '') { response.data.user.image = null }
                 setToken(response.data.accessToken);
+                authAxios.setToken(response.data.accessToken);
+
                 dispatch(setUser(response.data.user));
                 setLoginError("");
                 navigate('/');

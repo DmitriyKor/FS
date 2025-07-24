@@ -14,6 +14,8 @@ export const tokenAvailable = (): boolean => {
 export const useToken = (): boolean => {
     const token: string | null = localStorage.getItem(AUTH_TOKEN_STORAGE_NAME);
 
+    console.log('useToken, token is ', token);
+
     if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }

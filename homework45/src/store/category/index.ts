@@ -4,11 +4,12 @@ import axios, { type AxiosResponse } from 'axios';
 import type { ICategoryItem, ICategoryId, ICategories } from './interfaces.ts';
 import { API_URL } from '../const.ts';
 import { initialState } from './consts.ts';
+import { authAxios } from '../../helpers/authAxios.ts';
 
 export const fetchCategories = createAsyncThunk(
     'category/fetchCategories',
     async () => {
-        const response : AxiosResponse = await axios(API_URL + '/category');
+        const response : AxiosResponse = await authAxios.instance(API_URL + '/category');
         return response.data;
     }
 )
@@ -16,7 +17,7 @@ export const fetchCategories = createAsyncThunk(
 export const addCategory = createAsyncThunk(
   'category/addCategory',
   async (data: ICategoryItem, thunkAPI) => {
-    const response  : AxiosResponse = await axios.post(API_URL+'/category', data);
+    const response  : AxiosResponse = await authAxios.instance.post(API_URL+'/category', data);
     return response.data;
   }
 )
@@ -24,7 +25,7 @@ export const addCategory = createAsyncThunk(
 export const deleteCategory = createAsyncThunk(
   'category/deleteCategory',
   async (data: ICategoryId, thunkAPI) => {
-    const response = await axios.delete(API_URL+'/category'+'/'+data.id);
+    const response = await authAxios.instance.delete(API_URL+'/category'+'/'+data.id);
     return response.data;
   }
 )

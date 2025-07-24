@@ -17,8 +17,7 @@
       "image": ""
     }
   ],
-  "userinfo": [
-  ],
+  "userinfo": [],
   "category": [
     {
       "id": "1",
@@ -48,5 +47,14 @@
       "balanceExpense": 0
     }
   ],
-  "history": []
+  "history": [
+    {
+      "id": 1,
+      "userId": 1,
+      "categoryId": "2",
+      "comment": "kjbkjgkj",
+      "income": 0,
+      "expense": "50"
+    }
+  ]
 }

@@ -4,6 +4,7 @@ import axios, { type AxiosResponse } from 'axios';
 
 import type { IUserPassword, IUserData, IUser } from './interfaces.ts';
 import { API_URL } from '../const.ts';
+import { authAxios } from '../../helpers/authAxios.ts';
 
 const initialState: IUser = {
   data: null,
@@ -12,10 +13,7 @@ const initialState: IUser = {
 export const fetchUser = createAsyncThunk(
   'user/fetchUser',
   async () => {
-    console.log('fetch user:')
-    const response = await axios(API_URL+'/users/1');
-   
-    console.log(response.data);
+    const response = await authAxios.instance(API_URL+'/users/1');
     return response.data;
   }
 )
@@ -25,8 +23,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<IUserData>) => {
-      console.log('setUser: ');
-      console.log(action.payload);
       state.data = action.payload;
     },
     resetUser: (state)=>{

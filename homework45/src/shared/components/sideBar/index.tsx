@@ -18,7 +18,7 @@ export const SideBar: React.FC = () => {
     
     return user.data? 
      (
-        <StyledSideBar displayMode={drawer}>
+        <StyledSideBar $displayMode={drawer}>
             <List sx={{ p: 0 }}>
                 {SIDEBAR_MENU.map((item) => {
                     return (

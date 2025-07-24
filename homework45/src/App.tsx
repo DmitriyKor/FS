@@ -15,6 +15,7 @@ import { useToken } from './helpers/auth';
 import { Logout } from './pages/logout';
 import { fetchUser } from './store/user';
 import { GlobalStyle } from './shared/styles/styles';
+import { authAxios } from './helpers/authAxios';
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
   const categories = useSelector((state) => state.categories);
 
   useEffect(() => {
-    if (useToken()) {dispatch(fetchUser())};
+    if (authAxios.getTokenFromStorage()) {dispatch(fetchUser())}; 
   }, []);
 
   useEffect(() => {
@@ -48,7 +49,6 @@ function App() {
                 <Route path='/wallet' element={<Wallet />} />
               </> :               
               <>            
-                <Route path='/wallet' element={<Logout />} />
               </>
             }
           </Routes>

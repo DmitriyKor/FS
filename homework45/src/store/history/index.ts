@@ -7,11 +7,12 @@ import type { IHistoryItem, IHistoryId, IHistory } from './types.ts';
 import { updateCategoriesBalance } from '../category/index.ts';
 import { API_URL } from '../const.ts';
 import { HISTORY_URI, initialState } from './const.ts';
+import { authAxios } from '../../helpers/authAxios.ts';
 
 export const fetchHistory = createAsyncThunk(
   'history/fetchHistory',
   async (_, thunkAPI) => {
-    const response = await axios(API_URL+HISTORY_URI);
+    const response = await authAxios.instance(API_URL+HISTORY_URI);
     //recalculate categories while we mock the backend
     thunkAPI.dispatch(updateCategoriesBalance(response.data));
     return response.data;
@@ -22,7 +23,7 @@ export const setHistory = createAsyncThunk(
   'history/setHistory',
   async (data: IHistoryItem, thunkAPI) => {
     const {id, ...dataToPost} = data;   
-    const response = await axios.put(API_URL+HISTORY_URI+'/'+id, dataToPost);
+    const response = await authAxios.instance.put(API_URL+HISTORY_URI+'/'+id, dataToPost);
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 
   }
@@ -31,7 +32,7 @@ export const setHistory = createAsyncThunk(
 export const addHistory = createAsyncThunk(
   'history/addHistory',
   async (data: IHistoryItem, thunkAPI) => {
-    const response = await axios.post(API_URL+HISTORY_URI, data);
+    const response = await authAxios.instance.post(API_URL+HISTORY_URI, data);
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 
   }
@@ -40,9 +41,7 @@ export const addHistory = createAsyncThunk(
 export const deleteHistory = createAsyncThunk(
   'history/deleteHistory',
   async (data: IHistoryId, thunkAPI) => {
-    console.log('delete history item')
-    console.log(data);
-    const response = await axios.delete(API_URL+HISTORY_URI+'/'+data.id);
+    const response = await authAxios.instance.delete(API_URL+HISTORY_URI+'/'+data.id);
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 
   }
