@@ -7,7 +7,7 @@ import { WalletGridLayout } from "./index.styles"
 import { TopBar } from "../../shared/components/topBar"
 import { PageInternalLayout, PageLayout, PageMainArea } from "../../shared/styles/styles"
 
-export const Wallet = () => {
+const Wallet = () => {
     return (
         <PageLayout>
             <TopBar />
@@ -25,3 +25,5 @@ export const Wallet = () => {
         </PageLayout>
     )
 }
+
+export default Wallet;

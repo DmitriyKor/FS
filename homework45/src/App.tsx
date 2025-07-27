@@ -1,22 +1,39 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter, createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 
-import { Wallet } from './pages/wallet';
-import { NotFound } from './pages/notFound';
+//import { Wallet } from './pages/wallet';
+const Wallet = lazy(() => import('./pages/wallet'));
+//import { NotFound } from './pages/notFound';
+const NotFound = lazy(() => import('./pages/notFound'));
 import { fetchCategories } from './store/category';
 import { mainTheme } from './shared/styles/theme'
 import { fetchHistory } from './store/history';
-import { Login } from './pages/login';
-import { Home } from './pages/home';
-import { Register } from './pages/register';
-import { useToken } from './helpers/auth';
-import { Logout } from './pages/logout';
+//import { Login } from './pages/login';
+const Login = lazy(() => import('./pages/login'));
+//import { Home } from './pages/home';
+const Home = lazy(() => import('./pages/home'));
+//import { Register } from './pages/register';
+const Register = lazy(() => import('./pages/register'));
+//import { Logout } from './pages/logout';
+const Logout = lazy(() => import('./pages/logout'));
 import { fetchUser } from './store/user';
 import { GlobalStyle } from './shared/styles/styles';
 import { authAxios } from './helpers/authAxios';
+import SuspensePage from './pages/suspensePage';
 
+const openRoutes = [
+  { path: '/', element: <Home /> },
+  { path: '/login', element: <Login /> },
+  { path: '/logout', element: <Logout /> },
+  { path: '/register', element: <Register /> },
+  { path: '*', element: <Home /> },
+]
+
+const protectedRoutes = [
+  { path: '/wallet', element: <Wallet /> },
+]
 
 function App() {
 
@@ -25,7 +42,7 @@ function App() {
   const categories = useSelector((state) => state.categories);
 
   useEffect(() => {
-    if (authAxios.getTokenFromStorage()) {dispatch(fetchUser())}; 
+    if (authAxios.getTokenFromStorage()) { dispatch(fetchUser()) };
   }, []);
 
   useEffect(() => {
@@ -36,23 +53,30 @@ function App() {
   return (
     <>
       <ThemeProvider theme={mainTheme}>
-        <GlobalStyle/>
-        <Router>
+        <GlobalStyle />
+
+        <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='*' element={<NotFound />} />
-            <Route path='/logout' element={<Logout />} />
+            {openRoutes.map((item) => <Route path={item.path} element={
+              <>
+                <Suspense fallback={<SuspensePage/>}>
+                  {item.element}
+                </Suspense>
+              </>}
+            />)}
             {user.data ?
               <>
-                <Route path='/wallet' element={<Wallet />} />
-              </> :               
-              <>            
-              </>
+                {protectedRoutes.map((item) => <Route path={item.path} element={
+                  <>
+                    <Suspense fallback={<SuspensePage/>}>
+                      {item.element}
+                    </Suspense>
+                  </>}
+                />)}
+              </> :  <> </>
             }
           </Routes>
-        </Router>
+        </BrowserRouter>
       </ThemeProvider>
     </>
   )

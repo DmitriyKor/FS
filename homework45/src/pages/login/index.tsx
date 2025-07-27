@@ -14,7 +14,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { setToken, useToken } from '../../helpers/auth';
 import { authAxios } from '../../helpers/authAxios';
 
-export const Login = () => {
+const Login = () => {
 
     const [loginError, setLoginError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -94,3 +94,5 @@ export const Login = () => {
         </LoginFormStyle>
     )
 }
+
+export default Login;

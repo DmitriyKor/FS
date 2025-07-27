@@ -12,7 +12,7 @@ import { LoginFormElementsStyle, LoginFormStyle } from '../../shared/styles/styl
 import { setToken } from '../../helpers/auth';
 import { setUser } from '../../store/user';
 
-export const Register = () => {
+const Register = () => {
 
     const [loginError, setLoginError] = useState('');
 
@@ -136,3 +136,5 @@ export const Register = () => {
         </LoginFormStyle>
     )
 }
+
+export default Register;

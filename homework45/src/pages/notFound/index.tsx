@@ -1,7 +1,9 @@
-export const NotFound = () => {
+const NotFound = () => {
     return (
         <>
             <p>This page does not exist</p>
         </>
     )
 }
+
+export default NotFound;
