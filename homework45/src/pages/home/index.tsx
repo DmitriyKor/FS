@@ -4,7 +4,7 @@ import { TopBar } from "../../shared/components/topBar"
 import { PageInternalLayout, PageLayout, PageMainArea } from "../../shared/styles/styles"
 import { NavLink } from "react-router-dom"
 
-export const Home = () => {
+const Home = () => {
     return (
         <PageLayout>
             <TopBar />
@@ -25,3 +25,5 @@ export const Home = () => {
         </PageLayout>
     )
 }
+
+export default Home;

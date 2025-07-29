@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { resetUser } from "../../store/user";
 
-export const Logout = ()=> {
+const Logout = ()=> {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -19,3 +19,5 @@ export const Logout = ()=> {
         </>
     )
 }
+
+export default Logout;

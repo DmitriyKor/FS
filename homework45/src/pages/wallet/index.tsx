@@ -8,7 +8,7 @@ import { TopBar } from "../../shared/components/topBar"
 import { PageInternalLayout, PageLayout, PageMainArea } from "../../shared/styles/styles"
 import { SideBar } from "../../shared/components/sideBar"
 
-export const Wallet = () => {
+const Wallet = () => {
     return (
         <PageLayout>
             <TopBar />
@@ -26,3 +26,5 @@ export const Wallet = () => {
         </PageLayout>
     )
 }
+
+export default Wallet;
