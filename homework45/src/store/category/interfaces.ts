@@ -12,7 +12,7 @@ export interface ICategoryId {
 }
 
 export interface ICategories {
-    items: ICategoryItem[] | null;
+    items: ICategoryItem[] | null | undefined;
     isLoading : boolean;
     error: string | null | undefined;
 }

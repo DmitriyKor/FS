@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
-import axios, { type AxiosResponse } from 'axios';
 
-import type { IUserPassword, IUserData, IUser } from './interfaces.ts';
+import type { IUserData, IUser } from './interfaces.ts';
 import { API_URL } from '../const.ts';
 import { authAxios } from '../../helpers/authAxios.ts';
 
@@ -31,11 +30,11 @@ const userSlice = createSlice({
   },
  extraReducers: (builder) => {
     builder
-      .addCase(fetchUser.pending, (state) => {})
+      .addCase(fetchUser.pending, () => {})
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.data = action.payload;        
       })
-      .addCase(fetchUser.rejected, (state, action) => {
+      .addCase(fetchUser.rejected, (state) => {
         state.data = null;
       })
       ;

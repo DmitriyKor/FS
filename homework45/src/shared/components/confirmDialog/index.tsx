@@ -9,10 +9,18 @@ import DialogTitle from '@mui/material/DialogTitle';
 const ID_OK = 'ok';
 const ID_CANCEL = 'cancel';
 
-export default function ConfirmDialog({ open, closeDialog, title, message}) {
+interface IConfirmDialogProps {
+  open: boolean;
+  closeDialog : (c: boolean)=>void;
+  title: string;
+  message : string;
+}
 
-  const handleClose = (event:{}, reason: "backdropClick" | "escapeKeyDown") =>{
-    closeDialog(event.target.id==ID_OK);
+export default function ConfirmDialog({ open, closeDialog, title, message} : IConfirmDialogProps) {
+
+  const handleClose : React.MouseEventHandler<HTMLButtonElement> = (event):void =>{
+    const id = (event.target as HTMLInputElement).id;
+    closeDialog(id==ID_OK);
   }
     
   return (

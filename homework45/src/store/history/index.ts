@@ -1,13 +1,12 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
+import { createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
-import type { IHistoryItem, IHistoryId, IHistory } from './types.ts';
+
+import type { IHistoryItem, IHistoryId } from './types.ts';
 import { updateCategoriesBalance } from '../category/index.ts';
 import { API_URL } from '../const.ts';
 import { HISTORY_URI, initialState } from './const.ts';
 import { authAxios } from '../../helpers/authAxios.ts';
+
 
 export const fetchHistory = createAsyncThunk(
   'history/fetchHistory',
@@ -23,7 +22,7 @@ export const setHistory = createAsyncThunk(
   'history/setHistory',
   async (data: IHistoryItem, thunkAPI) => {
     const {id, ...dataToPost} = data;   
-    const response = await authAxios.instance.put(API_URL+HISTORY_URI+'/'+id, dataToPost);
+    await authAxios.instance.put(API_URL+HISTORY_URI+'/'+id, dataToPost);
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 
   }
@@ -32,16 +31,16 @@ export const setHistory = createAsyncThunk(
 export const addHistory = createAsyncThunk(
   'history/addHistory',
   async (data: IHistoryItem, thunkAPI) => {
-    const response = await authAxios.instance.post(API_URL+HISTORY_URI, data);
+    await authAxios.instance.post(API_URL+HISTORY_URI, data);
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 
   }
 )
 
-export const deleteHistory = createAsyncThunk(
+export const deleteHistory : any = createAsyncThunk(
   'history/deleteHistory',
   async (data: IHistoryId, thunkAPI) => {
-    const response = await authAxios.instance.delete(API_URL+HISTORY_URI+'/'+data.id);
+    await authAxios.instance.delete(API_URL+HISTORY_URI+'/'+data.id);
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 
   }
@@ -82,17 +81,17 @@ const historySlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message;
       })
-      .addCase(addHistory.fulfilled, (state, action) => {
+      .addCase(addHistory.fulfilled, () => {
       })
-      .addCase(setHistory.fulfilled, (state, action) => {
+      .addCase(setHistory.fulfilled, () => {
       })
-      .addCase(deleteHistory.fulfilled, (state, action) => {
+      .addCase(deleteHistory.fulfilled, () => {
       })
 
       ;
   }
 })
 
-export const { addOrSetHistoryItem, deleteHistoryItem, clearHistory } = historySlice.actions;
+export const {} = historySlice.actions;
 export default historySlice.reducer;
 export * from './types.ts'

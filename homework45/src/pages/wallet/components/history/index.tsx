@@ -9,16 +9,15 @@ import type { IHistory } from "@/store/history";
 import { HistoryLayout, HistoryListStyle } from "./index.styles";
 import { OPERATION_TYPE } from "@/store/history";
 import { EditHistoryDialog } from "./editHistoryDialog";
-import { useDialog } from "@/shared/hooks/useDialog";
-import { deleteHistory, fetchHistory, type IHistoryId } from "../../../../store/history";
+import { deleteHistory, type IHistoryId, type IHistoryItem } from "../../../../store/history";
 import ConfirmDialog from "../../../../shared/components/confirmDialog";
 import type { IUser } from "../../../../store/user";
+import type { RootState } from "../../../../store/store";
+import { useDialog } from "../../../../shared/hooks/useDialog";
 
 export const HistoryArea = () => {
-    const history: IHistory = useSelector(state => state.history);
-
-    const user: IUser = useSelector(state => state.user);
-
+    const history: IHistory = useSelector((state : RootState) => state.history);
+    const user: IUser = useSelector((state : RootState) => state.user);
     const dispatch: Dispatch = useDispatch();
 
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
@@ -27,10 +26,11 @@ export const HistoryArea = () => {
         const historyId: IHistoryId = { id: history.items[context].id };
         dispatch(deleteHistory(historyId));
     }
-    const { open: openC, openDialog: openCDialog, closeDialog: closeCDialog, dialogValues: dialogCValues } = useDialog(deleteConfirmCallback);
+    const { open: openC, openDialog: openCDialog, closeDialog: closeCDialog } = useDialog(deleteConfirmCallback);
 
-    const handleEditClick = (e) => {
-        const idx: number = history.items.findIndex(item => item.id == e.currentTarget.value);
+    const handleEditClick : React.MouseEventHandler<HTMLButtonElement> = (e):void => {
+        const value = (e.currentTarget as HTMLInputElement).value;
+        const idx: number = history.items.findIndex((item: IHistoryItem) => item.id == value);
         if (idx >= 0 && user.data) {
             const initialValues = {
                 id: history.items[idx].id,
@@ -44,8 +44,9 @@ export const HistoryArea = () => {
         }
     }
 
-    const handleDeleteClick = (e) => {
-        const idx: number = history.items.findIndex(item => item.id == e.currentTarget.value);
+    const handleDeleteClick : React.MouseEventHandler<HTMLButtonElement>  = (e) : void => {
+        const value = (e.currentTarget as HTMLInputElement).value;
+        const idx: number = history.items.findIndex((item : IHistoryItem) => item.id == value);
         if (idx >= 0) {
             openCDialog({}, idx);
         }
@@ -55,7 +56,7 @@ export const HistoryArea = () => {
         return (
             <HistoryListStyle>
                 {history.items?.toReversed().map(
-                    (item) => {
+                    (item : IHistoryItem) => {
                         return (
                             <Card sx={{ m: 0.5 }} key={item.id + item.comment}>
                                 <CardHeader sx={{ m: -0.5 }}

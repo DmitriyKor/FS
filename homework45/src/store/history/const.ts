@@ -1,3 +1,5 @@
+import type { IHistory } from "./types";
+
 export const HISTORY_URI = '/history';
 
 export const initialState: IHistory = {

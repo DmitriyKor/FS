@@ -1,6 +1,22 @@
+//import type { ThemedBaseStyledInterface } from '@mui/styled-engine-sc';
 //import baseStyled from 'styled-components';
 
-export const mainTheme = {
+interface ICustomTheme {
+  backgroundColor: string;
+  gap: string;
+  sideBar: {
+    selectedLinkColor: string;
+  },
+  panel: {
+    backgroundColor: string;
+    borderColor: string;
+    textColor: string;
+    borderRadius: string;
+    padding: string;
+  },
+}
+
+export const mainTheme : ICustomTheme = {
   backgroundColor: '#FFFFFF',
   gap: '10px',
   sideBar: {
@@ -15,5 +31,10 @@ export const mainTheme = {
   },
 };
 
-export type Theme = typeof mainTheme;
-//export const styled = baseStyled as ThemedStyledInterface<Theme>;
+
+declare module 'styled-components' {
+  export interface DefaultTheme extends ICustomTheme {}
+}
+
+export type Theme = ICustomTheme;
+//export const styled = baseStyled as ThemedBaseStyledInterface<Theme>;

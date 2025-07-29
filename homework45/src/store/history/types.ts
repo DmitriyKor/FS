@@ -1,14 +1,14 @@
 export interface IHistoryItem {
-    id: String;
-    categoryId : String;
-    userId : String;
-    comment : String;
-    income: Number;
-    expense: Number;
+    id: string;
+    categoryId : string;
+    userId : string;
+    comment : string;
+    income: number;
+    expense: number;
 }
 
 export interface IHistoryId {
-    id: String;
+    id: string;
 }
 export interface IHistory {
     items: IHistoryItem[];

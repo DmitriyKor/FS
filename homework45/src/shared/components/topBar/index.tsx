@@ -1,23 +1,23 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography } from "@mui/material";
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import { Avatar, Button, Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 
-import { AccountCircle, Login } from "@mui/icons-material";
+import { Login } from "@mui/icons-material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import type { IUser } from '../../store/user';
 import { ProfileContainer, TopBarStyle } from "./index.styles";
 import { displayDrawer, DrawerState } from "../../../store/drawer";
+import type { RootState } from "../../../store/store";
+import type { IUser } from "../../../store/user";
 
 
 export const TopBar = () => {
 
-    const user: IUser = useSelector(state => state.user);
+    const user: IUser = useSelector((state : RootState) => state.user);
     const dispatch = useDispatch();
-    const drawerState = useSelector(state=> state.drawer)
+    const drawerState = useSelector((state : RootState)=> state.drawer)
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -29,7 +29,7 @@ export const TopBar = () => {
         setAnchorEl(null);
     };
 
-    const handleMenuClick = (e) => {
+    const handleMenuClick = () => {
         if (drawerState==DrawerState.extended) {dispatch(displayDrawer(DrawerState.narrow))}
         else if (drawerState==DrawerState.narrow) {dispatch(displayDrawer(DrawerState.hidden))}
         else {dispatch(displayDrawer(DrawerState.extended))}

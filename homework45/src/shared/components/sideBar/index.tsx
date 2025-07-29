@@ -1,19 +1,20 @@
-import { BrowserRouter as Router, Routes, Route, Link, NavLink, useLocation } from 'react-router-dom';
-import React, { useContext, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from 'styled-components'
-import { Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, Toolbar } from '@mui/material';
+import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
 import { StyledSideBar } from './index.styles';
 import { StyledRouterNavLink } from '../../styles/styles';
 import { DrawerState } from '../../../store/drawer';
 import {SIDEBAR_MENU} from './const';
+import type { RootState } from '../../../store/store';
 
 export const SideBar: React.FC = () => {
 
-    const drawer = useSelector(state => state.drawer);
+    const drawer = useSelector((state : RootState) => state.drawer);
     const location = useLocation();
-    const user = useSelector(state => state.user);
+    const user = useSelector((state : RootState) => state.user);
     const theme = useTheme();
     
     return user.data? 

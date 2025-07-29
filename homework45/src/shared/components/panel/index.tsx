@@ -1,7 +1,9 @@
-import React, { Children } from 'react';
+import React from 'react';
 import { PanelStyle, PanelToolBarStyle, PanelToolBarButtonStyle } from './index.styles';
 
-export const Panel = ({children}) => {
+interface IPanelProps {children : React.ReactNode};
+
+export const Panel : React.FC<IPanelProps> = ({children}) => {
     return (
         <PanelStyle>
             {children}
@@ -9,7 +11,9 @@ export const Panel = ({children}) => {
     )
 }
 
-export const PanelToolBar = ({title, children}) => {
+interface IPanelToolBarProps {title: string; children: React.ReactNode};
+
+export const PanelToolBar : React.FC<IPanelToolBarProps> = ({title, children}) => {
     return (
         <PanelToolBarStyle>
             <h4>{title}</h4>
@@ -18,7 +22,7 @@ export const PanelToolBar = ({title, children}) => {
     )
 }
 
-export const PanelToolBarButton = ({text}) => {
+export const PanelToolBarButton = ({text}: {text:string}) => {
     return (
         <PanelToolBarButtonStyle>
             {text}
