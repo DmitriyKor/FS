@@ -1,37 +1,36 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, IconButton, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from "@mui/material";
+import {IconButton} from "@mui/material";
 
-import { Panel, PanelToolBar } from "@/shared/components/panel";
-import type { ICategories } from "@/store/category";
 import { CategoriesLayout, CategoriesListStyle, CategoryItemStyle } from "./index.styles"
 import { Add, Delete } from '@mui/icons-material';
 import { AddCategoryDialog } from './addCategoryDialog';
 import { useDialog } from '../../../../shared/hooks/useDialog';
 import ConfirmDialog from '../../../../shared/components/confirmDialog';
-import { deleteCategory, fetchCategories } from '../../../../store/category';
-import { useEffect } from 'react';
+import { deleteCategory, type ICategories, type ICategoryId, type ICategoryItem } from '../../../../store/category';
+import type { RootState } from '../../../../store/store';
+import { Panel, PanelToolBar } from '../../../../shared/components/panel';
 
 export const CategoriesArea: React.FC = () => {
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);   
+    //const user = useSelector((state: RootState) => state.user);   
 
-    const categories: ICategories = useSelector(state => state.categories);
+    const categories: ICategories = useSelector((state : RootState) => state.categories);
     
     const deleteConfirmCallback = (context:any)=> {
         console.log('Requested to delete category: ', context);
         const categoryId: ICategoryId = {id: context};
         dispatch(deleteCategory(categoryId));
     }
-    const { open: openConfirm, openDialog: openDialogConfirm, closeDialog: closeDialogConfirm, 
-        dialogValues: dialogValuesConfirm } = useDialog(deleteConfirmCallback);
+    const { open: openConfirm, openDialog: openDialogConfirm, closeDialog: closeDialogConfirm } = useDialog(deleteConfirmCallback);
 
     const handleAddClick = () => {
         openDialog(null);
     }
-
-    const handleDeleteClick = (e) => {
-        openDialogConfirm({}, e.currentTarget.value);
+    
+    const handleDeleteClick : React.MouseEventHandler<HTMLButtonElement> = (e) => {
+        const value = (e.currentTarget as HTMLInputElement).value;
+        openDialogConfirm({}, value);
     }
     
     return (
@@ -43,7 +42,7 @@ export const CategoriesArea: React.FC = () => {
                     </IconButton>
                 </PanelToolBar>
                 <CategoriesListStyle>
-                    {categories.items?.map((item) => {
+                    {categories.items?.map((item: ICategoryItem) => {
                         return (
                             <CategoryItemStyle key={item.id + item.name}>
                                 <h5>{item.name}</h5>

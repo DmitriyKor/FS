@@ -1,15 +1,15 @@
 import React from "react";
 
-type DialogCallback = (context:any) => void;
+type DialogCallback = ((context:any) => void) | undefined;
 
-export const useDialog = (closeCallback: DialogCallback) => {
-    const [open, setOpen] = React.useState(false);
-    const [dialogValues, setDialogValues] = React.useState(null);
-    const [closeContext, setCloseContext] = React.useState(null);
+export const useDialog = (closeCallback: DialogCallback = undefined) => {
+    const [open, setOpen] = React.useState<boolean>(false);
+    const [dialogValues, setDialogValues] = React.useState<object|null>(null);
+    const [closeContext, setCloseContext] = React.useState<any>(null);
 
-    const openDialog = (initialValues: any, context:any):void => {     
+    const openDialog = (initialValues: any, closeCont:any=0):void => {     
         setDialogValues(initialValues)
-        setCloseContext(context);
+        setCloseContext(closeCont);
         setOpen(true);
     };
     

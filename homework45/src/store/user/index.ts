@@ -9,7 +9,7 @@ const initialState: IUser = {
   data: null,
 }
 
-export const fetchUser = createAsyncThunk(
+export const fetchUser : any = createAsyncThunk(
   'user/fetchUser',
   async () => {
     const response = await authAxios.instance(API_URL+'/users/1');

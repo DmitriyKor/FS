@@ -1,14 +1,12 @@
-import React, { type AnyActionArg } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, IconButton, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from "@mui/material";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Stack, TextField } from "@mui/material";
 import { Form, Field } from 'react-final-form';
 
-import { requiredSelect, required, mustBeNumber } from "@/shared/validation";
-import type { ICategories } from "@/store/category";
-import { setHistory, type IHistoryItem } from "../../../../store/history";
 import { addCategory, type ICategoryItem } from "../../../../store/category";
+import { required } from "../../../../shared/validation";
 
-export const AddCategoryDialog = ({ open, closeDialog, dialogValues }) => {
+export const AddCategoryDialog = ({ open, closeDialog, dialogValues } : any) => {
 
     const handleClose = () => {
         closeDialog();
@@ -16,10 +14,8 @@ export const AddCategoryDialog = ({ open, closeDialog, dialogValues }) => {
 
     const dispatch = useDispatch();
 
-    const OnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-
-        const categoryItem: ICategoryItem = {...event, default: false, balanceIncome: 0, balanceExpense:0}
-        
+    const OnSubmit = (event: any) => {
+        const categoryItem: ICategoryItem = {id: event.id, name: event.name, description: event.description, default: false, balanceIncome: 0, balanceExpense:0}        
         console.log('OnSubmit AddCategoryDialog:')
         console.log(categoryItem);
         dispatch(addCategory(categoryItem))

@@ -1,19 +1,17 @@
-import React, { useEffect, useState, type AnyActionArg } from "react";
+import React from "react";
 import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, IconButton, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, IconButton, Typography } from "@mui/material";
 import { Delete, EditDocument } from '@mui/icons-material';
 
-import { Panel, PanelToolBar } from "@/shared/components/panel"
-import type { IHistory } from "@/store/history";
 import { HistoryLayout, HistoryListStyle } from "./index.styles";
-import { OPERATION_TYPE } from "@/store/history";
 import { EditHistoryDialog } from "./editHistoryDialog";
-import { deleteHistory, type IHistoryId, type IHistoryItem } from "../../../../store/history";
+import { deleteHistory, OPERATION_TYPE, type IHistory, type IHistoryId, type IHistoryItem } from "../../../../store/history";
 import ConfirmDialog from "../../../../shared/components/confirmDialog";
 import type { IUser } from "../../../../store/user";
 import type { RootState } from "../../../../store/store";
 import { useDialog } from "../../../../shared/hooks/useDialog";
+import { Panel, PanelToolBar } from "../../../../shared/components/panel";
 
 export const HistoryArea = () => {
     const history: IHistory = useSelector((state : RootState) => state.history);
@@ -55,8 +53,9 @@ export const HistoryArea = () => {
     const HistoryList = () => {
         return (
             <HistoryListStyle>
-                {history.items?.toReversed().map(
-                    (item : IHistoryItem) => {
+                {history.items?.map(
+                    (_: IHistoryItem, index: number, array: IHistoryItem[]) => {
+                        let item : IHistoryItem = array[array.length - index - 1];
                         return (
                             <Card sx={{ m: 0.5 }} key={item.id + item.comment}>
                                 <CardHeader sx={{ m: -0.5 }}
@@ -91,6 +90,7 @@ export const HistoryArea = () => {
         <HistoryLayout>
             <Panel>
                 <PanelToolBar title="History">
+                    <></>
                 </PanelToolBar>
                 <HistoryList/>
                 <EditHistoryDialog open={open} closeDialog={closeDialog} dialogValues={dialogValues} />

@@ -8,7 +8,7 @@ import { HISTORY_URI, initialState } from './const.ts';
 import { authAxios } from '../../helpers/authAxios.ts';
 
 
-export const fetchHistory = createAsyncThunk(
+export const fetchHistory : any = createAsyncThunk(
   'history/fetchHistory',
   async (_, thunkAPI) => {
     const response = await authAxios.instance(API_URL+HISTORY_URI);
@@ -18,7 +18,7 @@ export const fetchHistory = createAsyncThunk(
   }
 )
 
-export const setHistory = createAsyncThunk(
+export const setHistory : any = createAsyncThunk(
   'history/setHistory',
   async (data: IHistoryItem, thunkAPI) => {
     const {id, ...dataToPost} = data;   
@@ -28,7 +28,7 @@ export const setHistory = createAsyncThunk(
   }
 )
 
-export const addHistory = createAsyncThunk(
+export const addHistory : any = createAsyncThunk(
   'history/addHistory',
   async (data: IHistoryItem, thunkAPI) => {
     await authAxios.instance.post(API_URL+HISTORY_URI, data);

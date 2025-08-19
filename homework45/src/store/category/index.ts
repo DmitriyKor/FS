@@ -7,7 +7,7 @@ import { initialState } from './consts.ts';
 import { authAxios } from '../../helpers/authAxios.ts';
 import type { IHistoryItem } from '../history/types.ts';
 
-export const fetchCategories = createAsyncThunk(
+export const fetchCategories : any = createAsyncThunk(
     'category/fetchCategories',
     async () => {
         const response : AxiosResponse = await authAxios.instance(API_URL + '/category');
@@ -15,7 +15,7 @@ export const fetchCategories = createAsyncThunk(
     }
 )
 
-export const addCategory = createAsyncThunk(
+export const addCategory : any = createAsyncThunk(
   'category/addCategory',
   async (data: ICategoryItem) => {
     const response  : AxiosResponse = await authAxios.instance.post(API_URL+'/category', data);
@@ -23,7 +23,7 @@ export const addCategory = createAsyncThunk(
   }
 )
 
-export const deleteCategory = createAsyncThunk(
+export const deleteCategory : any = createAsyncThunk(
   'category/deleteCategory',
   async (data: ICategoryId) => {
     const response = await authAxios.instance.delete(API_URL+'/category'+'/'+data.id);

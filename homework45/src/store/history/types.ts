@@ -1,8 +1,8 @@
 export interface IHistoryItem {
     id: string;
-    categoryId : string;
-    userId : string;
-    comment : string;
+    categoryId : string | undefined | null;
+    userId : string | undefined | null;
+    comment : string | undefined | null;
     income: number;
     expense: number;
 }
@@ -13,7 +13,7 @@ export interface IHistoryId {
 export interface IHistory {
     items: IHistoryItem[];
     isLoading: boolean;
-    error: string | undefined;
+    error: string | undefined | null;
 }
 
 export const OPERATION_TYPE = {

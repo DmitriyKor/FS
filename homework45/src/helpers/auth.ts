@@ -1,4 +1,4 @@
-import axios, { type AxiosResponse } from "axios";
+import axios from "axios";
 
 export const AUTH_TOKEN_STORAGE_NAME = 'authToken';
 

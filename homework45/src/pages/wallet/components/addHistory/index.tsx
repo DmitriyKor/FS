@@ -3,21 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from '@mui/material';
 
-import { Panel, PanelToolBar } from "@/shared/components/panel"
 import { AddHistoryLayout } from "./index.styles"
-import type { ICategories } from '@/store/category';
-import { addHistory, OPERATION_TYPE, type IHistoryItem } from '@/store/history';
-import { required, mustBeNumber } from '@/shared/validation';
-import { requiredSelect } from '@/shared/validation';
 import type { IUser } from '../../../../store/user';
+import type { ICategories, ICategoryItem } from '../../../../store/category';
+import type { RootState } from '../../../../store/store';
+import { mustBeNumber, required, requiredSelect } from '../../../../shared/validation';
+import { addHistory, OPERATION_TYPE, type IHistoryItem } from '../../../../store/history';
+import { Panel, PanelToolBar } from '../../../../shared/components/panel';
 
 export const AddHistoryArea = () => {
 
     const dispatch = useDispatch();
-    const categories: ICategories = useSelector(state => state.categories);
-    const user: IUser = useSelector(state => state.user);
+    const categories: ICategories = useSelector((state : RootState) => state.categories);
+    const user: IUser = useSelector((state : RootState)=> state.user);
 
-    const onSubmit = async (data, form) => {
+    const onSubmit = async (data:any, form:any) => {
         console.log('AddHistory onSubmit, data is');
         console.log(data);
         console.log(user);
@@ -49,7 +49,7 @@ export const AddHistoryArea = () => {
 
                             <Stack spacing={2}>
                                 <Field name="type" type='radio'>
-                                    {({ input, meta }) => (
+                                    {({ input }) => (
                                         <FormControl>
                                             <RadioGroup
                                                  {...input}
@@ -79,7 +79,7 @@ export const AddHistoryArea = () => {
                                                 // helperText='Select the category'
                                                 label="Category"
                                             >
-                                                {categories.items?.map((item) => {
+                                                {categories.items?.map((item: ICategoryItem) => {
                                                     return (
                                                         <MenuItem value={item.id} key={item.id + item.name}>{item.name}</MenuItem>
                                                     )

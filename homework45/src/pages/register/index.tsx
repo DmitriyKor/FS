@@ -1,13 +1,14 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
-import { Alert, FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from '@mui/material';
-import { required } from '../../shared/validation';
+import { Alert, FormControl, Stack, TextField } from '@mui/material';
 import type { AxiosResponse } from 'axios';
 import axios from 'axios';
+
+import { required } from '../../shared/validation';
 import { API_URL } from '../../store/const';
-import { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { LoginFormElementsStyle, LoginFormStyle } from '../../shared/styles/styles';
 import { setToken } from '../../helpers/auth';
 import { setUser } from '../../store/user';
@@ -34,8 +35,10 @@ const Register = () => {
                 setLoginError("");
                 navigate('/');
             } else setLoginError(response.request.statusText);            
-        } catch (e) {
-            setLoginError(e.message);
+        } catch (e:unknown) {
+            if (e instanceof Error) {
+                setLoginError(e.message);
+            }
         }
     }
 
@@ -80,7 +83,7 @@ const Register = () => {
                             </Field>
 
                             <Field name="startBalance">
-                                {({ input, meta }) => (
+                                {({ input }) => (
                                     <FormControl size="small">
                                         <TextField
                                             {...input}

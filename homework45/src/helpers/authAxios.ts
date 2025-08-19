@@ -1,8 +1,5 @@
-import axios, { Axios, type AxiosInstance } from "axios";
+import axios, { type AxiosInstance } from "axios";
 import { AUTH_TOKEN_STORAGE_NAME } from "./auth";
-import { useDispatch } from "react-redux";
-import { resetUser } from "../store/user";
-import { useNavigate } from "react-router-dom";
 
 export class AuthAxios {
   public instance: AxiosInstance;
@@ -48,12 +45,12 @@ export class AuthAxios {
     this.instance.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
   }
 
-  private forwardToLogin():void {
-      const dispatch = useDispatch();
-      const navigate = useNavigate();
-      dispatch(resetUser());
-      navigate('/login');
-  }
+  // private forwardToLogin():void {
+  //     const dispatch = useDispatch();
+  //     const navigate = useNavigate();
+  //     dispatch(resetUser());
+  //     navigate('/login');
+  // }
 
 }
 

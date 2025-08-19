@@ -1,16 +1,30 @@
-import React, { type AnyActionArg } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, IconButton, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from "@mui/material";
+import { Button,  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from "@mui/material";
 import { Form, Field } from 'react-final-form';
 
-import { OPERATION_TYPE } from "@/store/history";
-import { requiredSelect, required, mustBeNumber } from "@/shared/validation";
-import type { ICategories } from "@/store/category";
-import { setHistory, type IHistoryItem } from "../../../../store/history";
+import { OPERATION_TYPE, setHistory, type IHistoryItem } from "../../../../store/history";
+import type { ICategories, ICategoryItem } from "../../../../store/category";
+import type { RootState } from "../../../../store/store";
+import { requiredSelect, required, mustBeNumber } from "../../../../shared/validation";
 
-export const EditHistoryDialog = ({ open, closeDialog, dialogValues }) => {
+// interface IEditHistoryDialogValues {
+//     id : string;
+//     userId: string;
+//     categoryId: string;
+//     comment: string;
+//     amount : number;
+// }
 
-    const categories: ICategories = useSelector(state => state.categories);
+interface IEditHistoryDialogProps {
+  open: boolean;
+  closeDialog : any;
+  dialogValues : any;
+}
+
+export const EditHistoryDialog = ({ open, closeDialog, dialogValues } : IEditHistoryDialogProps) => {
+
+    const categories: ICategories = useSelector((state: RootState) => state.categories);
 
     const dispatch = useDispatch();
 
@@ -18,14 +32,15 @@ export const EditHistoryDialog = ({ open, closeDialog, dialogValues }) => {
         closeDialog();
     };
 
-    const OnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const OnSubmit = (ev: any):void => {
+       
         const historyItem: IHistoryItem = {
-            id: event.id,
-            userId: event.userId,
-            categoryId: event.category,
-            comment: event.comment,
-            income: event.type == OPERATION_TYPE.income ? event.amount : 0,
-            expense: event.type == OPERATION_TYPE.expense ? event.amount : 0,
+            id: ev.id,
+            userId: ev.userId,
+            categoryId: ev.category,
+            comment: ev.comment,
+            income: ev.type == OPERATION_TYPE.income ? ev.amount : 0,
+            expense: ev.type == OPERATION_TYPE.expense ? ev.amount : 0,
         }
         console.log(historyItem);
         dispatch(setHistory(historyItem))
@@ -47,7 +62,7 @@ export const EditHistoryDialog = ({ open, closeDialog, dialogValues }) => {
                             <form onSubmit={handleSubmit}>
                                 <Stack spacing={2}>
                                     <Field name="type" type='radio'>
-                                        {({ input, meta }) => (
+                                        {({ input }) => (
                                             <FormControl>
                                                 {/* <FormLabel id="demo-radio-buttons-group-label">Type</FormLabel> */}
                                                 <RadioGroup
@@ -76,7 +91,7 @@ export const EditHistoryDialog = ({ open, closeDialog, dialogValues }) => {
                                                     labelId="demo-simple-select-label"
                                                     label="Category"
                                                 >
-                                                    {categories.items?.map((item) => {
+                                                    {categories.items?.map((item : ICategoryItem) => {
                                                         return (
                                                             <MenuItem value={item.id} key={item.id + item.name}>{item.name}</MenuItem>
                                                         )

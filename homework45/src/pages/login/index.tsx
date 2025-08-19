@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import type { AxiosResponse } from 'axios';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 import { Form, Field } from 'react-final-form';
 import Button from '@mui/material/Button';
-import { Alert, Checkbox, FormControl, FormControlLabel, FormGroup, Stack, TextField } from '@mui/material';
+import { Alert, Checkbox, FormControl, FormControlLabel, Stack, TextField } from '@mui/material';
+
 import { required } from '../../shared/validation';
 import { API_URL } from '../../store/const';
 import { setUser } from '../../store/user';
 import { LoginFormElementsStyle, LoginFormStyle } from '../../shared/styles/styles';
-import { Link, useNavigate } from 'react-router-dom';
-import { setToken, useToken } from '../../helpers/auth';
 import { authAxios } from '../../helpers/authAxios';
 
 const Login = () => {
@@ -27,15 +26,17 @@ const Login = () => {
             const response: AxiosResponse = await axios.post(API_URL + '/login', values);
             if (response.request.status == 200) {
                 if (response.data.user.image == '') { response.data.user.image = null }
-                setToken(response.data.accessToken);
+                
                 authAxios.setToken(response.data.accessToken);
 
                 dispatch(setUser(response.data.user));
                 setLoginError("");
                 navigate('/');
             } else setLoginError(response.request.statusText);
-        } catch (e) {
-            setLoginError(e.message);
+        } catch (e:unknown) {
+            if (e instanceof Error) {
+                setLoginError(e.message);
+            }
         }
     }
 
