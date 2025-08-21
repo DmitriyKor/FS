@@ -41,7 +41,5 @@ timeEmitter.once('init', ()=>{
 })
 
 setTimeout(()=>{timeEmitter.emit('event', 5, 10)}, 500)
-setTimeout(()=>{timeEmitter.emit('init')}, 200)
-setTimeout(()=>{timeEmitter.emit('init')}, 500)
-
-
+setTimeout(()=>{timeEmitter.emit('init')}, 200);
+setTimeout(()=>{timeEmitter.emit('init')}, 500);
