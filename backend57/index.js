@@ -1,45 +1,39 @@
-import fs from 'fs';
-import stream, { Transform } from 'stream';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const password = 'eofh2oiejzn397n';
 
-const readStream = fs.createReadStream(path.join(__dirname, 'file.txt'));
+const salt = crypto.randomBytes(16).toString('hex');
 
-const writeStream = fs.createWriteStream(path.join(__dirname, 'dest.txt'));
+const hash = crypto.pbkdf2Sync(password, salt, 1000,64, 'sha512').toString('hex');
 
-readStream.on('data', (chunk) => {
-    console.log('Received chunk: ', chunk);
-});
+//checking password
 
-writeStream.on('finish', () => {
-    console.log('data written');
-});
+const inputPassword = 'eofh2oiejzn397n';
+const salt2 = crypto.randomBytes(16).toString('hex');
+const inputHash = crypto.pbkdf2Sync(inputPassword, salt, 1000,64, 'sha512').toString('hex');
 
-readStream.on('error', (err) => {
-    console.log('Error of read stream', err);
-});
+if (hash==inputHash) {
+    console.log('Access granted');
+} else {
+    console.log('Access denied');
+}
 
-//console.log('Start to pipe')
-//readStream.pipe(writeStream);
+//generating web-token
 
-//const writeStreamKeyboard = fs.createWriteStream('./keyboard.txt');
-//process.stdin.pipe(writeStreamKeyboard);
+const secretWord = 'secret_secret_secret';//from ENV
 
-//process.stdin.pipe(process.stderr);
+const payload = {
+    "sub": "123456789", 
+    "name": "John Coltraine",
+    "admin": true
+};
 
-const uppercaseStream = new Transform({
-    transform(chunk, encoding, callback){
-        const upperCased = chunk.toString().toUpperCase();
-        callback(null, upperCased);
-    }
-});
+const token = jwt.sign(payload, secretWord, {'algorithm': 'HS256', 'expiresIn': '2 days'});
+console.log(token);
 
+const res = jwt.verify(token, secretWord);
+console.log(res);
 
-process.stdin.pipe(uppercaseStream).pipe(process.stderr);
-
-
-
+//https://medium.com/@dhananjay_yadav/implementing-google-authentication-with-react-js-and-node-js-f72e306f26c9
 
