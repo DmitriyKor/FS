@@ -60,7 +60,7 @@ function App() {
       <ThemeProvider theme={mainTheme}>
         <GoogleOAuthProvider clientId={clientId} >
 
-          <GlobalStyle />
+          <GlobalStyle/>
 
           <BrowserRouter>
             <Routes>
