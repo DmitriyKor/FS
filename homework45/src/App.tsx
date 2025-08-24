@@ -23,6 +23,7 @@ import { GlobalStyle } from './shared/styles/styles';
 import { authAxios } from './helpers/authAxios';
 import SuspensePage from './pages/suspensePage';
 import type { RootState } from './store/store';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const openRoutes = [
   { path: '/', element: <Home /> },
@@ -36,10 +37,13 @@ const protectedRoutes = [
   { path: '/wallet', element: <Wallet /> },
 ]
 
+ const clientId = "701484575722-6hl59r36cvcsf207nvmttuudg0tlen1p.apps.googleusercontent.com";
+ const clientSecret = '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'
+
 function App() {
 
   const dispatch = useDispatch();
-  const user = useSelector((state : RootState) => state.user);
+  const user = useSelector((state: RootState) => state.user);
   //const categories = useSelector((state: RootState) => state.categories);
 
   useEffect(() => {
@@ -54,30 +58,33 @@ function App() {
   return (
     <>
       <ThemeProvider theme={mainTheme}>
-        <GlobalStyle />
+        <GoogleOAuthProvider clientId={clientId}>
 
-        <BrowserRouter>
-          <Routes>
-            {openRoutes.map((item) => <Route path={item.path} element={
-              <>
-                <Suspense fallback={<SuspensePage/>}>
-                  {item.element}
-                </Suspense>
-              </>}
-            />)}
-            {user.data ?
-              <>
-                {protectedRoutes.map((item) => <Route path={item.path} element={
-                  <>
-                    <Suspense fallback={<SuspensePage/>}>
-                      {item.element}
-                    </Suspense>
-                  </>}
-                />)}
-              </> :  <> </>
-            }
-          </Routes>
-        </BrowserRouter>
+          <GlobalStyle />
+
+          <BrowserRouter>
+            <Routes>
+              {openRoutes.map((item) => <Route path={item.path} element={
+                <>
+                  <Suspense fallback={<SuspensePage />}>
+                    {item.element}
+                  </Suspense>
+                </>}
+              />)}
+              {user.data ?
+                <>
+                  {protectedRoutes.map((item) => <Route path={item.path} element={
+                    <>
+                      <Suspense fallback={<SuspensePage />}>
+                        {item.element}
+                      </Suspense>
+                    </>}
+                  />)}
+                </> : <> </>
+              }
+            </Routes>
+          </BrowserRouter>
+        </GoogleOAuthProvider>
       </ThemeProvider>
     </>
   )

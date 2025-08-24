@@ -1,39 +1,45 @@
-import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
+import fs from 'fs';
+import stream, { Transform } from 'stream';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const password = 'eofh2oiejzn397n';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const salt = crypto.randomBytes(16).toString('hex');
+const readStream = fs.createReadStream(path.join(__dirname, 'file.txt'));
 
-const hash = crypto.pbkdf2Sync(password, salt, 1000,64, 'sha512').toString('hex');
+const writeStream = fs.createWriteStream(path.join(__dirname, 'dest.txt'));
 
-//checking password
+readStream.on('data', (chunk) => {
+    console.log('Received chunk: ', chunk);
+});
 
-const inputPassword = 'eofh2oiejzn397n';
-const salt2 = crypto.randomBytes(16).toString('hex');
-const inputHash = crypto.pbkdf2Sync(inputPassword, salt, 1000,64, 'sha512').toString('hex');
+writeStream.on('finish', () => {
+    console.log('data written');
+});
 
-if (hash==inputHash) {
-    console.log('Access granted');
-} else {
-    console.log('Access denied');
-}
+readStream.on('error', (err) => {
+    console.log('Error of read stream', err);
+});
 
-//generating web-token
+//console.log('Start to pipe')
+//readStream.pipe(writeStream);
 
-const secretWord = 'secret_secret_secret';//from ENV
+//const writeStreamKeyboard = fs.createWriteStream('./keyboard.txt');
+//process.stdin.pipe(writeStreamKeyboard);
 
-const payload = {
-    "sub": "123456789", 
-    "name": "John Coltraine",
-    "admin": true
-};
+//process.stdin.pipe(process.stderr);
 
-const token = jwt.sign(payload, secretWord, {'algorithm': 'HS256', 'expiresIn': '2 days'});
-console.log(token);
+const uppercaseStream = new Transform({
+    transform(chunk, encoding, callback){
+        const upperCased = chunk.toString().toUpperCase();
+        callback(null, upperCased);
+    }
+});
 
-const res = jwt.verify(token, secretWord);
-console.log(res);
 
-//https://medium.com/@dhananjay_yadav/implementing-google-authentication-with-react-js-and-node-js-f72e306f26c9
+process.stdin.pipe(uppercaseStream).pipe(process.stderr);
+
+
+
 
