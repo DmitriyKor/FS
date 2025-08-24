@@ -58,7 +58,7 @@ function App() {
   return (
     <>
       <ThemeProvider theme={mainTheme}>
-        <GoogleOAuthProvider clientId={clientId}>
+        <GoogleOAuthProvider clientId={clientId} >
 
           <GlobalStyle />
 
