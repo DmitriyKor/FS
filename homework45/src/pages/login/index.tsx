@@ -12,6 +12,7 @@ import { API_URL } from '../../store/const';
 import { setUser } from '../../store/user';
 import { LoginFormElementsStyle, LoginFormStyle } from '../../shared/styles/styles';
 import { authAxios } from '../../helpers/authAxios';
+import GoogleAuth from '../../shared/components/googleAuth/googleAuth';
 
 const Login = () => {
 
@@ -87,11 +88,14 @@ const Login = () => {
                             </Stack>
                             <Button sx={{ mt: 2 }} variant="outlined" type='submit'>Login</Button>
                             {loginError != "" && <Alert severity="error">{loginError}</Alert>}
+                            <GoogleAuth></GoogleAuth>
                             <Link to='/register'><Button sx={{ mt: 2 }}>Register</Button></Link>
                         </LoginFormElementsStyle>
+                                            
                     </form>
                 )}
             />
+            
         </LoginFormStyle>
     )
 }
