@@ -13,15 +13,21 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 app.use(cookieParser(SECRET_KEY)); 
 
+//log
 app.use((req, res, next) => {
   console.log(`Request received: ${req.method} ${req.url}`);
   next(); // Pass control to the next middleware or route handler
 });
 
+//parse json
 app.use(express.json());
 
-//routes
+//error handling
+app.use((err, req, res, next)=>{
+  console.log(err);
+})
 
+//root path
 app.use('/', router);
 
 app.listen(PORT, () => {

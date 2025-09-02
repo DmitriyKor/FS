@@ -1,5 +1,7 @@
 import express from 'express';
 import * as userController from '../controllers/user.controller.js';
+import { userValidation } from '../validation/user.validation.js';
+import { validationHandler } from '../validation/index.validation.js';
 
 const userRouter = express.Router(); 
 
@@ -14,8 +16,9 @@ const myMiddleware = (req, res)=>{
   console.log('my middleware for user id')
 }
 
-userRouter.get('/', userController.getUserInfo);
-userRouter.post('/', userController.setUser);
-userRouter.post('/google-auth', userController.authUserGoogle);
+userRouter.get('/', userController.getInfo);
+userRouter.post('/login', userValidation, validationHandler, userController.login);
+userRouter.post('/register', userController.register);
+userRouter.post('/google-auth', userController.authGoogle);
 
 export default userRouter;

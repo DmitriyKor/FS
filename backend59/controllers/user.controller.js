@@ -1,10 +1,13 @@
-export const getUserInfo = (req, res) => {
+export const getInfo = (req, res) => {
 }
 
-export const setUser = (req, res) => {
+export const login = (req, res) => {
 }
 
-export const authUserGoogle = (req, res) => {
+export const register = (req, res) => {
+}
+
+export const authGoogle = (req, res) => {
 }
 
 //     res.send('getUserInfo. query='+JSON.stringify(req.query));
