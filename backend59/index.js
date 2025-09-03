@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import router from './routes/index.routes.js';
 
@@ -7,11 +8,19 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const SECRET_KEY = process.env.SECRET_KEY;
+const SECRET_KEY_COOKIES = process.env.SECRET_KEY_COOKIES;
 
 //global middlewares
 
-app.use(cookieParser(SECRET_KEY)); 
+app.use(
+    cors(
+        {
+            origin: '*'
+        }
+    )
+)
+
+app.use(cookieParser(SECRET_KEY_COOKIES)); 
 
 //log
 app.use((req, res, next) => {
@@ -24,10 +33,11 @@ app.use(express.json());
 
 //error handling
 app.use((err, req, res, next)=>{
-  console.log(err);
+  const statusCode = err.statusCode || 500; 
+  res.status(statusCode).json({message: err.message || 'An unexpected error occurred.'})
 })
 
-//root path
+//route from the root
 app.use('/', router);
 
 app.listen(PORT, () => {

@@ -8,4 +8,7 @@ export const validationHandler = (req, res, next) => {
         next(new GeneralServerError(400, 'Validation errors : '+errors.array()))
         //return res.status(400).json({ errors: errors.array() });
     }
+    else {
+        next();
+    }
 }
