@@ -39,6 +39,7 @@ export const getInfo = (req, res, next) => {
     if (userExists) {
         const { hashedPassword, ...userPublic } = user;
         res.status(200).json({
+            status: 'OK',
             user: userPublic,
         });  
     } else {
@@ -60,7 +61,8 @@ export const login = (req, res, next) => {
     if (isAuthenticated) {
         //create a token for the user
         const token = jwt.sign({ email: body.email }, SECRET_KEY_TOKEN, { expiresIn: '1h' }); 
-        res.status(200).json({
+        res.status(200).json({            
+            status: 'OK',
             message: 'Login successful',
             token: token,
         });
@@ -91,6 +93,7 @@ export const register = (req, res, next) => {
     //create a token for the user
     const token = jwt.sign({ email: body.email }, SECRET_KEY_TOKEN, { expiresIn: '1h' }); 
     res.status(200).json({
+        status: 'OK',
         message: 'Registration successful',
         token: token,
     });
