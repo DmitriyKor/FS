@@ -2,13 +2,19 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import router from './routes/index.routes.js';
 
 dotenv.config();
 
-const app = express();
 const PORT = process.env.PORT || 3000;
 const SECRET_KEY_COOKIES = process.env.SECRET_KEY_COOKIES;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
 
 //global middlewares
 
@@ -22,7 +28,7 @@ app.use(
 
 app.use(cookieParser(SECRET_KEY_COOKIES)); 
 
-//log
+//logging
 app.use((req, res, next) => {
   console.log(`Request received: ${req.method} ${req.url}`);
   next(); // Pass control to the next middleware or route handler
@@ -37,8 +43,11 @@ app.use((err, req, res, next)=>{
   res.status(statusCode).json({message: err.message || 'An unexpected error occurred.'})
 })
 
-//route from the root
-app.use('/', router);
+//root route
+app.use('/api', router);
+
+//static files 
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`)
