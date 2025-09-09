@@ -1,25 +1,22 @@
 import express from 'express';
 import * as userController from '../controllers/user.controller.js';
-import { userLoginValidation } from '../validation/user.validation.js';
+import { userLoginValidation, userRegisterValidation } from '../validation/user.validation.js';
 import { validationHandler } from '../validation/index.validation.js';
 import { checkToken } from '../auth/CheckToken.js';
 
 const userRouter = express.Router(); 
 
-//middleware for users
+//middleware for user
 userRouter.use((req, res, next) => {
   console.log(`Request received for user: ${req.method} ${req.url}`);
   //req.myField=... for subsequent use
   next(); // Pass control to the next middleware or route handler
 });
 
-const myMiddleware = (req, res)=>{
-  console.log('my middleware for user id')
-}
-
 userRouter.get('/', checkToken, userController.getInfo);
 userRouter.post('/login', userLoginValidation, validationHandler, userController.login);
-userRouter.post('/register', userController.register);
+userRouter.get('/activate', userController.activate);
+userRouter.post('/register', userRegisterValidation, validationHandler, userController.register);
 userRouter.post('/google-auth', userController.authGoogle);
 
 export default userRouter;

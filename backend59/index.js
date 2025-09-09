@@ -1,13 +1,15 @@
 import express from 'express';
 import dotenv from 'dotenv';
+dotenv.config();
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import {engine} from 'express-handlebars'
 
 import router from './routes/index.routes.js';
 
-dotenv.config();
+
 
 const PORT = process.env.PORT || 3000;
 const SECRET_KEY_COOKIES = process.env.SECRET_KEY_COOKIES;
@@ -15,6 +17,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+// Set Handlebars as the view engine
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'views')); // specify views directory
+
+
 
 //global middlewares
 

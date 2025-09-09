@@ -6,7 +6,6 @@ export const validationHandler = (req, res, next) => {
     if (!errors.isEmpty()) {
         console.log(errors);
         next(new GeneralServerError(400, 'Validation errors : '+errors.array()))
-        //return res.status(400).json({ errors: errors.array() });
     }
     else {
         next();

@@ -1,8 +1,10 @@
 import { hashPassword } from "../crypt/password.crypt.js";
 import jwt from 'jsonwebtoken';
 import { GeneralServerError } from "../exceptions/GeneralErrors.js";
-
-const SECRET_KEY_TOKEN = process.env.SECRET_KEY_TOKEN;
+import { createTransport } from "nodemailer";
+import { sendEmail } from "../transporter/index.js";
+import {Handlebars} from 'express-handlebars'
+import fs from 'fs';
 
 ///mock functions
 const getUserByEmail = (email) => {
@@ -47,6 +49,16 @@ export const getInfo = (req, res, next) => {
     }  
 }
 
+//  GET /user/activate
+export const activate = (req, res, next) => {
+    res.status(200).json({
+        status: 'OK',
+        message: 'Registration completed',
+        token: token,
+    });
+}
+
+
 //  POST /user/login
 export const login = (req, res, next) => {
     console.log('login is being processed')
@@ -60,7 +72,7 @@ export const login = (req, res, next) => {
 
     if (isAuthenticated) {
         //create a token for the user
-        const token = jwt.sign({ email: body.email }, SECRET_KEY_TOKEN, { expiresIn: '1h' }); 
+        const token = jwt.sign({ email: body.email }, process.env.SECRET_KEY_TOKEN, { expiresIn: '1h' }); 
         res.status(200).json({            
             status: 'OK',
             message: 'Login successful',
@@ -73,6 +85,7 @@ export const login = (req, res, next) => {
 
 // POST /user/register
 export const register = (req, res, next) => {
+
     console.log('register is being processed')
     //check email in database; reject if email exists
     const user = getUserByEmail(req.body.email);
@@ -90,11 +103,17 @@ export const register = (req, res, next) => {
     //add user to the database
     addUser(req.body);
 
+    //send email to the user
+    
+
+
+    sendEmail(req.body.email, 'Email confirmation', 'This is the test message', '<a href= ><a>');
+
     //create a token for the user
-    const token = jwt.sign({ email: body.email }, SECRET_KEY_TOKEN, { expiresIn: '1h' }); 
+    const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY_TOKEN, { expiresIn: '1h' }); 
     res.status(200).json({
         status: 'OK',
-        message: 'Registration successful',
+        message: 'Registration in process. Proceed with activation',
         token: token,
     });
 }

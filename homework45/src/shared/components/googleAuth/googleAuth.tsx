@@ -8,7 +8,13 @@ import axios from 'axios';
 import { setUser } from '../../../store/user';
 import { useNavigate } from 'react-router-dom';
 
-//{"web":{"client_id":"701484575722-6hl59r36cvcsf207nvmttuudg0tlen1p.apps.googleusercontent.com","project_id":"delta-s-df","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"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","javascript_origins":["http://localhost","http://localhost:3000"]}}
+//{"web":{"client_id":"701484575722-6hl59r36cvcsf207nvmttuudg0tlen1p.apps.googleusercontent.com",
+// "project_id":"delta-s-df",
+// "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+// "token_uri":"https://oauth2.googleapis.com/token",
+// "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+// "client_secret":"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",
+// "javascript_origins":["http://localhost","http://localhost:3000"]}}
 
 const GoogleAuth = () => {
 
