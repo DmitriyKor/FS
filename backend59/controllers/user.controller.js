@@ -3,8 +3,13 @@ import jwt from 'jsonwebtoken';
 import { GeneralServerError } from "../exceptions/GeneralErrors.js";
 import { createTransport } from "nodemailer";
 import { sendEmail } from "../transporter/index.js";
-import {Handlebars} from 'express-handlebars'
 import fs from 'fs';
+import path from 'path';
+import { renderHTML } from "../handlebars/index.js";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 ///mock functions
 const getUserByEmail = (email) => {
@@ -31,6 +36,10 @@ const addUser = (user) => {
 
 }
 
+const userExists = (email)=> {
+    return true;
+}
+
 
 //  GET /user
 export const getInfo = (req, res, next) => {
@@ -49,13 +58,20 @@ export const getInfo = (req, res, next) => {
     }  
 }
 
+const activationCode = 2323232323;
+
 //  GET /user/activate
 export const activate = (req, res, next) => {
-    res.status(200).json({
-        status: 'OK',
-        message: 'Registration completed',
-        token: token,
-    });
+    if (req.query.code==activationCode && userExists(req.query.email)){
+       //change status of user as Activated in the database
+       //setUserActivated(req.query.code)
+       //respond with page
+       const messageHTML = renderHTML(path.join(__dirname, '../views/activation_ok.handlebars'),{});
+       res.send(messageHTML);
+    }
+    else {
+        next(new GeneralServerError(400, 'Activation error'))
+    }
 }
 
 
@@ -100,14 +116,15 @@ export const register = (req, res, next) => {
         next(new GeneralServerError(500, 'Hashing error'))
     }
 
-    //add user to the database
-    addUser(req.body);
-
     //send email to the user
-    
+    //todo: generate code here 
+    const messageHTML = renderHTML(path.join(__dirname, '../views/activation.handlebars'), 
+        {link: `http://localhost:3000/api/user/activate?code=${activationCode}&email=${req.body.email}`})
+    sendEmail(req.body.email, 'Activation confirmation', '', messageHTML);
 
-
-    sendEmail(req.body.email, 'Email confirmation', 'This is the test message', '<a href= ><a>');
+    //add user to the database (non-activated at this stage)
+    const userData = {...req.body, activated: false, activationCode: activationCode};
+    addUser(userData);
 
     //create a token for the user
     const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY_TOKEN, { expiresIn: '1h' }); 
