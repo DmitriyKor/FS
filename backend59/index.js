@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
+
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import path from 'path';
@@ -8,8 +9,8 @@ import { fileURLToPath } from 'url';
 import {engine} from 'express-handlebars'
 
 import router from './routes/index.routes.js';
-
-
+import { initMongo } from './mongo/index.js';
+import { add } from './services/user.services.js';
 
 const PORT = process.env.PORT || 3000;
 const SECRET_KEY_COOKIES = process.env.SECRET_KEY_COOKIES;
@@ -23,7 +24,7 @@ app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views')); // specify views directory
 
-
+initMongo();
 
 //global middlewares
 
