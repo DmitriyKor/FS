@@ -57,9 +57,9 @@ export const login = async (req, res, next) => {
     }
     //check email and hash of password in database
     const user = await userService.getByEmail(req.body.email);
-    const isAuthentificated = (!!user) && user.hashedPassword == req.body.hashedPassword;
+    const isAuth = (!!user) && user.hashedPassword == req.body.hashedPassword;
 
-    if (isAuthentificated) {
+    if (isAuth) {
         //create a token for the user
         const token = jwt.sign({ email: body.email }, process.env.SECRET_KEY_TOKEN, { expiresIn: '12h' });
         res.status(200).json({

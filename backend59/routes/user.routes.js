@@ -2,7 +2,7 @@ import express from 'express';
 import * as userController from '../controllers/user.controller.js';
 import { userLoginValidation, userRegisterValidation } from '../validation/user.validation.js';
 import { validationHandler } from '../validation/index.validation.js';
-import { checkToken } from '../auth/CheckToken.js';
+import { checkTokenHeaders } from '../auth/checkToken.js';
 
 const userRouter = express.Router(); 
 
@@ -13,7 +13,7 @@ userRouter.use((req, res, next) => {
   next(); // Pass control to the next middleware or route handler
 });
 
-userRouter.get('/', checkToken, userController.getInfo);
+userRouter.get('/', checkTokenHeaders, userController.getInfo);
 userRouter.post('/login', userLoginValidation, validationHandler, userController.login);
 userRouter.get('/activate', userController.activate);
 userRouter.post('/register', userRegisterValidation, validationHandler, userController.register);
