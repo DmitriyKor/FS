@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    title Users catalogue
+    link(rel="stylesheet", type='text/css', href='/css/style.css') 
+  body
+    header
+      h1.main-header Separate user
+    main
+        h2 Table
+        table
+            thead
+                tr
+                    th ID
+                    th Name
+                    th Email
+            tbody
+                tr
+                    td= user.id
+                    td= user.name
+                    td= user.email
+    footer
+      p &copy; 2025 My Awesome Site
