@@ -1,4 +1,4 @@
-import { hashPassword } from "../crypt/password.crypt.js";
+import { compareHash, hashPassword } from "../crypt/password.crypt.js";
 import jwt from 'jsonwebtoken';
 import { GeneralServerError } from "../exceptions/GeneralErrors.js";
 import { createTransport } from "nodemailer";
@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import { renderHTML } from "../handlebars/index.js";
 import { fileURLToPath } from "url";
-import * as userService from '../services/user.services.js'
+import * as userService from '../services/user.service.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -50,18 +50,15 @@ export const activate = async (req, res, next) => {
 
 //  POST /user/login
 export const login = async (req, res, next) => {
-    console.log('login is being processed')
-    req.body.hashedPassword = await hashPassword(req.body.password);
-    if (!req.body.hashedPassword) {
-        next(new GeneralServerError(500, 'Hashing error'))
-    }
+   
     //check email and hash of password in database
     const user = await userService.getByEmail(req.body.email);
-    const isAuth = (!!user) && user.hashedPassword == req.body.hashedPassword;
+    
+    const isAuth = (user) && compareHash(req.body.password, user.hashedPassword);
 
     if (isAuth) {
         //create a token for the user
-        const token = jwt.sign({ email: body.email }, process.env.SECRET_KEY_TOKEN, { expiresIn: '12h' });
+        const token = jwt.sign({ email: req.body.email, id: user._id.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '12h' });
         res.status(200).json({
             status: 'OK',
             message: 'Login successful',
@@ -95,7 +92,11 @@ export const register = async (req, res, next) => {
         }
 
         //hash and erase password
+        console.log('password = ', req.body.password);
         req.body.hashedPassword = await hashPassword(req.body.password);
+        console.log('hased password = ', req.body.hashedPassword);
+        
+        
         req.body.password = 'xxxxxxxx';
         if (!req.body.hashedPassword) {
             next(new GeneralServerError(500, 'Hashing error'))
@@ -120,14 +121,14 @@ export const register = async (req, res, next) => {
         await sendEmail(req.body.email, 'Activation confirmation', '', messageHTML);
 
         //create a token for the user
-        const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY_TOKEN, { expiresIn: '1h' });
+        const token = jwt.sign({ email: req.body.email, id: addResult.resultId.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '1h' });
         res.status(200).json({
             status: 'OK',
             message: 'Proceed with activation',
             token: token,
         });
     } catch (error) {
-
+        next(new GeneralServerError(500, error.message))
     }
 }
 

@@ -1,5 +1,5 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import { add, getByEmail, setActive } from '../services/user.services.js';
+import { add, getByEmail, setActive } from '../services/user.service.js';
 
 class Mongo {
     client = null;

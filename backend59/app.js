@@ -10,7 +10,6 @@ import {engine} from 'express-handlebars'
 
 import router from './routes/index.routes.js';
 import { initMongo } from './mongo/index.js';
-import { add } from './services/user.services.js';
 
 const PORT = process.env.PORT || 3000;
 const SECRET_KEY_COOKIES = process.env.SECRET_KEY_COOKIES;
