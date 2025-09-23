@@ -3,9 +3,34 @@ import { mongo } from "../mongo/index.js";
 export const getByEmail = async (email) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_USERS);
-    try {
-        const user = await collection.findOne({ email: email }, {name:1, email:1, startBalance:1});
-        return user;
+    try {      
+        const userCursor = await collection.aggregate([
+            {
+                $match: {
+                    email
+                }
+            },
+            {
+                $lookup: {
+                    from: 'history',         
+                    localField: '_id',     
+                    foreignField: 'userId', 
+                    as: 'hist'           
+                }
+            },
+            {
+                $project: {
+                    email: 1,
+                    name: 1, 
+                    startBalance: 1,
+                    incomeAmount: { $sum: "$hist.income" },
+                    expenseAmount: { $sum: "$hist.expense" },
+                }
+            }
+        ]);
+
+        return (await userCursor.toArray())[0];
+        
     } catch (error) {
         console.error('Error of search:', error);
         throw error;

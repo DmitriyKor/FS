@@ -1,17 +1,27 @@
 import { ObjectId } from "mongodb";
 import { mongo } from "../mongo/index.js";
 
-export const getAll = async (userId) => {
+export const getAll = async (userId, from, count) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_HISTORY);
-    const historyCursor = await collection.find({ userId: userId }, { _id: 1, categoryId: 1, comment: 1, income: 1, expense: 1 });
-    return await historyCursor.toArray();
+    const countTotal = await collection.countDocuments({ userId: userId });
+
+    const historyCursor = collection.aggregate([
+        { $match: { userId: userId } }, 
+        { $sort: { time: -1 } },    
+        { $skip: +from },                   
+        { $limit: +count },                    
+        { $project: { userId:0 } } 
+    ])
+    // projection does not work here? 
+    //const historyCursor = await collection.find({ userId: userId }, { userId:0}).sort({time: -1}).skip(+from).limit(+count);
+    return { items: await historyCursor.toArray(), count: countTotal };
 }
 
 export const getItem = async (userId, itemId) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_HISTORY);
-    const result = await collection.findOne({_id: new ObjectId(itemId), userId: userId  }, { _id: 1, categoryId: 1, comment: 1, income: 1, expense: 1 });
+    const result = await collection.findOne({ _id: new ObjectId(itemId), userId: userId }, { _id: 1, categoryId: 1, comment: 1, income: 1, expense: 1, time: 1 });
     return result;
 }
 
@@ -47,6 +57,6 @@ export const deleteItem = async (userId, itemId) => {
 export const deleteAll = async (userId) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_HISTORY);
-    db.collection.deleteMany({ userId: userId });
+    db.collection.deleteMany({ userId });
     return;
 }

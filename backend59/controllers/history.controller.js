@@ -1,9 +1,12 @@
+import { ObjectId } from 'mongodb';
 import { GeneralServerError } from '../exceptions/GeneralErrors.js';
 import * as historyService from '../services/history.service.js'
 
 export const getAll = async (req, res, next) => {
     try {
-        const usersHistory = await historyService.getAll(req.user.id);
+        const from = req.query.from;
+        const count = req.query.count || 50;
+        const usersHistory = await historyService.getAll(req.user.id, from, count);
         res.status(200).json({
             status: 'OK',
             history: usersHistory,
@@ -14,7 +17,7 @@ export const getAll = async (req, res, next) => {
 }
 
 export const addItem = async (req, res, next) => {
-    const item = {...req.body, userId: req.user.id };
+    const item = {...req.body, userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId), time: new Date() };
     try {
         const result = await historyService.addItem(item);
         if (!result.acknowledged) {
@@ -74,8 +77,8 @@ export const deleteAll = async (req, res, next) => {
 
 export const changeItem = async (req, res, next) => {
     try {
-        const item = {...req.body, userId: req.user.id};     
-        if (!item._id) {item._id = req.params.id}
+        const item = {...req.body, userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId)};     
+        if (!item._id) {item._id = new ObjectId(req.params.id)}
         historyService.changeItem(item);
         res.status(200).json({
             status: 'OK'
