@@ -4,10 +4,10 @@ import { mongo } from "../mongo/index.js";
 export const getAll = async (userId, from, count) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_HISTORY);
-    const countTotal = await collection.countDocuments({ userId: userId });
+    const countTotal = await collection.countDocuments({ userId: new ObjectId(userId) });
 
     const historyCursor = collection.aggregate([
-        { $match: { userId: userId } }, 
+        { $match: { userId: new ObjectId(userId) } }, 
         { $sort: { time: -1 } },    
         { $skip: +from },                   
         { $limit: +count },                    
@@ -43,20 +43,17 @@ export const changeItem = async (item) => {
             expense: true
         },
     };
-    await collection.updateOne(filter, updateDoc);
-    return;
+    return await collection.updateOne(filter, updateDoc);
 }
 
 export const deleteItem = async (userId, itemId) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_HISTORY);
-    db.collection.deleteOne({ userId: userId, _id: new ObjectId(itemId) });
-    return;
+    return await collection.deleteOne({ userId: new ObjectId(userId), _id: new ObjectId(itemId) });
 }
 
 export const deleteAll = async (userId) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_HISTORY);
-    db.collection.deleteMany({ userId });
-    return;
+    return await collection.deleteMany({ userId: new ObjectId(userId) });
 }

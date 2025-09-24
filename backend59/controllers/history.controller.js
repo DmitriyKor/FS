@@ -6,6 +6,7 @@ export const getAll = async (req, res, next) => {
     try {
         const from = req.query.from;
         const count = req.query.count || 50;
+        console.log('getAll from, count:', from, count);
         const usersHistory = await historyService.getAll(req.user.id, from, count);
         res.status(200).json({
             status: 'OK',
@@ -55,9 +56,10 @@ export const getItem = async (req, res, next) => {
 export const deleteItem = async (req, res, next) => {
     try {
         const itemId = req.params.id;
-        historyService.deleteItem(req.user.userId, itemId);
+        const result = historyService.deleteItem(req.user.userId, itemId);
         res.status(204).json({
-            status: 'OK'
+            status: 'OK',
+            count: result.deleteCount
         });
     } catch (error) {
         next(new GeneralServerError(500, error.message))
@@ -66,9 +68,10 @@ export const deleteItem = async (req, res, next) => {
 
 export const deleteAll = async (req, res, next) => {
     try {
-        historyService.deleteAll(req.user.userId);
+        const result = historyService.deleteAll(req.user.userId);
         res.status(204).json({
-            status: 'OK'
+            status: 'OK',
+            count: result.deleteCount
         });
     } catch (error) {
         next(new GeneralServerError(500, error.message))
@@ -79,9 +82,10 @@ export const changeItem = async (req, res, next) => {
     try {
         const item = {...req.body, userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId)};     
         if (!item._id) {item._id = new ObjectId(req.params.id)}
-        historyService.changeItem(item);
+        const result = historyService.changeItem(item);
         res.status(200).json({
-            status: 'OK'
+            status: 'OK',
+            count: result.modifiedCount
         });
     } catch (error) {
         next(new GeneralServerError(500, error.message))

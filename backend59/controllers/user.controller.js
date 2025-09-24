@@ -8,6 +8,8 @@ import path from 'path';
 import { renderHTML } from "../handlebars/index.js";
 import { fileURLToPath } from "url";
 import * as userService from '../services/user.service.js'
+import * as categoriesService from '../services/categories.service.js'
+import {DEFAULT_CATEGORIES} from '../consts/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,14 +17,11 @@ const __dirname = path.dirname(__filename);
 //  GET /user
 export const getInfo = async (req, res, next) => {
     // req.user has been created by token checking middleware
-    const user = await userService.getByEmail(req.user.email);
-    const userExists = !!(user);
-
-    if (userExists) {
-        const { hashedPassword, _id, ...userPublicInfo } = user;
+    const user = await userService.getExtendedByEmail(req.user.email);
+    if (user) {
         res.status(200).json({
             status: 'OK',
-            user: userPublicInfo,
+            user
         });
     } else {
         next(new GeneralServerError(401, 'Unauthorized access'))
@@ -47,16 +46,15 @@ export const activate = async (req, res, next) => {
     }
 }
 
-
 //  POST /user/login
 export const login = async (req, res, next) => {
    
-    //check email and hash of password in database
+    //check password
     const user = await userService.getByEmail(req.body.email);
-    
     const isAuth = (user) && compareHash(req.body.password, user.hashedPassword);
 
-    if (isAuth) {
+    if (isAuth) {       
+        
         //create a token for the user
         const token = jwt.sign({ email: req.body.email, id: user._id.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '12h' });
         res.status(200).json({
@@ -114,6 +112,16 @@ export const register = async (req, res, next) => {
         if (!addResult.acknowledged) {
             next(new GeneralServerError(500, 'Database error'))
         }
+
+        //create default categories for the user
+        const defaultCategories = DEFAULT_CATEGORIES.map((item)=>{
+            return {
+                ...item,
+                userId: addResult.resultId,
+                default : true
+            }
+        })
+        await categoriesService.addMany(defaultCategories);
 
         //send invitation to activate email to the user
         messageHTML = renderHTML(path.join(__dirname, '../views/activation.handlebars'),
