@@ -4,7 +4,32 @@ import { mongo } from "../mongo/index.js";
 export const getAll = async (userId) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_CATEGORIES);
-    const categoriesCursor = await collection.find({ userId: new ObjectId(userId) });
+    const categoriesCursor = await collection.aggregate([
+        {
+            $match: {
+                userId: new ObjectId(userId)
+            }
+        },
+        {
+            $lookup: {
+                from: 'history',
+                localField: '_id',
+                foreignField: 'categoryId',
+                as: 'hist'
+            }
+        },
+        {
+            $project: {
+                _id: 1,
+                name: 1,
+                description: 1,
+                incomeAmount: { $sum: "$hist.income" },
+                expenseAmount: { $sum: "$hist.expense" },
+            }
+        }
+    ]);
+
+    //const categoriesCursor = await collection.find({ userId: new ObjectId(userId) });
     return await categoriesCursor.toArray();
 }
 
@@ -48,6 +73,6 @@ export const deleteItem = async (userId, itemId) => {
 export const deleteAll = async (userId) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_CATEGORIES);
-    return await db.collection.deleteMany({userId: new ObjectId(userId), default: false });
+    return await db.collection.deleteMany({ userId: new ObjectId(userId), default: false });
 }
 

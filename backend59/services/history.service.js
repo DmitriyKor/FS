@@ -8,13 +8,20 @@ export const getAll = async (userId, from, count) => {
 
     const historyCursor = collection.aggregate([
         { $match: { userId: new ObjectId(userId) } }, 
+        {
+            $lookup: {
+                from: 'categories',
+                localField: 'categoryId',
+                foreignField: '_id',
+                as: 'category'
+            }
+        },
         { $sort: { time: -1 } },    
         { $skip: +from },                   
         { $limit: +count },                    
-        { $project: { userId:0 } } 
-    ])
-    // projection does not work here? 
-    //const historyCursor = await collection.find({ userId: userId }, { userId:0}).sort({time: -1}).skip(+from).limit(+count);
+        { $project: { time:1, name:1, comment:1, categoryId:1, categoryName: { $first: "$category.name"}, income:1, expense:1 } } 
+    ]);
+
     return { items: await historyCursor.toArray(), count: countTotal };
 }
 

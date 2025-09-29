@@ -33,7 +33,6 @@ const activationCode = 2323232323;
 //  GET /user/activate
 export const activate = async (req, res, next) => {
     const user = await userService.getByEmail(req.query.email);
-
     if (!!user && req.query.code == user._id.toString()) {
         //change status of user as Activated in the database
         await userService.setActive(req.query.email)
@@ -48,13 +47,11 @@ export const activate = async (req, res, next) => {
 
 //  POST /user/login
 export const login = async (req, res, next) => {
-   
     //check password
     const user = await userService.getByEmail(req.body.email);
     const isAuth = (user) && compareHash(req.body.password, user.hashedPassword);
 
     if (isAuth) {       
-        
         //create a token for the user
         const token = jwt.sign({ email: req.body.email, id: user._id.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '12h' });
         res.status(200).json({
@@ -69,10 +66,8 @@ export const login = async (req, res, next) => {
 
 // POST /user/register
 export const register = async (req, res, next) => {
-
     console.log('register is being processed');
     var messageHTML = null;
-
     try {
         //check email in database; reject if email exists
         const user = await userService.getByEmail(req.body.email);
