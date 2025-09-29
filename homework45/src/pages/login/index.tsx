@@ -13,6 +13,7 @@ import { setUser } from '../../store/user';
 import { LoginFormElementsStyle, LoginFormStyle } from '../../shared/styles/styles';
 import { authAxios } from '../../helpers/authAxios';
 import GoogleAuth from '../../shared/components/googleAuth/googleAuth';
+import { ENDPOINT_USER } from '../../store/user/const';
 
 const Login = () => {
 
@@ -24,8 +25,13 @@ const Login = () => {
 
     const onSubmit = async (values: any) => {
         try {
-            const response: AxiosResponse = await axios.post(API_URL + '/login', values);
+            const response: AxiosResponse = await axios.post(API_URL + ENDPOINT_USER+ '/login', values);
+            console.log('OnSubmit:');
+            console.log(response);
+            
             if (response.request.status == 200) {
+                
+                
                 if (response.data.user.image == '') { response.data.user.image = null }
                 
                 authAxios.setToken(response.data.accessToken);

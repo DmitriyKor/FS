@@ -23,6 +23,7 @@ export const getAll = async (userId) => {
                 _id: 1,
                 name: 1,
                 description: 1,
+                default:1,
                 incomeAmount: { $sum: "$hist.income" },
                 expenseAmount: { $sum: "$hist.expense" },
             }

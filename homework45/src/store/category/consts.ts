@@ -5,3 +5,5 @@ export const initialState: ICategories = {
     isLoading: false,
     error: ""
 }
+
+export const ENDPOINT_CATEGORIES = '/categories';

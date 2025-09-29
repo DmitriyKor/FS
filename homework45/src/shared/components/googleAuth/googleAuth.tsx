@@ -39,7 +39,7 @@ const GoogleAuth = () => {
 
     return (
         <GoogleLogin
-            onSuccess={credentialResponse: => onGoogleSuccess(credentialResponse)}
+            onSuccess={credentialResponse => onGoogleSuccess(credentialResponse)}
             onError={() => {
                 console.log('Login Failed');
             }}

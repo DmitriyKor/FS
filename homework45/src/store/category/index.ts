@@ -3,36 +3,38 @@ import { type AxiosResponse } from 'axios';
 
 import type { ICategoryItem, ICategoryId, ICategories } from './interfaces.ts';
 import { API_URL } from '../const.ts';
-import { initialState } from './consts.ts';
+import { ENDPOINT_CATEGORIES, initialState } from './consts.ts';
 import { authAxios } from '../../helpers/authAxios.ts';
 import type { IHistoryItem } from '../history/types.ts';
 
 export const fetchCategories : any = createAsyncThunk(
-    'category/fetchCategories',
+    'categories/fetchCategories',
     async () => {
-        const response : AxiosResponse = await authAxios.instance(API_URL + '/category');
+        const response : AxiosResponse = await authAxios.instance(API_URL + ENDPOINT_CATEGORIES);
+        console.log('fetchCategories:');
+        console.log(response);
         return response.data;
     }
 )
 
 export const addCategory : any = createAsyncThunk(
-  'category/addCategory',
+  'categories/addCategory',
   async (data: ICategoryItem) => {
-    const response  : AxiosResponse = await authAxios.instance.post(API_URL+'/category', data);
+    const response  : AxiosResponse = await authAxios.instance.post(API_URL+ENDPOINT_CATEGORIES, data);
     return response.data;
   }
 )
 
 export const deleteCategory : any = createAsyncThunk(
-  'category/deleteCategory',
+  'categories/deleteCategory',
   async (data: ICategoryId) => {
-    const response = await authAxios.instance.delete(API_URL+'/category'+'/'+data.id);
+    const response = await authAxios.instance.delete(API_URL+ENDPOINT_CATEGORIES+'/'+data.id);
     return response.data;
   }
 )
 
 const categoriesSlice = createSlice({
-    name: 'category',
+    name: 'categories',
     initialState,
     reducers: {
         updateCategoriesBalance: (state: ICategories, action) => {

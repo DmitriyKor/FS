@@ -12,8 +12,10 @@ export const fetchHistory : any = createAsyncThunk(
   'history/fetchHistory',
   async (_, thunkAPI) => {
     const response = await authAxios.instance(API_URL+HISTORY_URI);
+    console.log('fetchHistory:');
+    console.log(response);
     //recalculate categories while we mock the backend
-    thunkAPI.dispatch(updateCategoriesBalance(response.data));
+    //thunkAPI.dispatch(updateCategoriesBalance(response.data));
     return response.data;
   }
 )
