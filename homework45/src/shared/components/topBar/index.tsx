@@ -16,6 +16,10 @@ import type { IUser } from "../../../store/user";
 export const TopBar = () => {
 
     const user: IUser = useSelector((state : RootState) => state.user);
+    console.log('TopBar. user = ');
+    console.log(user);
+
+
     const dispatch = useDispatch();
     const drawerState = useSelector((state : RootState)=> state.drawer)
 
@@ -56,12 +60,25 @@ export const TopBar = () => {
     }
 
     function stringAvatar(name: string) {
+        // if (!name) return {
+        //     sx: {
+        //         bgcolor: 'lightblue',
+        //         mr: 2
+        //     },
+        //     children: '-'
+        // }
+        
+        //console.log('stringAvatar. name = ', name);
+        const nameParts: string[] = name?.split(' ');
+        var ch:string='';
+        if (nameParts && nameParts.length>1) {ch=nameParts[0][0]+nameParts[1][0]}
+        else if (nameParts && nameParts.length>0) {ch=nameParts[0][0]}
         return {
             sx: {
                 bgcolor: name? stringToColor(name):'lightblue',
                 mr: 2 
             },
-            children: name?`${name.split(' ')[0][0]}${name.split(' ')[1][0]}`:'',
+            children: ch,
         };
     }
 
@@ -123,7 +140,7 @@ export const TopBar = () => {
                 <MenuIcon />
             </IconButton>
             
-            {user.data ?
+            {(user.data) ?
                 <Avatar {...stringAvatar(user.data.name)} onClick={handleOpenUserMenu}/>
                 :
                 <Link to='/login'>

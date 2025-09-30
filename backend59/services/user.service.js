@@ -30,9 +30,11 @@ export const getExtendedByEmail = async (email) => {
                     _id : 0,
                     email: 1,
                     name: 1, 
+                    image: 1,
                     startBalance: 1,
                     incomeAmount: { $sum: "$hist.income" },
                     expenseAmount: { $sum: "$hist.expense" },
+                    activated: 1
                 }
             }
         ]);

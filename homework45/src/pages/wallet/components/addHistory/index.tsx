@@ -15,6 +15,11 @@ export const AddHistoryArea = () => {
 
     const dispatch = useDispatch();
     const categories: ICategories = useSelector((state : RootState) => state.categories);
+    console.log('AddHistory, categories is');
+    console.log(categories);
+
+
+
     const user: IUser = useSelector((state : RootState)=> state.user);
 
     const onSubmit = async (data:any, form:any) => {

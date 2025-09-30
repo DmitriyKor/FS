@@ -12,11 +12,9 @@ export const fetchHistory : any = createAsyncThunk(
   'history/fetchHistory',
   async (_, thunkAPI) => {
     const response = await authAxios.instance(API_URL+HISTORY_URI);
-    console.log('fetchHistory:');
-    console.log(response);
     //recalculate categories while we mock the backend
     //thunkAPI.dispatch(updateCategoriesBalance(response.data));
-    return response.data;
+    return response.data.history;
   }
 )
 
@@ -77,7 +75,8 @@ const historySlice = createSlice({
       .addCase(fetchHistory.pending, (state) => { state.isLoading = true })
       .addCase(fetchHistory.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.items = action.payload;        
+        state.items = action.payload.items; 
+        state.countTotal = action.payload.count;       
       })
       .addCase(fetchHistory.rejected, (state, action) => {
         state.isLoading = false;

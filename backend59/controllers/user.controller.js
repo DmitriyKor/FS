@@ -54,9 +54,12 @@ export const login = async (req, res, next) => {
     if (isAuth) {       
         //create a token for the user
         const token = jwt.sign({ email: req.body.email, id: user._id.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '12h' });
+        //get extended user data
+        const userExtended = await userService.getExtendedByEmail(req.body.email); 
         res.status(200).json({
             status: 'OK',
             message: 'Login successful',
+            user: userExtended,
             token: token,
         });
     } else {
@@ -85,11 +88,7 @@ export const register = async (req, res, next) => {
         }
 
         //hash and erase password
-        console.log('password = ', req.body.password);
         req.body.hashedPassword = await hashPassword(req.body.password);
-        console.log('hased password = ', req.body.hashedPassword);
-        
-        
         req.body.password = 'xxxxxxxx';
         if (!req.body.hashedPassword) {
             next(new GeneralServerError(500, 'Hashing error'))
@@ -99,6 +98,7 @@ export const register = async (req, res, next) => {
         const userData = {
             name: req.body.name,
             email: req.body.email,
+            image: "",
             hashedPassword: req.body.hashedPassword,
             startBalance: req.body.startBalance,
             activated: false
@@ -123,11 +123,15 @@ export const register = async (req, res, next) => {
             { link: `http://localhost:3000/api/user/activate?code=${addResult.resultId}&email=${req.body.email}` })
         await sendEmail(req.body.email, 'Activation confirmation', '', messageHTML);
 
+        //get extended user data
+        const userExtended = await userService.getExtendedByEmail(req.body.email); 
+
         //create a token for the user
         const token = jwt.sign({ email: req.body.email, id: addResult.resultId.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '1h' });
         res.status(200).json({
             status: 'OK',
             message: 'Proceed with activation',
+            user: userExtended,
             token: token,
         });
     } catch (error) {

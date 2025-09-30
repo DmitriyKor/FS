@@ -4,6 +4,8 @@ export interface IUserData {
   email: string;
   image: string;
   startBalance: number;
+  incomeAmount : number;
+  expenseAmount : number;
 }
 
 export interface IUser {

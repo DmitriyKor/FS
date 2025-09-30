@@ -32,9 +32,9 @@ const Login = () => {
             if (response.request.status == 200) {
                 
                 
-                if (response.data.user.image == '') { response.data.user.image = null }
+                if  (!response.data.user.image || response.data.user.image == '') { response.data.user.image = null }
                 
-                authAxios.setToken(response.data.accessToken);
+                authAxios.setToken(response.data.token);
 
                 dispatch(setUser(response.data.user));
                 setLoginError("");

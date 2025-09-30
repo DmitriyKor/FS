@@ -7,6 +7,8 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import {engine} from 'express-handlebars'
+import bodyParser from 'body-parser';
+
 
 import router from './routes/index.routes.js';
 import { initMongo } from './mongo/index.js';
@@ -44,7 +46,9 @@ app.use((req, res, next) => {
 });
 
 //parse json
-app.use(express.json());
+//app.use(express.json());
+app.use(bodyParser.json({limit: '15Mb'}));
+app.use(bodyParser.urlencoded({limit: '15Mb', extended: true}));
 
 //error handling
 app.use((err, req, res, next)=>{

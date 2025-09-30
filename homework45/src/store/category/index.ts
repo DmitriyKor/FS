@@ -11,9 +11,7 @@ export const fetchCategories : any = createAsyncThunk(
     'categories/fetchCategories',
     async () => {
         const response : AxiosResponse = await authAxios.instance(API_URL + ENDPOINT_CATEGORIES);
-        console.log('fetchCategories:');
-        console.log(response);
-        return response.data;
+        return response.data.categories;
     }
 )
 

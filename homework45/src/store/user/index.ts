@@ -10,6 +10,9 @@ const initialState: IUser = {
   data: null,
 }
 
+ // "email":"john@gmail.com",
+ // "password": "yryU&77i",
+
 export const fetchUser : any = createAsyncThunk(
   'user/fetchUser',
   async () => {
@@ -33,6 +36,7 @@ const userSlice = createSlice({
     builder
       .addCase(fetchUser.pending, () => {})
       .addCase(fetchUser.fulfilled, (state, action) => {
+        console.log(action.payload);        
         state.data = action.payload;        
       })
       .addCase(fetchUser.rejected, (state) => {

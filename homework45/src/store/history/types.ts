@@ -12,6 +12,7 @@ export interface IHistoryId {
 }
 export interface IHistory {
     items: IHistoryItem[];
+    countTotal: number;
     isLoading: boolean;
     error: string | undefined | null;
 }

@@ -2,14 +2,18 @@ import styled from 'styled-components';
 
 export const HistoryLayout = styled.div`
     grid-area: history;   
+    height: 90%;
 `
 
 export const HistoryListStyle = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
-    margin: 10px;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0;
     span: 10px;
+    overflow: auto;
 `
 
 export const HistoryItemStyle = styled.div`

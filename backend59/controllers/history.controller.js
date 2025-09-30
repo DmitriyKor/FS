@@ -4,9 +4,8 @@ import * as historyService from '../services/history.service.js'
 
 export const getAll = async (req, res, next) => {
     try {
-        const from = req.query.from;
+        const from = req.query.from || 0;
         const count = req.query.count || 50;
-        console.log('getAll from, count:', from, count);
         const usersHistory = await historyService.getAll(req.user.id, from, count);
         res.status(200).json({
             status: 'OK',
@@ -39,7 +38,6 @@ export const getItem = async (req, res, next) => {
     try {
         const itemId = req.params.id;
         const historyItem = await historyService.getItem(req.user.id, itemId);
-        console.log('getItem historyItem = ', historyItem);
         
         if (!historyItem) {
             next(new GeneralServerError(404, 'Item is missing'))

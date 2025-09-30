@@ -9,10 +9,9 @@ export const historyValidation = [
 
 export const historyQueryValidation = [
   query('from')
-    .notEmpty()
-    .withMessage('Query parameter "from" is required')
+    .optional()
     .isInt({ min: 0 })
-    .withMessage('From must be an integer greater than or equal to 0.'),
+    .withMessage('from must be an integer greater than or equal to 0.'),
   query('count')
     .optional()
     .isInt({ min: 10 })
