@@ -9,7 +9,8 @@ import type { ICategories, ICategoryItem } from '../../../../store/category';
 import type { RootState } from '../../../../store/store';
 import { mustBeNumber, required, requiredSelect } from '../../../../shared/validation';
 import { addHistory, OPERATION_TYPE, type IHistoryItem } from '../../../../store/history';
-import { Panel, PanelToolBar } from '../../../../shared/components/panel';
+import { Panel } from '../../../../shared/components/panel';
+import { PanelToolBarStyle, PanelToolBarText } from '../../../../shared/styles/styles';
 
 export const AddHistoryArea = () => {
 
@@ -44,8 +45,9 @@ export const AddHistoryArea = () => {
     return (
         <AddHistoryLayout>
             <Panel>
-                <PanelToolBar title='Add history'>
-                </PanelToolBar>
+                <PanelToolBarStyle>
+                    <PanelToolBarText>Add history</PanelToolBarText>
+                </PanelToolBarStyle>
                 <Form
                     onSubmit={onSubmit}
                     initialValues={{ type: OPERATION_TYPE.income }}

@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from "@mui/material";
 
-import { CategoriesLayout, CategoriesListStyle, CategoryItemStyle, CategoryItemToolbar, CategoryItemToolbarIcon, CategoryItemToolbarIcons, CategoryItemToolbarText } from "./index.styles"
+import { CategoriesLayout, CategoriesListStyle, CategoryItemStyle } from "./index.styles"
 import { Add, Delete } from '@mui/icons-material';
 import { AddCategoryDialog } from './addCategoryDialog';
 import { useDialog } from '../../../../shared/hooks/useDialog';
 import ConfirmDialog from '../../../../shared/components/confirmDialog';
 import { deleteCategory, type ICategories, type ICategoryId, type ICategoryItem } from '../../../../store/category';
 import type { RootState } from '../../../../store/store';
-import { Panel, PanelToolBar } from '../../../../shared/components/panel';
+import { Panel } from '../../../../shared/components/panel';
+import { ItemToolbarIcon, ItemToolbarIconGroup, ItemToolbarStyle, ItemToolbarText, PanelToolBarStyle, PanelToolBarText } from '../../../../shared/styles/styles';
 
 export const CategoriesArea: React.FC = () => {
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
@@ -36,25 +37,31 @@ export const CategoriesArea: React.FC = () => {
     return (
         <CategoriesLayout>
             <Panel>
-                <PanelToolBar title="Categories">
-                    <IconButton aria-label="add" onClick={handleAddClick}>
-                        <Add />
-                    </IconButton>
-                </PanelToolBar>
+                <PanelToolBarStyle>
+                    <PanelToolBarText>Categories</PanelToolBarText>
+                    <ItemToolbarIconGroup>
+                        <ItemToolbarIcon>
+                            <IconButton aria-label="add" onClick={handleAddClick}>
+                                <Add />
+                            </IconButton>
+                        </ItemToolbarIcon>
+                    </ItemToolbarIconGroup>
+                </PanelToolBarStyle>
+
                 <CategoriesListStyle>
                     {categories.items?.map((item: ICategoryItem) => {
                         return (
                             <CategoryItemStyle key={item._id + item.name}>
-                                <CategoryItemToolbar>
-                                    <CategoryItemToolbarText><h4>{item.name}</h4></CategoryItemToolbarText>
-                                    <CategoryItemToolbarIcons>
-                                        <CategoryItemToolbarIcon>
+                                <ItemToolbarStyle>
+                                    <ItemToolbarText>{item.name}</ItemToolbarText>
+                                    <ItemToolbarIconGroup>
+                                        <ItemToolbarIcon>
                                             <IconButton size='small' value={item._id} disabled={item.default || item.incomeAmount > 0 || item.expenseAmount > 0} aria-label="delete" onClick={handleDeleteClick}>
                                                 <Delete fontSize="small" />
                                             </IconButton>
-                                        </CategoryItemToolbarIcon>
-                                    </CategoryItemToolbarIcons>
-                                </CategoryItemToolbar>
+                                        </ItemToolbarIcon>
+                                    </ItemToolbarIconGroup>
+                                </ItemToolbarStyle>
                                 <h5>{item.description}</h5>
                                 <p>Income: {item.incomeAmount}</p>
                                 <p>Expense: {item.expenseAmount}</p>

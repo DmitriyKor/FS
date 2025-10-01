@@ -35,9 +35,10 @@ export const EditHistoryDialog = ({ open, closeDialog, dialogValues } : IEditHis
     const OnSubmit = (ev: any):void => {
        
         const historyItem: IHistoryItem = {
-            id: ev.id,
+            _id: ev.id,
             userId: ev.userId,
             categoryId: ev.category,
+            categoryName: '',
             comment: ev.comment,
             income: ev.type == OPERATION_TYPE.income ? ev.amount : 0,
             expense: ev.type == OPERATION_TYPE.expense ? ev.amount : 0,
@@ -93,7 +94,7 @@ export const EditHistoryDialog = ({ open, closeDialog, dialogValues } : IEditHis
                                                 >
                                                     {categories.items?.map((item : ICategoryItem) => {
                                                         return (
-                                                            <MenuItem value={item.id} key={item.id + item.name}>{item.name}</MenuItem>
+                                                            <MenuItem value={item._id} key={item._id + item.name}>{item.name}</MenuItem>
                                                         )
                                                     })}
                                                 </Select>

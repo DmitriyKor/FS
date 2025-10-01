@@ -4,18 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent, CardHeader, IconButton, Typography } from "@mui/material";
 import { Delete, EditDocument } from '@mui/icons-material';
 
-import { HistoryLayout, HistoryListStyle } from "./index.styles";
+import { HistoryItemStyle, HistoryLayout, HistoryListStyle } from "./index.styles";
 import { EditHistoryDialog } from "./editHistoryDialog";
 import { deleteHistory, OPERATION_TYPE, type IHistory, type IHistoryId, type IHistoryItem } from "../../../../store/history";
 import ConfirmDialog from "../../../../shared/components/confirmDialog";
 import type { IUser } from "../../../../store/user";
 import type { RootState } from "../../../../store/store";
 import { useDialog } from "../../../../shared/hooks/useDialog";
-import { Panel, PanelToolBar } from "../../../../shared/components/panel";
+import { Panel } from "../../../../shared/components/panel";
+import { ItemToolbarIcon, ItemToolbarIconGroup, ItemToolbarStyle, ItemToolbarText, PanelToolBarStyle, PanelToolBarText } from "../../../../shared/styles/styles";
 
 export const HistoryArea = () => {
-    const history: IHistory = useSelector((state : RootState) => state.history);
-    const user: IUser = useSelector((state : RootState) => state.user);
+    const history: IHistory = useSelector((state: RootState) => state.history);
+    const user: IUser = useSelector((state: RootState) => state.user);
     const dispatch: Dispatch = useDispatch();
 
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
@@ -26,12 +27,12 @@ export const HistoryArea = () => {
     }
     const { open: openC, openDialog: openCDialog, closeDialog: closeCDialog } = useDialog(deleteConfirmCallback);
 
-    const handleEditClick : React.MouseEventHandler<HTMLButtonElement> = (e):void => {
+    const handleEditClick: React.MouseEventHandler<HTMLButtonElement> = (e): void => {
         const value = (e.currentTarget as HTMLInputElement).value;
-        const idx: number = history.items.findIndex((item: IHistoryItem) => item.id == value);
+        const idx: number = history.items.findIndex((item: IHistoryItem) => item._id == value);
         if (idx >= 0 && user.data) {
             const initialValues = {
-                id: history.items[idx].id,
+                _id: history.items[idx]._id,
                 userId: user.data.id,
                 type: (history.items[idx].income > 0) ? OPERATION_TYPE.income : OPERATION_TYPE.expense,
                 category: history.items[idx].categoryId,
@@ -42,43 +43,65 @@ export const HistoryArea = () => {
         }
     }
 
-    const handleDeleteClick : React.MouseEventHandler<HTMLButtonElement>  = (e) : void => {
+    const handleDeleteClick: React.MouseEventHandler<HTMLButtonElement> = (e): void => {
         const value = (e.currentTarget as HTMLInputElement).value;
-        const idx: number = history.items.findIndex((item : IHistoryItem) => item.id == value);
+        const idx: number = history.items.findIndex((item: IHistoryItem) => item._id == value);
         if (idx >= 0) {
             openCDialog({}, idx);
         }
     }
 
     const HistoryList = () => {
+        console.log('historyList:', history.items)
         return (
             <HistoryListStyle>
                 {history.items?.map(
                     (_: IHistoryItem, index: number, array: IHistoryItem[]) => {
-                        let item : IHistoryItem = array[array.length - index - 1];
+                        let item: IHistoryItem = array[array.length - index - 1];
                         return (
-                            <Card sx={{ m: 0.5 }} key={item.id + item.comment}>
-                                <CardHeader sx={{ m: -0.5 }}
-                                    title={item.comment}
-                                    subheader={"Category id:" + item.categoryId}
-                                    action={
-                                        <>
-                                            <IconButton aria-label="edit" value={item.id} onClick={handleEditClick}>
-                                                <EditDocument />
+                            <HistoryItemStyle key={item._id}>
+                                <ItemToolbarStyle>
+                                    <ItemToolbarText>{item.comment}</ItemToolbarText>
+                                    <ItemToolbarIconGroup>
+                                        <ItemToolbarIcon>
+                                            <IconButton aria-label="edit" value={item._id} onClick={handleEditClick}>
+                                                <EditDocument fontSize="small" />
                                             </IconButton>
-                                            <IconButton aria-label="delete" value={item.id} onClick={handleDeleteClick}>
-                                                <Delete />
+                                        </ItemToolbarIcon>
+                                        <ItemToolbarIcon>
+                                            <IconButton aria-label="delete" value={item._id} onClick={handleDeleteClick}>
+                                                <Delete fontSize="small" />
                                             </IconButton>
-                                        </>
-                                    }
-                                />
-                                <CardContent>
-                                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                        {item.income > 0 ? item.income : item.expense}
-                                    </Typography>
-                                </CardContent>
+                                        </ItemToolbarIcon>
+                                        
+                                    </ItemToolbarIconGroup>
+                                </ItemToolbarStyle>
+                                <p>Category: {item.categoryName}</p>
+                                {item.income>0? <p>Income: {item.income}</p> : <p>Expense: {item.expense}</p> }
+                                
+                            </HistoryItemStyle>
+                            // <Card sx={{ m: 0.5 }} key={item.id + item.comment}>
+                            //     <CardHeader sx={{ m: -0.5 }}
+                            //         title={item.comment}
+                            //         subheader={"Category id:" + item.categoryId}
+                            //         action={
+                            //             <>
+                            //                 <IconButton aria-label="edit" value={item.id} onClick={handleEditClick}>
+                            //                     <EditDocument />
+                            //                 </IconButton>
+                            //                 <IconButton aria-label="delete" value={item.id} onClick={handleDeleteClick}>
+                            //                     <Delete />
+                            //                 </IconButton>
+                            //             </>
+                            //         }
+                            //     />
+                            //     <CardContent>
+                            //         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            //             {item.income > 0 ? item.income : item.expense}
+                            //         </Typography>
+                            //     </CardContent>
 
-                            </Card>
+                            // </Card>
                         )
                     }
                 )}
@@ -89,10 +112,10 @@ export const HistoryArea = () => {
     return (
         <HistoryLayout>
             <Panel>
-                <PanelToolBar title="History">
-                    <></>
-                </PanelToolBar>
-                <HistoryList/>
+                <PanelToolBarStyle>
+                    <PanelToolBarText>History</PanelToolBarText>
+                </PanelToolBarStyle>
+                <HistoryList />
                 <EditHistoryDialog open={open} closeDialog={closeDialog} dialogValues={dialogValues} />
                 <ConfirmDialog open={openC} closeDialog={closeCDialog} title="Delete" message="Delete history item?" />
             </Panel>

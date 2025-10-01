@@ -19,7 +19,7 @@ export const getAll = async (userId, from, count) => {
         { $sort: { time: -1 } },    
         { $skip: +from },                   
         { $limit: +count },                    
-        { $project: { time:1, name:1, comment:1, categoryId:1, categoryName: { $first: "$category.name"}, income:1, expense:1 } } 
+        { $project: { time:1, description:1, comment:1, categoryId:1, categoryName: { $first: "$category.name"}, income:1, expense:1 } } 
     ]);
 
     return { items: await historyCursor.toArray(), count: countTotal };

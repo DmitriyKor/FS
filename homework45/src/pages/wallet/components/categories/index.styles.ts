@@ -37,36 +37,6 @@ export const CategoryItemStyle = styled.div`
         font-size: 10px;
     }
 `
-export const CategoryItemToolbar = styled.div`
-    display: flex;
-    font-size: 10px;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-`
-export const CategoryItemToolbarText = styled.div`
-    display: flex;
-    flex: 1 1 auto;
-    margin-right: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`
-export const CategoryItemToolbarIcons = styled.div`
-  display: flex;
-  gap: 8px;              
-  flex-shrink: 0;    
-`
 
-export const CategoryItemToolbarIcon = styled.div`
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`
 
 

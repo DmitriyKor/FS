@@ -1,6 +1,7 @@
 export interface IHistoryItem {
-    id: string;
+    _id: string;
     categoryId : string | undefined | null;
+    categoryName : string | undefined | null;
     userId : string | undefined | null;
     comment : string | undefined | null;
     income: number;
@@ -8,7 +9,7 @@ export interface IHistoryItem {
 }
 
 export interface IHistoryId {
-    id: string;
+    _id: string;
 }
 export interface IHistory {
     items: IHistoryItem[];
