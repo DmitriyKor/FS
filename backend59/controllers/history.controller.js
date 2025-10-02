@@ -7,6 +7,7 @@ export const getAll = async (req, res, next) => {
         const from = req.query.from || 0;
         const count = req.query.count || 50;
         const usersHistory = await historyService.getAll(req.user.id, from, count);
+        
         res.status(200).json({
             status: 'OK',
             history: usersHistory,
@@ -17,7 +18,12 @@ export const getAll = async (req, res, next) => {
 }
 
 export const addItem = async (req, res, next) => {
-    const item = {...req.body, userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId), time: new Date() };
+    const item = {userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId), time: new Date(), 
+        comment: req.body.comment, income: req.body.income, expense: req.body.expense
+     };
+    
+    console.log('history addItem', item);
+    
     try {
         const result = await historyService.addItem(item);
         if (!result.acknowledged) {
@@ -54,7 +60,10 @@ export const getItem = async (req, res, next) => {
 export const deleteItem = async (req, res, next) => {
     try {
         const itemId = req.params.id;
-        const result = historyService.deleteItem(req.user.userId, itemId);
+
+        console.log('delete item, req.params.id=', req.params.id)
+
+        const result = await historyService.deleteItem(req.user.id, itemId);
         res.status(204).json({
             status: 'OK',
             count: result.deleteCount
@@ -66,7 +75,9 @@ export const deleteItem = async (req, res, next) => {
 
 export const deleteAll = async (req, res, next) => {
     try {
-        const result = historyService.deleteAll(req.user.userId);
+
+        console.log('delete all')        
+        const result = await historyService.deleteAll(req.user.userId);
         res.status(204).json({
             status: 'OK',
             count: result.deleteCount
@@ -78,9 +89,15 @@ export const deleteAll = async (req, res, next) => {
 
 export const changeItem = async (req, res, next) => {
     try {
-        const item = {...req.body, userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId)};     
+        const item = {...req.body, userId: req.user.id};     
         if (!item._id) {item._id = new ObjectId(req.params.id)}
-        const result = historyService.changeItem(item);
+        console.log('changeItem.item=', item)
+        const result = await historyService.changeItem(item);
+        console.log('changeItem.result=', result);
+        
+        if (!result.acknowledged) {
+            next(new GeneralServerError(500, 'Database error'))
+        }
         res.status(200).json({
             status: 'OK',
             count: result.modifiedCount

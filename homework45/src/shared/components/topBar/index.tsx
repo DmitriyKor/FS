@@ -16,9 +16,6 @@ import type { IUser } from "../../../store/user";
 export const TopBar = () => {
 
     const user: IUser = useSelector((state : RootState) => state.user);
-    console.log('TopBar. user = ');
-    console.log(user);
-
 
     const dispatch = useDispatch();
     const drawerState = useSelector((state : RootState)=> state.drawer)

@@ -53,7 +53,7 @@ export const login = async (req, res, next) => {
 
     if (isAuth) {       
         //create a token for the user
-        const token = jwt.sign({ email: req.body.email, id: user._id.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '12h' });
+        const token = jwt.sign({ email: req.body.email, id: user._id.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '48h' });
         //get extended user data
         const userExtended = await userService.getExtendedByEmail(req.body.email); 
         res.status(200).json({
@@ -127,7 +127,7 @@ export const register = async (req, res, next) => {
         const userExtended = await userService.getExtendedByEmail(req.body.email); 
 
         //create a token for the user
-        const token = jwt.sign({ email: req.body.email, id: addResult.resultId.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '1h' });
+        const token = jwt.sign({ email: req.body.email, id: addResult.resultId.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '48h' });
         res.status(200).json({
             status: 'OK',
             message: 'Proceed with activation',

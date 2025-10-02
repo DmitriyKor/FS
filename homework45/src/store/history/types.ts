@@ -2,7 +2,6 @@ export interface IHistoryItem {
     _id: string;
     categoryId : string | undefined | null;
     categoryName : string | undefined | null;
-    userId : string | undefined | null;
     comment : string | undefined | null;
     income: number;
     expense: number;

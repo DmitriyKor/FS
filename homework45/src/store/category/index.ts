@@ -19,7 +19,8 @@ export const addCategory : any = createAsyncThunk(
   'categories/addCategory',
   async (data: ICategoryItem) => {
     const response  : AxiosResponse = await authAxios.instance.post(API_URL+ENDPOINT_CATEGORIES, data);
-    return response.data;
+    console.log('DATADATA: ', response.data)
+    return response.data.item;
   }
 )
 
@@ -61,6 +62,7 @@ const categoriesSlice = createSlice({
                 state.error = action.error.message
             })
             .addCase(addCategory.fulfilled, (state, action) => {
+
                 state.items?.push(action.payload);
             })
             .addCase(deleteCategory.fulfilled, (state, action) => {

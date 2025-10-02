@@ -35,15 +35,13 @@ export const EditHistoryDialog = ({ open, closeDialog, dialogValues } : IEditHis
     const OnSubmit = (ev: any):void => {
        
         const historyItem: IHistoryItem = {
-            _id: ev.id,
-            userId: ev.userId,
-            categoryId: ev.category,
+            _id: ev._id,
+            categoryId: ev.categoryId,
             categoryName: '',
             comment: ev.comment,
             income: ev.type == OPERATION_TYPE.income ? ev.amount : 0,
             expense: ev.type == OPERATION_TYPE.expense ? ev.amount : 0,
         }
-        console.log(historyItem);
         dispatch(setHistory(historyItem))
         handleClose();
     };
@@ -79,7 +77,7 @@ export const EditHistoryDialog = ({ open, closeDialog, dialogValues } : IEditHis
                                         )}
                                     </Field>
 
-                                    <Field name="category" validate={requiredSelect}>
+                                    <Field name="categoryId" validate={requiredSelect}>
                                         {({ input, meta }) => (
                                             <FormControl fullWidth>
                                                 <InputLabel>

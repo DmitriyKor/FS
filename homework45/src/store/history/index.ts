@@ -11,7 +11,7 @@ import { authAxios } from '../../helpers/authAxios.ts';
 export const fetchHistory : any = createAsyncThunk(
   'history/fetchHistory',
   async (_, thunkAPI) => {
-    const response = await authAxios.instance(API_URL+HISTORY_URI);
+    const response = await authAxios.instance(API_URL+HISTORY_URI);  
     //recalculate categories while we mock the backend
     //thunkAPI.dispatch(updateCategoriesBalance(response.data));
     return response.data.history;
@@ -21,10 +21,16 @@ export const fetchHistory : any = createAsyncThunk(
 export const setHistory : any = createAsyncThunk(
   'history/setHistory',
   async (data: IHistoryItem, thunkAPI) => {
-    const {id, ...dataToPost} = data;   
-    await authAxios.instance.put(API_URL+HISTORY_URI+'/'+id, dataToPost);
+    // console.log('setHistory data:');
+    // console.log(data);
+    
+    const {_id, ...dataToPost} = data;   
+    const response = await authAxios.instance.patch(API_URL+HISTORY_URI+'/'+_id, dataToPost);
     //refetch full history and recalulate categories there
-    await thunkAPI.dispatch(fetchHistory()); 
+    //await thunkAPI.dispatch(fetchHistory()); 
+    // console.log('setHistory response:');
+    // console.log(response);
+    return response.data;
   }
 )
 
@@ -40,7 +46,9 @@ export const addHistory : any = createAsyncThunk(
 export const deleteHistory : any = createAsyncThunk(
   'history/deleteHistory',
   async (data: IHistoryId, thunkAPI) => {
-    await authAxios.instance.delete(API_URL+HISTORY_URI+'/'+data.id);
+    console.log('history/deleteHistory. data=');
+    console.log(data);
+    await authAxios.instance.delete(API_URL+HISTORY_URI+'/'+data._id);
     //refetch full history and recalulate categories there
     await thunkAPI.dispatch(fetchHistory()); 
   }
@@ -76,7 +84,9 @@ const historySlice = createSlice({
       .addCase(fetchHistory.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items = action.payload.items; 
-        state.countTotal = action.payload.count;       
+        state.countTotal = action.payload.count; 
+        // console.log('history/fetchHistory')
+        // console.log(state.items);      
       })
       .addCase(fetchHistory.rejected, (state, action) => {
         state.isLoading = false;

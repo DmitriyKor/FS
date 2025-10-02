@@ -43,7 +43,43 @@ export const addMany = async (items) => {
 export const getItem = async (userId, itemId) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_CATEGORIES);
-    return await collection.findOne({ _id: new ObjectId(itemId), userId: new ObjectId(userId) });
+    
+    const categoriesCursor = await collection.aggregate([
+        {
+            $match: {
+                userId: new ObjectId(userId),
+                _id: new ObjectId(itemId)
+            }
+        },
+        {
+            $lookup: {
+                from: 'history',
+                localField: '_id',
+                foreignField: 'categoryId',
+                as: 'hist'
+            }
+        },
+        {
+            $project: {
+                _id: 1,
+                name: 1,
+                description: 1,
+                default:1,
+                incomeAmount: { $sum: "$hist.income" },
+                expenseAmount: { $sum: "$hist.expense" },
+            }
+        }
+    ]);
+    
+
+    const categoriesArray = await categoriesCursor.toArray();
+
+    console.log('array categories=', categoriesArray)
+
+    return categoriesArray? categoriesArray[0] : null;
+    
+    //return await collection.findOne({ _id: new ObjectId(itemId), userId: new ObjectId(userId)}, 
+    //{projection: {_id:1, default:1, name:1, description:1}});
 }
 
 export const addItem = async (item) => {
@@ -68,12 +104,12 @@ export const changeItem = async (item) => {
 export const deleteItem = async (userId, itemId) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_CATEGORIES);
-    return await db.collection.deleteOne({ userId: new ObjectId(userId), _id: new ObjectId(itemId), default: false });
+    return await collection.deleteOne({ userId: new ObjectId(userId), _id: new ObjectId(itemId), default: false });
 }
 
 export const deleteAll = async (userId) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_CATEGORIES);
-    return await db.collection.deleteMany({ userId: new ObjectId(userId), default: false });
+    return null//await collection.deleteMany({ userId: new ObjectId(userId), default: false });
 }
 

@@ -15,7 +15,7 @@ export const AddCategoryDialog = ({ open, closeDialog, dialogValues } : any) => 
     const dispatch = useDispatch();
 
     const OnSubmit = (event: any) => {
-        const categoryItem: ICategoryItem = {id: event.id, name: event.name, description: event.description, default: false, balanceIncome: 0, balanceExpense:0}        
+        const categoryItem: ICategoryItem = {_id: '', name: event.name, description: event.description, default: false, incomeAmount: 0, expenseAmount:0}        
         console.log('OnSubmit AddCategoryDialog:')
         console.log(categoryItem);
         dispatch(addCategory(categoryItem))

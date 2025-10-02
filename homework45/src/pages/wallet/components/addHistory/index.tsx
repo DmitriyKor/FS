@@ -16,28 +16,26 @@ export const AddHistoryArea = () => {
 
     const dispatch = useDispatch();
     const categories: ICategories = useSelector((state : RootState) => state.categories);
-    console.log('AddHistory, categories is');
-    console.log(categories);
-
-
+    // console.log('AddHistory, categories is');
+    // console.log(categories);
 
     const user: IUser = useSelector((state : RootState)=> state.user);
 
     const onSubmit = async (data:any, form:any) => {
-        console.log('AddHistory onSubmit, data is');
-        console.log(data);
-        console.log(user);
+        // console.log('AddHistory onSubmit, data is');
+        // console.log(data);
+        // console.log(user);
 
         let item: IHistoryItem = {
-            id: "",
-            userId: user.data?.id,
-            categoryId: data.category,
+            _id: "",
+            categoryName : '',
+            categoryId: data.categoryId,
             comment: data.comment,
             income: data.type == OPERATION_TYPE.income ? data.amount: 0,
             expense: data.type == OPERATION_TYPE.expense ? data.amount: 0,
         }
 
-        console.log(item);
+        // console.log(item);
         await dispatch(addHistory(item));
         form.restart();
     }
@@ -71,7 +69,7 @@ export const AddHistoryArea = () => {
                                     )}
                                 </Field>
 
-                                <Field name="category" validate={requiredSelect}>
+                                <Field name="categoryId" validate={requiredSelect}>
                                     {({ input, meta }) => (
                                         <FormControl fullWidth>
                                             <InputLabel id="demo-simple-select-label">
@@ -88,7 +86,7 @@ export const AddHistoryArea = () => {
                                             >
                                                 {categories.items?.map((item: ICategoryItem) => {
                                                     return (
-                                                        <MenuItem value={item.id} key={item.id + item.name}>{item.name}</MenuItem>
+                                                        <MenuItem value={item._id} key={item._id + item.name}>{item.name}</MenuItem>
                                                     )
                                                 })}
                                             </Select>

@@ -16,13 +16,22 @@ import { ItemToolbarIcon, ItemToolbarIconGroup, ItemToolbarStyle, ItemToolbarTex
 
 export const HistoryArea = () => {
     const history: IHistory = useSelector((state: RootState) => state.history);
+    console.log('History=');
+    console.log(history) ;  
+    
+
+
     const user: IUser = useSelector((state: RootState) => state.user);
     const dispatch: Dispatch = useDispatch();
 
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
 
     const deleteConfirmCallback = (context: any): void => {
-        const historyId: IHistoryId = { id: history.items[context].id };
+        console.log('deleteConfirmCallback. context =', context);
+        
+        const historyId: IHistoryId = { _id: history.items[context]._id };
+        console.log('deleteConfirmCallback. historyId =', historyId);
+
         dispatch(deleteHistory(historyId));
     }
     const { open: openC, openDialog: openCDialog, closeDialog: closeCDialog } = useDialog(deleteConfirmCallback);
@@ -33,9 +42,8 @@ export const HistoryArea = () => {
         if (idx >= 0 && user.data) {
             const initialValues = {
                 _id: history.items[idx]._id,
-                userId: user.data.id,
                 type: (history.items[idx].income > 0) ? OPERATION_TYPE.income : OPERATION_TYPE.expense,
-                category: history.items[idx].categoryId,
+                categoryId: history.items[idx].categoryId,
                 comment: history.items[idx].comment,
                 amount: Math.max(Number(history.items[idx].income), Number(history.items[idx].expense)),
             }
@@ -47,17 +55,19 @@ export const HistoryArea = () => {
         const value = (e.currentTarget as HTMLInputElement).value;
         const idx: number = history.items.findIndex((item: IHistoryItem) => item._id == value);
         if (idx >= 0) {
+            console.log('handleDeleteClick. idx=', idx)
+            console.log('handleDeleteClick. item=', history.items[idx])
+
             openCDialog({}, idx);
         }
     }
 
     const HistoryList = () => {
-        console.log('historyList:', history.items)
+
         return (
             <HistoryListStyle>
                 {history.items?.map(
-                    (_: IHistoryItem, index: number, array: IHistoryItem[]) => {
-                        let item: IHistoryItem = array[array.length - index - 1];
+                    (item: IHistoryItem) => {
                         return (
                             <HistoryItemStyle key={item._id}>
                                 <ItemToolbarStyle>

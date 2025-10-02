@@ -5,6 +5,9 @@ import * as categoriesService from '../services/categories.service.js'
 export const getAll = async (req, res, next) => {
     try {
         const usersCategories = await categoriesService.getAll(req.user.id);
+        // console.log('Categories. userId:', req.user.id)
+        // console.log(usersCategories);      
+        
         res.status(200).json({
             status: 'OK',
             categories: usersCategories,
@@ -21,10 +24,17 @@ export const addItem = async (req, res, next) => {
         if (!result.acknowledged) {
             next(new GeneralServerError(500, 'Database error'))
         }
-        item.id = result.resultId;
+
+        const categoryItem = await categoriesService.getItem(req.user.id, result.insertedId.toString());
+        if (!categoryItem) {
+             next(new GeneralServerError(404, 'Item is missing'))
+        }
+        console.log('added category:', categoryItem)
+
+        //item._id = result.insertedId.toString();
         res.status(201).json({
             status: 'OK',
-            item: item,
+            item: categoryItem,
         });
 
     } catch (error) {
@@ -53,7 +63,7 @@ export const changeItem = async (req, res, next) => {
     try {
         const item = { ...req.body, userId: new ObjectId(req.user.id) };
         if (!item._id) { item._id = new ObjectId(req.params.id) }
-        const result = categoriesService.changeItem(item);
+        const result = await categoriesService.changeItem(item);
         res.status(200).json({
             status: 'OK',
             count: result.modifiedCount
@@ -66,7 +76,9 @@ export const changeItem = async (req, res, next) => {
 export const deleteItem = async (req, res, next) => {
     try {
         const itemId = req.params.id;
-        const result = categoriesService.deleteItem(req.user.userId, itemId);
+        const result = await categoriesService.deleteItem(req.user.id, itemId);
+        console.log('deleteItem', req.user.id, itemId, result)
+        
         res.status(204).json({
             status: 'OK',
             count: result.deleteCount
@@ -78,7 +90,7 @@ export const deleteItem = async (req, res, next) => {
 
 export const deleteAll = async (req, res, next) => {
     try {
-        const result = categoriesService.deleteAll(req.user.userId);
+        const result = await categoriesService.deleteAll(req.user.id);
         res.status(204).json({
             status: 'OK',
             count: result.deleteCount
