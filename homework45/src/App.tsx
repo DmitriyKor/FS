@@ -24,6 +24,7 @@ import { authAxios } from './helpers/authAxios';
 import SuspensePage from './pages/suspensePage';
 import type { RootState } from './store/store';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { HISTORY_FILTER_ALL } from './store/history/const';
 
 const openRoutes = [
   { path: '/', element: <Home /> },
@@ -52,7 +53,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchCategories());
-    dispatch(fetchHistory());
+    dispatch(fetchHistory(HISTORY_FILTER_ALL));
   }, [user]);
 
   return (

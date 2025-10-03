@@ -14,6 +14,7 @@ export interface IHistory {
     items: IHistoryItem[];
     countTotal: number;
     isLoading: boolean;
+    filter: string;
     error: string | undefined | null;
 }
 

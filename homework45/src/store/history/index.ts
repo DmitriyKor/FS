@@ -10,8 +10,11 @@ import { authAxios } from '../../helpers/authAxios.ts';
 
 export const fetchHistory : any = createAsyncThunk(
   'history/fetchHistory',
-  async (_, thunkAPI) => {
-    const response = await authAxios.instance(API_URL+HISTORY_URI);  
+  async (filter, thunkAPI) => {    
+    const response = await authAxios.instance(API_URL+HISTORY_URI, {
+      params: {
+        filter: filter,
+      }});
     //recalculate categories while we mock the backend
     //thunkAPI.dispatch(updateCategoriesBalance(response.data));
     return response.data.history;
@@ -39,7 +42,8 @@ export const addHistory : any = createAsyncThunk(
   async (data: IHistoryItem, thunkAPI) => {
     await authAxios.instance.post(API_URL+HISTORY_URI, data);
     //refetch full history and recalulate categories there
-    await thunkAPI.dispatch(fetchHistory()); 
+    const state : unknown = thunkAPI.getState(); 
+    await thunkAPI.dispatch(fetchHistory(state.filter)); 
   }
 )
 
@@ -50,7 +54,8 @@ export const deleteHistory : any = createAsyncThunk(
     console.log(data);
     await authAxios.instance.delete(API_URL+HISTORY_URI+'/'+data._id);
     //refetch full history and recalulate categories there
-    await thunkAPI.dispatch(fetchHistory()); 
+    const state : unknown = thunkAPI.getState(); 
+    await thunkAPI.dispatch(fetchHistory(state.filter)); 
   }
 )
 
@@ -80,7 +85,11 @@ const historySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchHistory.pending, (state) => { state.isLoading = true })
+      .addCase(fetchHistory.pending, (state, action) => { 
+        state.isLoading = true;
+        state.filter = action.meta.arg;
+        console.log('.addCase(fetchHistory.pending, action.meta.arg=', action.meta.arg);
+      })
       .addCase(fetchHistory.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items = action.payload.items; 

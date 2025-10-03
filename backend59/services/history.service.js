@@ -1,13 +1,23 @@
 import { ObjectId } from "mongodb";
 import { mongo } from "../mongo/index.js";
 
-export const getAll = async (userId, from, count) => {
+export const getAll = async (userId, from, count, filter) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_HISTORY);
-    const countTotal = await collection.countDocuments({ userId: new ObjectId(userId) });
+
+    var match;
+    if (!filter || filter == 'all') { match = { "userId": new ObjectId(userId) } }
+    else if (filter == 'income') { match = { "userId": new ObjectId(userId), "income": { "$gt": 0 } } }
+    else if (filter == 'expense') {
+        match = { "userId": new ObjectId(userId), "expense": { "$gt": 0 } }
+    };
+
+    console.log(match);
+
+    const countTotal = await collection.countDocuments(match);
 
     const historyCursor = await collection.aggregate([
-        { $match: { userId: new ObjectId(userId) } }, 
+        { $match: match },
         {
             $lookup: {
                 from: 'categories',
@@ -16,10 +26,10 @@ export const getAll = async (userId, from, count) => {
                 as: 'category'
             }
         },
-        { $sort: { time: -1 } },    
-        { $skip: +from },                   
-        { $limit: +count },                    
-        { $project: { time:1, description:1, comment:1, categoryId:1, categoryName: { $first: "$category.name"}, income:1, expense:1 } } 
+        { $sort: { time: -1 } },
+        { $skip: +from },
+        { $limit: +count },
+        { $project: { time: 1, description: 1, comment: 1, categoryId: 1, categoryName: { $first: "$category.name" }, income: 1, expense: 1 } }
     ]);
 
     return { items: await historyCursor.toArray(), count: countTotal };
@@ -28,9 +38,9 @@ export const getAll = async (userId, from, count) => {
 export const getItem = async (userId, itemId) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_HISTORY);
-    
+
     const historyCursor = await collection.aggregate([
-        { $match: { userId: new ObjectId(userId), _id: new ObjectId(itemId) } }, 
+        { $match: { userId: new ObjectId(userId), _id: new ObjectId(itemId) } },
         {
             $lookup: {
                 from: 'categories',
@@ -38,11 +48,11 @@ export const getItem = async (userId, itemId) => {
                 foreignField: '_id',
                 as: 'category'
             }
-        },                   
-        { $project: { time:1, description:1, comment:1, categoryId:1, categoryName: { $first: "$category.name"}, income:1, expense:1 } } 
-    ]);    
+        },
+        { $project: { time: 1, description: 1, comment: 1, categoryId: 1, categoryName: { $first: "$category.name" }, income: 1, expense: 1 } }
+    ]);
     const historyArray = await historyCursor.toArray();
-    const result = historyArray.length>0? historyArray[0] : null;  
+    const result = historyArray.length > 0 ? historyArray[0] : null;
     //const result = await collection.findOne({ _id: new ObjectId(itemId), userId: userId }, { _id: 1, categoryId: 1, comment: 1, income: 1, expense: 1, time: 1 });
     return result;
 }

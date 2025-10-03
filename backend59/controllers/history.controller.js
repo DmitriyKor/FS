@@ -6,7 +6,8 @@ export const getAll = async (req, res, next) => {
     try {
         const from = req.query.from || 0;
         const count = req.query.count || 50;
-        const usersHistory = await historyService.getAll(req.user.id, from, count);
+        const filter = req.query.filter || 'all';
+        const usersHistory = await historyService.getAll(req.user.id, from, count, filter);
         
         res.status(200).json({
             status: 'OK',
@@ -19,8 +20,7 @@ export const getAll = async (req, res, next) => {
 
 export const addItem = async (req, res, next) => {
     const item = {userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId), time: new Date(), 
-        comment: req.body.comment, income: req.body.income, expense: req.body.expense
-     };
+        comment: req.body.comment, income: Number(req.body.income), expense: Number(req.body.expense)};
     
     console.log('history addItem', item);
     
@@ -89,7 +89,11 @@ export const deleteAll = async (req, res, next) => {
 
 export const changeItem = async (req, res, next) => {
     try {
-        const item = {...req.body, userId: req.user.id};     
+        
+        const item = {userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId),  
+        comment: req.body.comment, income: Number(req.body.income), expense: Number(req.body.expense)};
+        
+        
         if (!item._id) {item._id = new ObjectId(req.params.id)}
         console.log('changeItem.item=', item)
         const result = await historyService.changeItem(item);
