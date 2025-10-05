@@ -13,6 +13,9 @@ const initialState: IUser = {
  // "email":"john@gmail.com",
  // "password": "yryU&77i",
 
+ //aaa@
+ //qW1234%a
+
 export const fetchUser : any = createAsyncThunk(
   'user/fetchUser',
   async () => {
