@@ -19,7 +19,6 @@ export const addCategory : any = createAsyncThunk(
   'categories/addCategory',
   async (data: ICategoryItem) => {
     const response  : AxiosResponse = await authAxios.instance.post(API_URL+ENDPOINT_CATEGORIES, data);
-    console.log('DATADATA: ', response.data)
     return response.data.item;
   }
 )

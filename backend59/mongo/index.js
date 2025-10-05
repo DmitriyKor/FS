@@ -23,6 +23,7 @@ class Mongo {
             //return this.client.db(process.env.MONGODB_DATABASE_NAME);
         } catch(e) {
             // Ensures that the client will close when you finish/error
+            console.log('Error opening MongoDB:', e.message)
             await this.client.close();
         }
     }
@@ -32,6 +33,7 @@ async function runMongo() {
     // Create a MongoClient with a MongoClientOptions object to set the Stable API version
     const uri = `mongodb+srv://${process.env.MONGODB_USER_NAME}:${process.env.MONGODB_PASSWORD}@fstesting.bravgel.mongodb.net/?retryWrites=true&w=majority&appName=FSTesting`;
 
+    console.log('trying to open Mongo with uri:', uri)
     const client = new MongoClient(uri, {
         serverApi: {
             version: ServerApiVersion.v1,

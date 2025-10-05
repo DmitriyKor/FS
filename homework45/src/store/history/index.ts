@@ -24,8 +24,7 @@ export const fetchHistory : any = createAsyncThunk(
 export const setHistory : any = createAsyncThunk(
   'history/setHistory',
   async (data: IHistoryItem, thunkAPI) => {
-    // console.log('setHistory data:');
-    // console.log(data);
+
     
     const {_id, ...dataToPost} = data;   
     const response = await authAxios.instance.patch(API_URL+HISTORY_URI+'/'+_id, dataToPost);
@@ -33,29 +32,27 @@ export const setHistory : any = createAsyncThunk(
     //await thunkAPI.dispatch(fetchHistory()); 
     // console.log('setHistory response:');
     // console.log(response);
-    return response.data;
+    return {response: response, _id};
   }
 )
 
 export const addHistory : any = createAsyncThunk(
   'history/addHistory',
   async (data: IHistoryItem, thunkAPI) => {
-    await authAxios.instance.post(API_URL+HISTORY_URI, data);
-    //refetch full history and recalulate categories there
-    const state : unknown = thunkAPI.getState(); 
-    await thunkAPI.dispatch(fetchHistory(state.filter)); 
+    const response = await authAxios.instance.post(API_URL+HISTORY_URI, data);
+    return response.data.item;
   }
 )
 
 export const deleteHistory : any = createAsyncThunk(
   'history/deleteHistory',
   async (data: IHistoryId, thunkAPI) => {
-    console.log('history/deleteHistory. data=');
     console.log(data);
-    await authAxios.instance.delete(API_URL+HISTORY_URI+'/'+data._id);
+    const response = await authAxios.instance.delete(API_URL+HISTORY_URI+'/'+data._id);
     //refetch full history and recalulate categories there
-    const state : unknown = thunkAPI.getState(); 
-    await thunkAPI.dispatch(fetchHistory(state.filter)); 
+    // const state : unknown = thunkAPI.getState(); 
+    // await thunkAPI.dispatch(fetchHistory(state.filter)); 
+    return {response, data};
   }
 )
 
@@ -88,24 +85,27 @@ const historySlice = createSlice({
       .addCase(fetchHistory.pending, (state, action) => { 
         state.isLoading = true;
         state.filter = action.meta.arg;
-        console.log('.addCase(fetchHistory.pending, action.meta.arg=', action.meta.arg);
       })
       .addCase(fetchHistory.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items = action.payload.items; 
-        state.countTotal = action.payload.count; 
-        // console.log('history/fetchHistory')
-        // console.log(state.items);      
+        state.countTotal = action.payload.count;     
       })
       .addCase(fetchHistory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       })
-      .addCase(addHistory.fulfilled, () => {
+      .addCase(addHistory.fulfilled, (state, action) => {
+        console.log('addHistory state.items=', state.items);
+        console.log('addHistory action.payload=', action.payload);
+        state.items.splice(0, 0, action.payload);
       })
       .addCase(setHistory.fulfilled, () => {
       })
-      .addCase(deleteHistory.fulfilled, () => {
+      .addCase(deleteHistory.fulfilled, (state, action) => {
+        console.log('deleteHistory state.items=', state.items);
+        console.log('deleteHistory action.payload=', action.payload);
+        state.items = state.items.filter(item => item._id !== action.payload.data._id);
       })
 
       ;

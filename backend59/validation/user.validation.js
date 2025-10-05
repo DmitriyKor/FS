@@ -8,7 +8,6 @@ export const userLoginValidation = [
 export const userRegisterValidation = [
   body('name').notEmpty().withMessage('Name is required.'),
   body('name').isLength({min: 2, max: 256}).withMessage('Wrong length of name'),
-  body('name').isAlpha().withMessage('Name must be alphabetic'),
   body('startBalance').isNumeric().withMessage('Start balance must be numeric'),
   body('password')
     .isStrongPassword({

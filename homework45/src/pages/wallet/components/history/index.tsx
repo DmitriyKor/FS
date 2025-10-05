@@ -22,19 +22,13 @@ export const HistoryArea = () => {
     console.log('History=');
     console.log(history);
 
-
-
     const user: IUser = useSelector((state: RootState) => state.user);
     const dispatch: Dispatch = useDispatch();
 
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
 
     const deleteConfirmCallback = (context: any): void => {
-        console.log('deleteConfirmCallback. context =', context);
-
-        const historyId: IHistoryId = { _id: history.items[context]._id };
-        console.log('deleteConfirmCallback. historyId =', historyId);
-
+        const historyId: IHistoryId = { _id: history.items[context]._id }
         dispatch(deleteHistory(historyId));
     }
     const { open: openC, openDialog: openCDialog, closeDialog: closeCDialog } = useDialog(deleteConfirmCallback);
@@ -58,9 +52,6 @@ export const HistoryArea = () => {
         const value = (e.currentTarget as HTMLInputElement).value;
         const idx: number = history.items.findIndex((item: IHistoryItem) => item._id == value);
         if (idx >= 0) {
-            console.log('handleDeleteClick. idx=', idx)
-            console.log('handleDeleteClick. item=', history.items[idx])
-
             openCDialog({}, idx);
         }
     }
@@ -102,18 +93,18 @@ export const HistoryArea = () => {
 
 
     const FilterButtons = () => {
-        //const [filter, setFilter] = React.useState<string | null>(HISTORY_FILTER_ALL);
-
+        
+        console.log('FilterButtons, history.filter=', history.filter)
         const handleFilter = (
             event: React.MouseEvent<HTMLElement>,
             newFilter: string | null,
         ) => {
             dispatch(fetchHistory(newFilter))
-            //setFilter(newFilter);
         };
 
         return (
             <ToggleButtonGroup
+                fullWidth
                 sx={{ height: '28px', marginBottom: 1 }}
                 size="small"
                 value={history.filter}
@@ -122,13 +113,13 @@ export const HistoryArea = () => {
                 aria-label="history filter"
             >
                 <ToggleButton value={HISTORY_FILTER_ALL} aria-label="left aligned">
-                    <Button>All</Button>
+                    All
                 </ToggleButton>
                 <ToggleButton value={HISTORY_FILTER_INCOME} aria-label="centered">
-                    <Button>Income</Button>
+                   Income
                 </ToggleButton>
                 <ToggleButton value={HISTORY_FILTER_EXPENSE} aria-label="right aligned">
-                    <Button>Expense</Button>
+                    Expense
                 </ToggleButton>
             </ToggleButtonGroup>
         );

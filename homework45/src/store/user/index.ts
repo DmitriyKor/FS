@@ -36,7 +36,7 @@ const userSlice = createSlice({
     builder
       .addCase(fetchUser.pending, () => {})
       .addCase(fetchUser.fulfilled, (state, action) => {
-        console.log(action.payload);        
+        console.log('fetchUser=',action.payload);        
         state.data = action.payload;        
       })
       .addCase(fetchUser.rejected, (state) => {

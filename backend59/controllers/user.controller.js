@@ -87,12 +87,16 @@ export const register = async (req, res, next) => {
             return;
         }
 
+        console.log('email is not found in db')
+
         //hash and erase password
         req.body.hashedPassword = await hashPassword(req.body.password);
         req.body.password = 'xxxxxxxx';
         if (!req.body.hashedPassword) {
             next(new GeneralServerError(500, 'Hashing error'))
         }
+
+        console.log('password is hashed:', req.body.hashedPassword)
 
         //add user to the database (non-activated at this stage)
         const userData = {
@@ -103,31 +107,35 @@ export const register = async (req, res, next) => {
             startBalance: req.body.startBalance,
             activated: false
         };
-        const addResult = await userService.add(userData);//addResult.resultId is the id of added user
+
+        console.log('userService.add.userData=', userData)
+        const addResult = await userService.add(userData);//addResult.insertedId is the id of added user
+        console.log('addResult=', addResult);
         if (!addResult.acknowledged) {
             next(new GeneralServerError(500, 'Database error'))
         }
+
 
         //create default categories for the user
         const defaultCategories = DEFAULT_CATEGORIES.map((item)=>{
             return {
                 ...item,
-                userId: addResult.resultId,
+                userId: addResult.insertedId,
                 default : true
             }
         })
         await categoriesService.addMany(defaultCategories);
 
         //send invitation to activate email to the user
-        messageHTML = renderHTML(path.join(__dirname, '../views/activation.handlebars'),
-            { link: `http://localhost:3000/api/user/activate?code=${addResult.resultId}&email=${req.body.email}` })
-        await sendEmail(req.body.email, 'Activation confirmation', '', messageHTML);
+        // messageHTML = renderHTML(path.join(__dirname, '../views/activation.handlebars'),
+        //     { link: `http://localhost:3000/api/user/activate?code=${addResult.insertedId}&email=${req.body.email}` })
+        // await sendEmail(req.body.email, 'Activation confirmation', '', messageHTML);
 
         //get extended user data
         const userExtended = await userService.getExtendedByEmail(req.body.email); 
 
         //create a token for the user
-        const token = jwt.sign({ email: req.body.email, id: addResult.resultId.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '48h' });
+        const token = jwt.sign({ email: req.body.email, id: addResult.insertedId.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '48h' });
         res.status(200).json({
             status: 'OK',
             message: 'Proceed with activation',
