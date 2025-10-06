@@ -10,6 +10,7 @@ export const HistoryListStyle = styled.div`
     padding: 0;
     margin: 0;
     gap: 10px;
+    overflow-y: auto;
 `
 
 export const HistoryItemStyle = styled.div`
@@ -20,4 +21,6 @@ export const HistoryItemStyle = styled.div`
     border: 1px solid ${props => props.theme.panel.borderColor};
     background-color: ${props => props.theme.historyItem.backgroundColor};
     font-size: 10px;
+    width: 100%;
+    box-sizing: border-box;
 `
