@@ -19,8 +19,6 @@ import { HISTORY_FILTER_ALL, HISTORY_FILTER_EXPENSE, HISTORY_FILTER_INCOME } fro
 
 export const HistoryArea = () => {
     const history: IHistory = useSelector((state: RootState) => state.history);
-    console.log('History=');
-    console.log(history);
 
     const user: IUser = useSelector((state: RootState) => state.user);
     const dispatch: Dispatch = useDispatch();
@@ -93,8 +91,7 @@ export const HistoryArea = () => {
 
 
     const FilterButtons = () => {
-        
-        console.log('FilterButtons, history.filter=', history.filter)
+
         const handleFilter = (
             event: React.MouseEvent<HTMLElement>,
             newFilter: string | null,

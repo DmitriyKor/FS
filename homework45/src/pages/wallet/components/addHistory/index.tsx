@@ -16,15 +16,10 @@ export const AddHistoryArea = () => {
 
     const dispatch = useDispatch();
     const categories: ICategories = useSelector((state : RootState) => state.categories);
-    // console.log('AddHistory, categories is');
-    // console.log(categories);
 
     const user: IUser = useSelector((state : RootState)=> state.user);
 
     const onSubmit = async (data:any, form:any) => {
-        // console.log('AddHistory onSubmit, data is');
-        // console.log(data);
-        // console.log(user);
 
         let item: IHistoryItem = {
             _id: "",
@@ -35,7 +30,6 @@ export const AddHistoryArea = () => {
             expense: data.type == OPERATION_TYPE.expense ? data.amount: 0,
         }
 
-        // console.log(item);
         await dispatch(addHistory(item));
         form.restart();
     }

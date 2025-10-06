@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { GeneralServerError } from '../exceptions/GeneralErrors.js';
 import * as historyService from '../services/history.service.js'
+import * as userService from '../services/user.service.js'
 
 export const getAll = async (req, res, next) => {
     try {
@@ -22,17 +23,20 @@ export const addItem = async (req, res, next) => {
     const item = {userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId), time: new Date(), 
         comment: req.body.comment, income: Number(req.body.income), expense: Number(req.body.expense)};
     
-    console.log('history addItem', item);
-    
     try {
         const result = await historyService.addItem(item);
         if (!result.acknowledged) {
             next(new GeneralServerError(500, 'Database error'))
         }
+        
+        //request user's extended data (amounts)
+        const user = await userService.getExtendedByEmail(req.user.email);
+        
         item.id = result.resultId;
         res.status(201).json({
             status: 'OK',
             item: item,
+            user
         });
 
     } catch (error) {
@@ -61,12 +65,21 @@ export const deleteItem = async (req, res, next) => {
     try {
         const itemId = req.params.id;
 
-        console.log('delete item, req.params.id=', req.params.id)
-
         const result = await historyService.deleteItem(req.user.id, itemId);
-        res.status(204).json({
-            status: 'OK',
-            count: result.deleteCount
+
+        if (!result.acknowledged) {
+             next(new GeneralServerError(500, error.message))
+        }
+        
+        //request user's extended data (amounts)
+        const user = await userService.getExtendedByEmail(req.user.email);
+
+        console.log('new user data after delete: ', user)
+
+        res.status(200).json({
+            status: 'OK gggg',
+            count: result.deleteCount,
+            user
         });
     } catch (error) {
         next(new GeneralServerError(500, error.message))
@@ -74,13 +87,20 @@ export const deleteItem = async (req, res, next) => {
 }
 
 export const deleteAll = async (req, res, next) => {
-    try {
-
-        console.log('delete all')        
+    try {     
         const result = await historyService.deleteAll(req.user.userId);
+        
+        if (!result.acknowledged) {
+             next(new GeneralServerError(500, error.message))
+        }
+
+        //request user's extended data (amounts)
+        const user = await userService.getExtendedByEmail(req.user.email);
+        
         res.status(204).json({
             status: 'OK',
-            count: result.deleteCount
+            count: result.deleteCount,
+            user
         });
     } catch (error) {
         next(new GeneralServerError(500, error.message))
@@ -93,18 +113,19 @@ export const changeItem = async (req, res, next) => {
         const item = {userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId),  
         comment: req.body.comment, income: Number(req.body.income), expense: Number(req.body.expense)};
         
-        
         if (!item._id) {item._id = new ObjectId(req.params.id)}
-        console.log('changeItem.item=', item)
         const result = await historyService.changeItem(item);
-        console.log('changeItem.result=', result);
-        
         if (!result.acknowledged) {
             next(new GeneralServerError(500, 'Database error'))
         }
+
+        //request user's extended data (amounts)
+        const user = await userService.getExtendedByEmail(req.user.email);
+
         res.status(200).json({
             status: 'OK',
-            count: result.modifiedCount
+            count: result.modifiedCount,
+            user
         });
     } catch (error) {
         next(new GeneralServerError(500, error.message))

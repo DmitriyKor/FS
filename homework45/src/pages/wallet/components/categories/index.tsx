@@ -17,8 +17,6 @@ export const CategoriesArea: React.FC = () => {
     //const user = useSelector((state: RootState) => state.user);   
 
     const categories: ICategories = useSelector((state: RootState) => state.categories);
-    console.log('categories=');
-    console.log(categories) ; 
 
     const deleteConfirmCallback = (context: any) => {
         const categoryId: ICategoryId = { id: context };

@@ -81,8 +81,6 @@ export const changeItem = async (item) => {
 export const deleteItem = async (userId, itemId) => {
     const db = mongo.client.db(process.env.MONGODB_DATABASE_NAME);
     const collection = db.collection(process.env.MONGODB_COLLECTION_HISTORY);
-
-    console.log('deleteItem', userId, itemId);
     return await collection.deleteOne({ userId: new ObjectId(userId), _id: new ObjectId(itemId) });
 }
 
