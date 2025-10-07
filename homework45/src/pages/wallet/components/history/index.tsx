@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent, CardHeader, IconButton, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { Delete, EditDocument } from '@mui/icons-material';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import { useInView, type InViewHookResponse } from "react-intersection-observer";
 
-import { HistoryItemStyle, HistoryLayout, HistoryListStyle } from "./index.styles";
+import { HistoryItemStyle, HistoryLayout, HistoryListStyle, HistoryLoaderStyle } from "./index.styles";
 import { EditHistoryDialog } from "./editHistoryDialog";
 import { deleteHistory, fetchHistory, OPERATION_TYPE, type IHistory, type IHistoryId, type IHistoryItem } from "../../../../store/history";
 import ConfirmDialog from "../../../../shared/components/confirmDialog";
@@ -25,11 +24,53 @@ export const HistoryArea = () => {
 
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
 
+    const loaderRef = useRef(null);
+    const scrollRef = useRef(null);
+
+    const prevHeight = useRef(0);
+
+    useLayoutEffect(() => {
+        if (history.isLoading && scrollRef.current) {
+            prevHeight.current = scrollRef.current.scrollHeight;
+        }
+    }, [history.isLoading]);
+
+    useLayoutEffect(() => {
+        if (!history.isLoading && scrollRef.current) {
+            const diff = scrollRef.current.scrollHeight - prevHeight.current;
+            scrollRef.current.scrollTop += diff;
+        }
+    }, [history.isLoading, history.items.length]);
+
     const deleteConfirmCallback = (context: any): void => {
         const historyId: IHistoryId = { _id: history.items[context]._id }
         dispatch(deleteHistory(historyId));
     }
     const { open: openC, openDialog: openCDialog, closeDialog: closeCDialog } = useDialog(deleteConfirmCallback);
+
+    useEffect(() => {
+        const io = new IntersectionObserver(
+            (entries) => {
+                const target = entries[0];
+                console.log('IntersectionObserver, target.isIntersecting=', target.isIntersecting);
+                if (target.isIntersecting && !history.isLoading && (history.items.length < history.countTotal)) {
+                    dispatch(fetchHistory({ ...history.params, from: history.items.length }))
+                }
+            },
+            {
+                threshold: 0.1,
+            }
+        );
+
+        if (loaderRef.current) {
+            io.observe(loaderRef.current)
+        }
+        return () => {
+            if (loaderRef.current) {
+                io.disconnect();
+            };
+        };
+    }, [loaderRef.current]);
 
     const handleEditClick: React.MouseEventHandler<HTMLButtonElement> = (e): void => {
         const value = (e.currentTarget as HTMLInputElement).value;
@@ -55,15 +96,14 @@ export const HistoryArea = () => {
     }
 
     const HistoryList = () => {
-
         return (
-            <HistoryListStyle>
+            <HistoryListStyle ref={scrollRef}>
                 {history.items?.map(
-                    (item: IHistoryItem) => {
+                    (item: IHistoryItem, index: number, items: IHistoryItem[]) => {
                         return (
                             <HistoryItemStyle key={item._id}>
                                 <ItemToolbarStyle>
-                                    <ItemToolbarText>{item.comment}</ItemToolbarText>
+                                    <ItemToolbarText>{index.toString() + '. ' + item.comment}</ItemToolbarText>
                                     <ItemToolbarIconGroup>
                                         <ItemToolbarIcon>
                                             <IconButton aria-label="edit" value={item._id} onClick={handleEditClick}>
@@ -85,18 +125,19 @@ export const HistoryArea = () => {
                         )
                     }
                 )}
+                <div ref={loaderRef} />
+                <p>{history.isLoading ? "Loading..." : "Scroll down to load..."}</p>
+                <p>AAAAAAAAAAAAAAAAA</p>
             </HistoryListStyle>
         )
     }
 
-
     const FilterButtons = () => {
-
         const handleFilter = (
             event: React.MouseEvent<HTMLElement>,
             newFilter: string | null,
         ) => {
-            dispatch(fetchHistory(newFilter))
+            dispatch(fetchHistory({ ...history.params, filter: newFilter }))
         };
 
         return (
@@ -104,7 +145,7 @@ export const HistoryArea = () => {
                 fullWidth
                 sx={{ height: '28px', marginBottom: 1 }}
                 size="small"
-                value={history.filter}
+                value={history.params.filter}
                 exclusive
                 onChange={handleFilter}
                 aria-label="history filter"
@@ -113,7 +154,7 @@ export const HistoryArea = () => {
                     All
                 </ToggleButton>
                 <ToggleButton value={HISTORY_FILTER_INCOME} aria-label="centered">
-                   Income
+                    Income
                 </ToggleButton>
                 <ToggleButton value={HISTORY_FILTER_EXPENSE} aria-label="right aligned">
                     Expense

@@ -8,7 +8,7 @@ export interface ICategoryItem {
 }
 
 export interface ICategoryId {
-    id: String;
+    _id: String;
 }
 
 export interface ICategories {

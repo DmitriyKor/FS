@@ -19,7 +19,7 @@ export const CategoriesArea: React.FC = () => {
     const categories: ICategories = useSelector((state: RootState) => state.categories);
 
     const deleteConfirmCallback = (context: any) => {
-        const categoryId: ICategoryId = { id: context };
+        const categoryId: ICategoryId = {_id: context };
         dispatch(deleteCategory(categoryId));
     }
     const { open: openConfirm, openDialog: openDialogConfirm, closeDialog: closeDialogConfirm } = useDialog(deleteConfirmCallback);

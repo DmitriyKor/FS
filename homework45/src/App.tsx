@@ -24,7 +24,7 @@ import { authAxios } from './helpers/authAxios';
 import SuspensePage from './pages/suspensePage';
 import type { RootState } from './store/store';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { HISTORY_FILTER_ALL } from './store/history/const';
+import { HISTORY_DEFAULT_PARAMS } from './store/history/const';
 
 const openRoutes = [
   { path: '/', element: <Home /> },
@@ -38,14 +38,13 @@ const protectedRoutes = [
   { path: '/wallet', element: <Wallet /> },
 ]
 
- const clientId = "701484575722-6hl59r36cvcsf207nvmttuudg0tlen1p.apps.googleusercontent.com";
- const clientSecret = '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'
+const clientId = "701484575722-6hl59r36cvcsf207nvmttuudg0tlen1p.apps.googleusercontent.com";
+const clientSecret = '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'
 
 function App() {
 
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
-  //const categories = useSelector((state: RootState) => state.categories);
 
   useEffect(() => {
     if (authAxios.getTokenFromStorage()) { dispatch(fetchUser()) };
@@ -53,16 +52,14 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchCategories());
-    dispatch(fetchHistory(HISTORY_FILTER_ALL));
+    dispatch(fetchHistory(HISTORY_DEFAULT_PARAMS));
   }, [user]);
 
   return (
     <>
       <ThemeProvider theme={mainTheme}>
         <GoogleOAuthProvider clientId={clientId} >
-
-          <GlobalStyle/>
-
+          <GlobalStyle />
           <BrowserRouter>
             <Routes>
               {openRoutes.map((item) => <Route path={item.path} element={

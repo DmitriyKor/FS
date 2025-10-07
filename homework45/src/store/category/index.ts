@@ -26,7 +26,11 @@ export const addCategory : any = createAsyncThunk(
 export const deleteCategory : any = createAsyncThunk(
   'categories/deleteCategory',
   async (data: ICategoryId) => {
-    const response = await authAxios.instance.delete(API_URL+ENDPOINT_CATEGORIES+'/'+data.id);
+    console.log('categories/deleteCategory, data', data);
+    const response = await authAxios.instance.delete(API_URL+ENDPOINT_CATEGORIES+'/'+data._id);
+    console.log('categories/deleteCategory, response', response);
+
+    
     return response.data;
   }
 )
@@ -35,19 +39,19 @@ const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
     reducers: {
-        updateCategoriesBalance: (state: ICategories, action) => {
-            state.items = state.items?.map((item_category) => {
-                return {
-                    ...item_category,
-                    balanceExpense: action.payload.reduce((acc:number, item : IHistoryItem) => {
-                        return item_category.id == item.categoryId ? acc + Number(item.expense) : acc
-                    }, 0),
-                    balanceIncome: action.payload.reduce((acc:number, item : IHistoryItem) => {
-                        return item_category.id == item.categoryId ? acc + Number(item.income) : acc
-                    }, 0),
-                }
-            })
-        },
+        // updateCategoriesBalance: (state: ICategories, action) => {
+        //     state.items = state.items?.map((item_category) => {
+        //         return {
+        //             ...item_category,
+        //             balanceExpense: action.payload.reduce((acc:number, item : IHistoryItem) => {
+        //                 return item_category.id == item.categoryId ? acc + Number(item.expense) : acc
+        //             }, 0),
+        //             balanceIncome: action.payload.reduce((acc:number, item : IHistoryItem) => {
+        //                 return item_category.id == item.categoryId ? acc + Number(item.income) : acc
+        //             }, 0),
+        //         }
+        //     })
+        // },
     },
     extraReducers: (builder) => {
         builder
@@ -65,7 +69,7 @@ const categoriesSlice = createSlice({
                 state.items?.push(action.payload);
             })
             .addCase(deleteCategory.fulfilled, (state, action) => {
-                const idx : number | undefined = state.items?.findIndex(item => item.id == action.meta.arg.id);
+                const idx : number | undefined = state.items?.findIndex(item => item._id == action.meta.arg._id);
                 if (idx && idx>-1) {
                     state.items?.splice(idx, 1);
                 }
@@ -74,6 +78,6 @@ const categoriesSlice = createSlice({
     }
 })
 
-export const { updateCategoriesBalance } = categoriesSlice.actions;
+//export const { updateCategoriesBalance } = categoriesSlice.actions;
 export default categoriesSlice.reducer;
 export * from './interfaces.ts'

@@ -10,11 +10,18 @@ export interface IHistoryItem {
 export interface IHistoryId {
     _id: string;
 }
+
+export interface IHistoryParams {
+    filter: string;
+    from: number;
+    count: number;
+}
+
 export interface IHistory {
     items: IHistoryItem[];
     countTotal: number;
     isLoading: boolean;
-    filter: string;
+    params: IHistoryParams;
     error: string | undefined | null;
 }
 
