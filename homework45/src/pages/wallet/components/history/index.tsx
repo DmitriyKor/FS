@@ -126,8 +126,6 @@ export const HistoryArea = () => {
                     }
                 )}
                 <div ref={loaderRef} />
-                <p>{history.isLoading ? "Loading..." : "Scroll down to load..."}</p>
-                <p>AAAAAAAAAAAAAAAAA</p>
             </HistoryListStyle>
         )
     }
