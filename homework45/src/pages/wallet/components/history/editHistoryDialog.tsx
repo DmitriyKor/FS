@@ -8,14 +8,6 @@ import type { ICategories, ICategoryItem } from "../../../../store/category";
 import type { RootState } from "../../../../store/store";
 import { requiredSelect, required, mustBeNumber } from "../../../../shared/validation";
 
-// interface IEditHistoryDialogValues {
-//     id : string;
-//     userId: string;
-//     categoryId: string;
-//     comment: string;
-//     amount : number;
-// }
-
 interface IEditHistoryDialogProps {
   open: boolean;
   closeDialog : any;

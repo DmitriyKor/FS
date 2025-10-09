@@ -58,12 +58,13 @@ const historySlice = createSlice({
       })
       .addCase(fetchHistory.fulfilled, (state, action) => {
         state.isLoading = false;              
-        // console.log('fetchHistory.fulfilled   action.meta.arg=', action.meta.arg);
-        // console.log('fetchHistory.fulfilled   action.payload=', action.payload);
+        //rewrite or add new items
         for (let i = 0; i < action.payload.items.length; i++) {
             state.items[action.meta.arg.from + i] = action.payload.items[i];
         }
-        state.countTotal = action.payload.count;     
+        state.countTotal = action.payload.count;
+        //remove unnecessary items which may appear after changing the filter
+        if (state.items.length>state.countTotal) state.items.splice(state.countTotal, state.items.length-state.countTotal);     
       })
       .addCase(fetchHistory.rejected, (state, action) => {
         state.isLoading = false;
