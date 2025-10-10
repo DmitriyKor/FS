@@ -1,4 +1,5 @@
 import express from 'express';
+//import {DOTENV_CONFIGURED} from './config/dotenv.config.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,8 +13,9 @@ import bodyParser from 'body-parser';
 
 import router from './routes/index.routes.js';
 import { initMongo } from './mongo/index.js';
+import { configureS3 } from './config/s3.config.js';
 
-const PORT = process.env.PORT || 3000;
+//const PORT = process.env.PORT || 3000;
 const SECRET_KEY_COOKIES = process.env.SECRET_KEY_COOKIES;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +29,7 @@ app.set('views', path.join(__dirname, 'views')); // specify views directory
 
 console.log('InitMongo:')
 initMongo();
+configureS3();
 
 //global middlewares
 
@@ -63,6 +66,6 @@ app.use('/api', router);
 //static files 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`)
+app.listen(process.env.PORT, () => {
+  console.log(`Example app listening on port ${process.env.PORT}`)
 })

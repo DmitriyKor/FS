@@ -19,7 +19,7 @@ userRouter.get('/', checkTokenHeaders, userController.getInfo);
 userRouter.post('/login', userLoginValidation, validationHandler, userController.login);
 userRouter.get('/activate', userController.activate);
 userRouter.post('/register', userRegisterValidation, validationHandler, userController.register);
-userRouter.post("/image", uploadSingleImageMdl, uploadImage);
+userRouter.post("/image", checkTokenHeaders, uploadSingleImageMdl, uploadImage);
 userRouter.post('/google-auth', userController.authGoogle);
 
 export default userRouter;

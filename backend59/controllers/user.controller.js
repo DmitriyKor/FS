@@ -18,6 +18,8 @@ const __dirname = path.dirname(__filename);
 export const getInfo = async (req, res, next) => {
     // req.user has been created by token checking middleware
     const user = await userService.getExtendedByEmail(req.user.email);
+    console.log('getInfo. user=', user)
+    
     if (user) {
         res.status(200).json({
             status: 'OK',
@@ -51,7 +53,7 @@ export const login = async (req, res, next) => {
     const user = await userService.getByEmail(req.body.email);
     const isAuth = (user) && compareHash(req.body.password, user.hashedPassword);
 
-    if (isAuth) {       
+    if (isAuth) {   
         //create a token for the user
         const token = jwt.sign({ email: req.body.email, id: user._id.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '48h' });
         //get extended user data
@@ -102,7 +104,7 @@ export const register = async (req, res, next) => {
         const userData = {
             name: req.body.name,
             email: req.body.email,
-            image: "",
+            image: new String,
             hashedPassword: req.body.hashedPassword,
             startBalance: req.body.startBalance,
             activated: false

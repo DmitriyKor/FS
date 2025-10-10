@@ -2,20 +2,22 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-// ensure upload folder exists
-const uploadDir = path.join(process.cwd(), "uploads");
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+const storage = multer.memoryStorage();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    const ext = path.extname(file.originalname);
-    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
-  },
-});
+// ensure upload folder exists
+
+// const uploadDir = path.join(process.cwd(), "uploads");
+// if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, uploadDir);
+//   },
+//   filename: function (req, file, cb) {
+//     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+//     const ext = path.extname(file.originalname);
+//     cb(null, file.fieldname + "-" + uniqueSuffix + ext);
+//   },
+// });
 
 function fileFilter(req, file, cb) {
   const allowed = ["image/jpeg", "image/png", "image/webp"];

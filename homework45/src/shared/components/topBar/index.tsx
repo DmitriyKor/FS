@@ -11,16 +11,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { ProfileContainer, TopBarStyle } from "./index.styles";
 import { displayDrawer, DrawerState } from "../../../store/drawer";
 import type { RootState } from "../../../store/store";
-import type { IUser } from "../../../store/user";
+import { fetchUser, type IUser } from "../../../store/user";
 import type { AxiosResponse } from "axios";
 import axios from "axios";
 import { API_URL } from "../../../store/const";
 import { ENDPOINT_USER } from "../../../store/user/const";
+import { authAxios } from "../../../helpers/authAxios";
 
 
 export const TopBar = () => {
 
     const user: IUser = useSelector((state: RootState) => state.user);
+
+    console.log('user.data?.image', user.data?.image);
 
     const dispatch = useDispatch();
     const drawerState = useSelector((state: RootState) => state.drawer);
@@ -79,9 +82,9 @@ export const TopBar = () => {
             const formData = new FormData();
             formData.append("image", file);
             try {
-                const response: AxiosResponse = await axios.post(API_URL + ENDPOINT_USER + '/image', formData);
-                console.log('File upload response:');
-                console.log(response);
+                const response: AxiosResponse = await authAxios.instance.post(API_URL + ENDPOINT_USER + '/image', formData);
+                console.log(response.status);
+                if (response.status==200) dispatch(fetchUser());
             } catch (e) {
             }
         };
@@ -178,7 +181,8 @@ export const TopBar = () => {
             </IconButton>
 
             {(user.data) ?
-                <Avatar {...stringAvatar(user.data.name)} onClick={handleOpenUserMenu} />
+                (user.data.image? <Avatar sx={{ width: 40, height: 40, mr:2 }} src={user.data?.image} alt={user.data?.name} onClick={handleOpenUserMenu}/> 
+                    : <Avatar {...stringAvatar(user.data.name)} onClick={handleOpenUserMenu} />)
                 :
                 <Link to='/login'>
                     <Button
