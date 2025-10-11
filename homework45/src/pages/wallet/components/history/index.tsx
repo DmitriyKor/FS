@@ -3,7 +3,6 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent, CardHeader, IconButton, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { Delete, EditDocument } from '@mui/icons-material';
-import { useInView, type InViewHookResponse } from "react-intersection-observer";
 
 import { HistoryItemStyle, HistoryLayout, HistoryListStyle, HistoryLoaderStyle } from "./index.styles";
 import { EditHistoryDialog } from "./editHistoryDialog";
