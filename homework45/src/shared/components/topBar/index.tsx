@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Divider, FormControl, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, TextField } from "@mui/material";
-import { Form, Field } from 'react-final-form';
+import { Avatar, Button, Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
+import { Form } from 'react-final-form';
 
-import { Edit, Login } from "@mui/icons-material";
+import { Login } from "@mui/icons-material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -13,17 +13,12 @@ import { displayDrawer, DrawerState } from "../../../store/drawer";
 import type { RootState } from "../../../store/store";
 import { fetchUser, type IUser } from "../../../store/user";
 import type { AxiosResponse } from "axios";
-import axios from "axios";
 import { API_URL } from "../../../store/const";
 import { ENDPOINT_USER } from "../../../store/user/const";
 import { authAxios } from "../../../helpers/authAxios";
 
-
 export const TopBar = () => {
-
     const user: IUser = useSelector((state: RootState) => state.user);
-
-    console.log('user.data?.image', user.data?.image);
 
     const dispatch = useDispatch();
     const drawerState = useSelector((state: RootState) => state.drawer);
@@ -65,16 +60,16 @@ export const TopBar = () => {
     }
 
     const FileSelect = () => {
-        const fileSelect = useRef(null);
+        const fileSelect: any = useRef(null);
 
-        const handleFileSelectClick = (e)=>{
+        const handleFileSelectClick = ()=>{
             if (fileSelect && fileSelect.current) fileSelect.current.click();
         }
         
         const OnSubmit = () => {
         }
 
-        const handleFileChange = async (e) => {
+        const handleFileChange = async (e:any) => {
             const file = e.target.files[0];
             if (!file) return;
             const reader = new FileReader();
@@ -83,7 +78,6 @@ export const TopBar = () => {
             formData.append("image", file);
             try {
                 const response: AxiosResponse = await authAxios.instance.post(API_URL + ENDPOINT_USER + '/image', formData);
-                console.log(response.status);
                 if (response.status==200) dispatch(fetchUser());
             } catch (e) {
             }

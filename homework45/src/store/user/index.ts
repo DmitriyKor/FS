@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import type { IUserData, IUser } from './interfaces.ts';
+import type { IUserData } from './interfaces.ts';
 import { API_URL } from '../const.ts';
 import { authAxios } from '../../helpers/authAxios.ts';
 import { ENDPOINT_USER, initialState } from './const.ts';

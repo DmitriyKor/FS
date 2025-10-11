@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import { FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from '@mui/material';
 
 import { AddHistoryLayout } from "./index.styles"
-import type { IUser } from '../../../../store/user';
 import type { ICategories, ICategoryItem } from '../../../../store/category';
 import type { RootState } from '../../../../store/store';
 import { mustBeNumber, required, requiredSelect } from '../../../../shared/validation';
@@ -16,8 +15,6 @@ export const AddHistoryArea = () => {
 
     const dispatch = useDispatch();
     const categories: ICategories = useSelector((state : RootState) => state.categories);
-
-    const user: IUser = useSelector((state : RootState)=> state.user);
 
     const onSubmit = async (data:any, form:any) => {
 

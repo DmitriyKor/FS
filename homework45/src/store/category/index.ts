@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { type AxiosResponse } from 'axios';
 
-import type { ICategoryItem, ICategoryId, ICategories } from './interfaces.ts';
+import type { ICategoryItem, ICategoryId } from './interfaces.ts';
 import { API_URL } from '../const.ts';
 import { ENDPOINT_CATEGORIES, initialState } from './consts.ts';
 import { authAxios } from '../../helpers/authAxios.ts';
-import type { IHistoryItem } from '../history/types.ts';
 
 export const fetchCategories : any = createAsyncThunk(
     'categories/fetchCategories',
@@ -26,11 +25,7 @@ export const addCategory : any = createAsyncThunk(
 export const deleteCategory : any = createAsyncThunk(
   'categories/deleteCategory',
   async (data: ICategoryId) => {
-    console.log('categories/deleteCategory, data', data);
     const response = await authAxios.instance.delete(API_URL+ENDPOINT_CATEGORIES+'/'+data._id);
-    console.log('categories/deleteCategory, response', response);
-
-    
     return response.data;
   }
 )

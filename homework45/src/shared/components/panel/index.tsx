@@ -1,6 +1,5 @@
 import React from 'react';
-import { PanelStyle, PanelToolBarButtonStyle } from './index.styles';
-import { PanelToolBarStyle } from '../../styles/styles';
+import { PanelStyle } from './index.styles';
 
 interface IPanelProps {children? : React.ReactNode};
 

@@ -38,9 +38,6 @@ const protectedRoutes = [
   { path: '/wallet', element: <Wallet /> },
 ]
 
-const clientId = "701484575722-6hl59r36cvcsf207nvmttuudg0tlen1p.apps.googleusercontent.com";
-const clientSecret = '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'
-
 function App() {
 
   const dispatch = useDispatch();
@@ -58,7 +55,7 @@ function App() {
   return (
     <>
       <ThemeProvider theme={mainTheme}>
-        <GoogleOAuthProvider clientId={clientId} >
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID || ""} >
           <GlobalStyle />
           <BrowserRouter>
             <Routes>

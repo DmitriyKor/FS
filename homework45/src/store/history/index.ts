@@ -8,7 +8,7 @@ import { setUser } from '../user/index.ts';
 
 export const fetchHistory : any = createAsyncThunk(
   'history/fetchHistory',
-  async (params: IHistoryParams, thunkAPI) => {    
+  async (params: IHistoryParams) => {    
     const response = await authAxios.instance(API_URL+HISTORY_ENDPOINT, {params});
     return response.data.history;
   }

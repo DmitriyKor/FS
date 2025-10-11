@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {useEffect, useLayoutEffect, useRef } from "react";
 import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, CardContent, CardHeader, IconButton, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { IconButton, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Delete, EditDocument } from '@mui/icons-material';
 
-import { HistoryItemStyle, HistoryLayout, HistoryListStyle, HistoryLoaderStyle } from "./index.styles";
+import { HistoryItemStyle, HistoryLayout, HistoryListStyle } from "./index.styles";
 import { EditHistoryDialog } from "./editHistoryDialog";
 import { deleteHistory, fetchHistory, OPERATION_TYPE, type IHistory, type IHistoryId, type IHistoryItem } from "../../../../store/history";
 import ConfirmDialog from "../../../../shared/components/confirmDialog";
@@ -23,8 +23,8 @@ export const HistoryArea = () => {
 
     const { open, openDialog, closeDialog, dialogValues } = useDialog();
 
-    const loaderRef = useRef(null);
-    const scrollRef = useRef(null);
+    const loaderRef:any = useRef(null);
+    const scrollRef:any = useRef(null);
 
     const prevHeight = useRef(0);
 
@@ -98,7 +98,7 @@ export const HistoryArea = () => {
         return (
             <HistoryListStyle ref={scrollRef}>
                 {history.items?.map(
-                    (item: IHistoryItem, index: number, items: IHistoryItem[]) => {
+                    (item: IHistoryItem, index: number) => {
                         return (
                             <HistoryItemStyle key={item._id}>
                                 <ItemToolbarStyle>
@@ -131,7 +131,8 @@ export const HistoryArea = () => {
 
     const FilterButtons = () => {
         const handleFilter = (
-            event: React.MouseEvent<HTMLElement>,
+            //event: React.MouseEvent<HTMLElement>,
+            _:React.MouseEvent<HTMLElement>,
             newFilter: string | null,
         ) => {
             dispatch(fetchHistory({ ...history.params, filter: newFilter }))
