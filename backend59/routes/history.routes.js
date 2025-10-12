@@ -1,8 +1,8 @@
 import express from 'express';
 import * as historyController from '../controllers/history.controller.js';
-import { checkTokenHeaders } from '../auth/checkToken.js';
 import { historyQueryValidation, historyValidation } from '../validation/history.validation.js';
 import { validationHandler } from '../validation/index.validation.js';
+import { checkTokenHeaders } from '../auth/checkToken.js';
 
 const historyRouter = express.Router(); 
 
