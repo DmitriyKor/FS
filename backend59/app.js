@@ -14,6 +14,7 @@ import bodyParser from 'body-parser';
 import router from './routes/index.routes.js';
 import { initMongo } from './mongo/index.js';
 import { configureS3 } from './config/s3.config.js';
+import { connectDB } from './config/mongoose.config.js';
 
 //const PORT = process.env.PORT || 3000;
 const SECRET_KEY_COOKIES = process.env.SECRET_KEY_COOKIES;
@@ -27,8 +28,8 @@ app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views')); // specify views directory
 
-console.log('InitMongo:')
-initMongo();
+//initMongo();
+connectDB();
 configureS3();
 
 //global middlewares

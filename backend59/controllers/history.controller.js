@@ -1,15 +1,18 @@
-import { ObjectId } from 'mongodb';
+//import { ObjectId } from 'mongodb';
+import mongoose from 'mongoose';
 import { GeneralServerError } from '../exceptions/GeneralErrors.js';
-import * as historyService from '../services/history.service.js'
-import * as userService from '../services/user.service.js'
+//import * as historyService from '../services/history.service.js'
+import * as historyModel from '../models/history.models.js'
+//import * as userService from '../services/user.service.js'
+import * as userModel from '../models/user.model.js'
 
 export const getAll = async (req, res, next) => {
     try {
         const from = req.query.from || 0;
         const count = req.query.count || 50;
         const filter = req.query.filter || 'all';
-        const usersHistory = await historyService.getAll(req.user.id, from, count, filter);
-        
+        const usersHistory = await historyModel.getAll(req.user.id, from, count, filter);
+
         res.status(200).json({
             status: 'OK',
             history: usersHistory,
@@ -20,17 +23,17 @@ export const getAll = async (req, res, next) => {
 }
 
 export const addItem = async (req, res, next) => {
-    const item = {userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId), time: new Date(), 
+    const item = {userId: new mongoose.Types.ObjectId(req.user.id), categoryId: new mongoose.Types.ObjectId(req.body.categoryId), time: new Date(), 
         comment: req.body.comment, income: Number(req.body.income), expense: Number(req.body.expense)};
     
     try {
-        const result = await historyService.addItem(item);
+        const result = await historyModel.addItem(item);
         if (!result.acknowledged) {
             next(new GeneralServerError(500, 'Database error'))
         }
         
         //request user's extended data (amounts)
-        const user = await userService.getExtendedByEmail(req.user.email);
+        const user = await userModel.getExtendedByEmail(req.user.email);
         
         item.id = result.resultId;
         res.status(201).json({
@@ -47,7 +50,7 @@ export const addItem = async (req, res, next) => {
 export const getItem = async (req, res, next) => {
     try {
         const itemId = req.params.id;
-        const historyItem = await historyService.getItem(req.user.id, itemId);
+        const historyItem = await historyModel.getItem(req.user.id, itemId);
         
         if (!historyItem) {
             next(new GeneralServerError(404, 'Item is missing'))
@@ -65,14 +68,14 @@ export const deleteItem = async (req, res, next) => {
     try {
         const itemId = req.params.id;
 
-        const result = await historyService.deleteItem(req.user.id, itemId);
+        const result = await historyModel.deleteItem(req.user.id, itemId);
 
         if (!result.acknowledged) {
              next(new GeneralServerError(500, error.message))
         }
         
         //request user's extended data (amounts)
-        const user = await userService.getExtendedByEmail(req.user.email);
+        const user = await userModel.getExtendedByEmail(req.user.email);
 
         console.log('new user data after delete: ', user)
 
@@ -88,14 +91,14 @@ export const deleteItem = async (req, res, next) => {
 
 export const deleteAll = async (req, res, next) => {
     try {     
-        const result = await historyService.deleteAll(req.user.userId);
+        const result = await historyModel.deleteAll(req.user.userId);
         
         if (!result.acknowledged) {
              next(new GeneralServerError(500, error.message))
         }
 
         //request user's extended data (amounts)
-        const user = await userService.getExtendedByEmail(req.user.email);
+        const user = await userModel.getExtendedByEmail(req.user.email);
         
         res.status(204).json({
             status: 'OK',
@@ -110,17 +113,17 @@ export const deleteAll = async (req, res, next) => {
 export const changeItem = async (req, res, next) => {
     try {
         
-        const item = {userId: new ObjectId(req.user.id), categoryId: new ObjectId(req.body.categoryId),  
+        const item = {userId: new mongoose.Types.ObjectId(req.user.id), categoryId: new mongoose.Types.ObjectId(req.body.categoryId),  
         comment: req.body.comment, income: Number(req.body.income), expense: Number(req.body.expense)};
         
-        if (!item._id) {item._id = new ObjectId(req.params.id)}
-        const result = await historyService.changeItem(item);
+        if (!item._id) {item._id = new mongoose.Types.ObjectId(req.params.id)}
+        const result = await historyModel.changeItem(item);
         if (!result.acknowledged) {
             next(new GeneralServerError(500, 'Database error'))
         }
 
         //request user's extended data (amounts)
-        const user = await userService.getExtendedByEmail(req.user.email);
+        const user = await userModel.getExtendedByEmail(req.user.email);
 
         res.status(200).json({
             status: 'OK',

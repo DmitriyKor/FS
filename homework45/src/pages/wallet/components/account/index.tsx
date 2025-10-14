@@ -7,18 +7,20 @@ import type { IUser } from "../../../../store/user";
 export const AccountArea = () => {
     const user: IUser = useSelector((state:any) => state.user);
 
+    console.log('AccountArea, user:', user)
+
     return (
         <AccountLayout>
             <Panel>
                 <PanelToolBarStyle>
                     <PanelToolBarText>Account</PanelToolBarText>
                 </PanelToolBarStyle>
-                {user && user.data && user.data.startBalance && user?.data?.incomeAmount && user?.data?.expenseAmount ?
+                {user && user.data  ?
                     <>
-                        <p>Start balance: {user?.data?.startBalance}</p>
-                        <p>Income: {user?.data?.incomeAmount}</p>
-                        <p>Expenses: {user?.data?.expenseAmount}</p>
-                        <h4>Total: {user?.data?.startBalance + user?.data?.incomeAmount - user?.data?.expenseAmount}</h4>
+                        <p>Start balance: {user.data.startBalance}</p>
+                        <p>Income: {user.data.incomeAmount}</p>
+                        <p>Expenses: {user.data.expenseAmount}</p>
+                        <h4>Total: {user.data.startBalance + user.data.incomeAmount - user.data.expenseAmount}</h4>
                     </> : ""}
 
             </Panel>

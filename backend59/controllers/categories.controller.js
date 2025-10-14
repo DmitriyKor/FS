@@ -1,10 +1,12 @@
-import { ObjectId } from 'mongodb';
+//import { ObjectId } from 'mongodb';
+import mongoose from 'mongoose';
 import { GeneralServerError } from '../exceptions/GeneralErrors.js';
-import * as categoriesService from '../services/categories.service.js'
+//import * as categoriesService from '../services/categories.service.js'
+import * as categoriesModel from '../models/categories.model.js'
 
 export const getAll = async (req, res, next) => {
     try {
-        const usersCategories = await categoriesService.getAll(req.user.id);
+        const usersCategories = await categoriesModel.getAll(req.user.id);
         // console.log('Categories. userId:', req.user.id)
         // console.log(usersCategories);      
         
@@ -18,14 +20,14 @@ export const getAll = async (req, res, next) => {
 }
 
 export const addItem = async (req, res, next) => {
-    const item = { userId: new ObjectId(req.user.id), default: false, name: req.body.name, description: req.body.description };
+    const item = { userId: new mongoose.Types.ObjectId(req.user.id), default: false, name: req.body.name, description: req.body.description };
     try {
-        const result = await categoriesService.addItem(item);
+        const result = await categoriesModel.addItem(item);
         if (!result.acknowledged) {
             next(new GeneralServerError(500, 'Database error'))
         }
 
-        const categoryItem = await categoriesService.getItem(req.user.id, result.insertedId.toString());
+        const categoryItem = await categoriesModel.getItem(req.user.id, result.insertedId.toString());
         if (!categoryItem) {
              next(new GeneralServerError(404, 'Item is missing'))
         }
@@ -45,7 +47,7 @@ export const addItem = async (req, res, next) => {
 export const getItem = async (req, res, next) => {
     try {
         const itemId = req.params.id;
-        const categoryItem = await categoriesService.getItem(req.user.id, itemId);
+        const categoryItem = await categoriesModel.getItem(req.user.id, itemId);
 
         if (!categoryItem) {
             next(new GeneralServerError(404, 'Item is missing'))
@@ -61,9 +63,9 @@ export const getItem = async (req, res, next) => {
 
 export const changeItem = async (req, res, next) => {
     try {
-        const item = { ...req.body, userId: new ObjectId(req.user.id) };
-        if (!item._id) { item._id = new ObjectId(req.params.id) }
-        const result = await categoriesService.changeItem(item);
+        const item = { ...req.body, userId: new mongoose.Types.ObjectId(req.user.id) };
+        if (!item._id) { item._id = new mongoose.Types.ObjectId(req.params.id) }
+        const result = await categoriesModel.changeItem(item);
         res.status(200).json({
             status: 'OK',
             count: result.modifiedCount
@@ -76,7 +78,7 @@ export const changeItem = async (req, res, next) => {
 export const deleteItem = async (req, res, next) => {
     try {
         const itemId = req.params.id;
-        const result = await categoriesService.deleteItem(req.user.id, itemId);
+        const result = await categoriesModel.deleteItem(req.user.id, itemId);
         console.log('deleteItem', req.user.id, itemId, result)
         
         res.status(204).json({
@@ -90,7 +92,7 @@ export const deleteItem = async (req, res, next) => {
 
 export const deleteAll = async (req, res, next) => {
     try {
-        const result = await categoriesService.deleteAll(req.user.id);
+        const result = await categoriesModel.deleteAll(req.user.id);
         res.status(204).json({
             status: 'OK',
             count: result.deleteCount

@@ -1,15 +1,16 @@
 import { PutObjectCommand } from "@aws-sdk/client-s3";
+import mongoose from 'mongoose';
 import { s3, S3_BUCKET } from "../config/s3.config.js";
 import crypto from "crypto";
 import path from "path";
-import * as userService from '../services/user.service.js';
+//import * as userService from '../services/user.service.js';
+import * as userModel from '../models/user.model.js';
 
 export const uploadImage = async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ message: "No file uploaded" });
         }
-
         const file = req.file;
         const fileExt = path.extname(file.originalname);
         const randomName = crypto.randomBytes(16).toString("hex") + fileExt;
@@ -27,9 +28,9 @@ export const uploadImage = async (req, res) => {
         const imageUrl = `https://${S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`;
         console.log('image URL=', imageUrl);
 
-        const user = await userService.getByEmail(req.user.email);
+        const user = await userModel.getByEmail(req.user.email);
         user.image = imageUrl;
-        await userService.set(user);
+        await userModel.set(user);
 
         console.log('updated user: ', user)
 

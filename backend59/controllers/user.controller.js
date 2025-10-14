@@ -7,9 +7,11 @@ import fs from 'fs';
 import path from 'path';
 import { renderHTML } from "../handlebars/index.js";
 import { fileURLToPath } from "url";
-import * as userService from '../services/user.service.js'
+//import * as userService from '../services/user.service.js'
+import * as userModel from '../models/user.model.js';
 import * as categoriesService from '../services/categories.service.js'
 import {DEFAULT_CATEGORIES} from '../consts/index.js';
+import mongoose from 'mongoose';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,7 +19,7 @@ const __dirname = path.dirname(__filename);
 //  GET /user
 export const getInfo = async (req, res, next) => {
     // req.user has been created by token checking middleware
-    const user = await userService.getExtendedByEmail(req.user.email);
+    const user = await userModel.getExtendedByEmail(req.user.email);
     console.log('getInfo. user=', user)
     
     if (user) {
@@ -34,10 +36,10 @@ const activationCode = 2323232323;
 
 //  GET /user/activate
 export const activate = async (req, res, next) => {
-    const user = await userService.getByEmail(req.query.email);
+    const user = await userModel.getByEmail(req.query.email);
     if (!!user && req.query.code == user._id.toString()) {
         //change status of user as Activated in the database
-        await userService.setActive(req.query.email)
+        await userModel.setActive(req.query.email)
         //respond with page
         const messageHTML = renderHTML(path.join(__dirname, '../views/activation_ok.handlebars'), {});
         res.send(messageHTML);
@@ -50,14 +52,17 @@ export const activate = async (req, res, next) => {
 //  POST /user/login
 export const login = async (req, res, next) => {
     //check password
-    const user = await userService.getByEmail(req.body.email);
+    console.log('login');
+    
+    const user = await userModel.getByEmail(req.body.email);
+    console.log('user=', user);
     const isAuth = (user) && compareHash(req.body.password, user.hashedPassword);
 
     if (isAuth) {   
         //create a token for the user
         const token = jwt.sign({ email: req.body.email, id: user._id.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '48h' });
         //get extended user data
-        const userExtended = await userService.getExtendedByEmail(req.body.email); 
+        const userExtended = await userModel.getExtendedByEmail(req.body.email); 
         res.status(200).json({
             status: 'OK',
             message: 'Login successful',
@@ -75,7 +80,7 @@ export const register = async (req, res, next) => {
     var messageHTML = null;
     try {
         //check email in database; reject if email exists
-        const user = await userService.getByEmail(req.body.email);
+        const user = await userModel.getByEmail(req.body.email);
         const userExists = !!user;
         if (userExists) {
             if (!user.activated) {
@@ -111,7 +116,7 @@ export const register = async (req, res, next) => {
         };
 
         console.log('userService.add.userData=', userData)
-        const addResult = await userService.add(userData);//addResult.insertedId is the id of added user
+        const addResult = await userModel.add(userData);//addResult.insertedId is the id of added user
         console.log('addResult=', addResult);
         if (!addResult.acknowledged) {
             next(new GeneralServerError(500, 'Database error'))
@@ -134,7 +139,7 @@ export const register = async (req, res, next) => {
         // await sendEmail(req.body.email, 'Activation confirmation', '', messageHTML);
 
         //get extended user data
-        const userExtended = await userService.getExtendedByEmail(req.body.email); 
+        const userExtended = await userModel.getExtendedByEmail(req.body.email); 
 
         //create a token for the user
         const token = jwt.sign({ email: req.body.email, id: addResult.insertedId.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '48h' });
