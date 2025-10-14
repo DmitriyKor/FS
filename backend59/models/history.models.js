@@ -8,6 +8,9 @@ const historySchema = new mongoose.Schema({
     time: Date
 });
 
+historySchema.index({ categoryId: 1 });
+historySchema.index({ time: -1 });
+
 export const HistoryModel = mongoose.model('history', historySchema, 'history');
 
 export const getAll = async (userId, from, count, filter) => {
