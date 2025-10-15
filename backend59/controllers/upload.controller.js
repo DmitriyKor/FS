@@ -23,19 +23,11 @@ export const uploadImage = async (req, res) => {
             //ACL: "public-read", // optional: makes file publicly accessible?
         };
         const result = await s3.send(new PutObjectCommand(params));
-
-        console.log('S3 result=', result);
         const imageUrl = `https://${S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`;
-        console.log('image URL=', imageUrl);
-
         const user = await userModel.getByEmail(req.user.email);
         user.image = imageUrl;
         await userModel.set(user);
-
-        console.log('updated user: ', user)
-
         // const imageUrl = `/uploads/${req.file.filename}`;
-
         res.status(200).json({
             message: "Image uploaded successfully",
             file: {

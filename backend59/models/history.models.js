@@ -1,26 +1,27 @@
 import mongoose from 'mongoose';
+import { ensureObjectId, ensureValueObjectId } from './objectIdHelper.js';
 
 const historySchema = new mongoose.Schema({
     comment: String,
     categoryId: mongoose.Schema.Types.ObjectId,
+    userId: mongoose.Schema.Types.ObjectId,
     income: Number,
     expense: Number,
     time: Date
 });
 
 historySchema.index({ categoryId: 1 });
+historySchema.index({ userId: 1 });
 historySchema.index({ time: -1 });
 
-export const HistoryModel = mongoose.model('history', historySchema, 'history');
+const HistoryModel = mongoose.model('history', historySchema, 'history');
 
 export const getAll = async (userId, from, count, filter) => {
-
-    var match;
-    if (!filter || filter == 'all') { match = { "userId": new mongoose.Types.ObjectId(userId) } }
-    else if (filter == 'income') { match = { "userId": new mongoose.Types.ObjectId(userId), "income": { "$gt": 0 } } }
-    else if (filter == 'expense') {
-        match = { "userId": new mongoose.Types.ObjectId(userId), "expense": { "$gt": 0 } }
-    };
+    
+    userId = ensureValueObjectId(userId);
+    
+    const match = (filter == 'income') ? { "userId": userId, "income": { "$gt": 0 } } :
+         (filter == 'expense') ? { "userId": userId, "expense": { "$gt": 0 } } : { "userId": userId};
 
     const countTotal = await HistoryModel.countDocuments(match);
 
@@ -44,8 +45,10 @@ export const getAll = async (userId, from, count, filter) => {
 }
 
 export const getItem = async (userId, itemId) => {
+    userId = ensureValueObjectId(userId);
+    const _id = ensureValueObjectId(itemId);
     const results = await HistoryModel.aggregate([
-        { $match: { userId: new mongoose.Types.ObjectId(userId), _id: new mongoose.Types.ObjectId(itemId) } },
+        { $match: { userId, _id } },
         {
             $lookup: {
                 from: 'categories',
@@ -60,26 +63,36 @@ export const getItem = async (userId, itemId) => {
 }
 
 export const addItem = async (item) => {
-    return await HistoryModel.insertOne(item);
+    ensureObjectId(item, "userId");
+    ensureObjectId(item, "categoryId");
+    const result = await HistoryModel.insertOne(item);
+    delete result.userId;
+    return result;
 }
 
 export const changeItem = async (item) => {
+    ensureObjectId(item, "_id");
+    ensureObjectId(item, "userId");
+    ensureObjectId(item, "categoryId");
     console.log('changeItem: ', item)
     const updateDoc = {
         $set: {
             comment: item.comment,
-            categoryId: new mongoose.Types.ObjectId(item.categoryId),
+            categoryId: item.categoryId,
             income: item.income,
             expense: item.expense
         },
     };
-    return await HistoryModel.updateOne( { _id: new mongoose.Types.ObjectId(item._id) }, updateDoc);
+    return await HistoryModel.updateOne( { _id: item._id}, updateDoc);
 }
 
 export const deleteItem = async (userId, itemId) => {
-    return await HistoryModel.deleteOne({ userId: new mongoose.Types.ObjectId(userId), _id: new mongoose.Types.ObjectId(itemId) });
+    userId = ensureValueObjectId(userId);
+    const _id = ensureValueObjectId(itemId);
+    return await HistoryModel.deleteOne({ userId, _id });
 }
 
 export const deleteAll = async (userId) => {
-    return await HistoryModel.deleteMany({ userId: new mongoose.Types.ObjectId(userId) });
+    userId = ensureValueObjectId(userId);
+    return await HistoryModel.deleteMany({ userId});
 }

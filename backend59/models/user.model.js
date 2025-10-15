@@ -9,13 +9,10 @@ const userSchema = new mongoose.Schema({
     activated: { type: Boolean, default: false }
 });
 
- export const UserModel = mongoose.model('User', userSchema);
-// console.log('User Schema:');
-// console.log(UserModel.collection.name);
+const UserModel = mongoose.model('User', userSchema);
 
 export const getByEmail = async (email) => {
     const result = await UserModel.findOne({ email });
-    //console.log('getByEmail result= ', result);
     return result;
 }
 
@@ -26,12 +23,10 @@ export const set = async (user) => {
         },
     };
     const result = await UserModel.updateOne({ email: user.email }, updateDoc);
-    //console.log('set result= ', result);
     return result;
 }
 
 export const getExtendedByEmail = async (email) => {
-    console.log('getExtendedByEmail, email=', email)
     const results = await UserModel.aggregate([
         {
             $match: {
@@ -59,7 +54,6 @@ export const getExtendedByEmail = async (email) => {
             }
         }
     ]);
-    //console.log('getExtendedByEmail results= ', results);
     if (results.length) return results[0];
 }
 

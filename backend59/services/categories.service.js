@@ -74,12 +74,8 @@ export const getItem = async (userId, itemId) => {
 
     const categoriesArray = await categoriesCursor.toArray();
 
-    console.log('array categories=', categoriesArray)
-
     return categoriesArray? categoriesArray[0] : null;
     
-    //return await collection.findOne({ _id: new ObjectId(itemId), userId: new ObjectId(userId)}, 
-    //{projection: {_id:1, default:1, name:1, description:1}});
 }
 
 export const addItem = async (item) => {

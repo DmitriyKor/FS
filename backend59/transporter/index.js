@@ -23,7 +23,7 @@ export const sendEmail = async (recipients, subject, text, html) => {
     
     try {
         await transporter.verify();
-        console.log("Server is ready to take our messages");
+        //console.log("Server is ready to take our messages");
 
         const info = await transporter.sendMail({
             from: 'dmytrok251@gmail.com', // sender address
@@ -33,7 +33,7 @@ export const sendEmail = async (recipients, subject, text, html) => {
             html: html, // html body
         });
 
-        console.log("Message sent: %s", info.messageId);
+        //console.log("Message sent: %s", info.messageId);
         //console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     } catch (err) {
         console.error("Error while sending mail", err);

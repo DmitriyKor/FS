@@ -7,11 +7,9 @@ import fs from 'fs';
 import path from 'path';
 import { renderHTML } from "../handlebars/index.js";
 import { fileURLToPath } from "url";
-//import * as userService from '../services/user.service.js'
 import * as userModel from '../models/user.model.js';
-import * as categoriesService from '../services/categories.service.js'
+import * as categoriesModel from '../models/categories.model.js';
 import {DEFAULT_CATEGORIES} from '../consts/index.js';
-import mongoose from 'mongoose';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,8 +18,6 @@ const __dirname = path.dirname(__filename);
 export const getInfo = async (req, res, next) => {
     // req.user has been created by token checking middleware
     const user = await userModel.getExtendedByEmail(req.user.email);
-    console.log('getInfo. user=', user)
-    
     if (user) {
         res.status(200).json({
             status: 'OK',
@@ -51,11 +47,8 @@ export const activate = async (req, res, next) => {
 
 //  POST /user/login
 export const login = async (req, res, next) => {
-    //check password
-    console.log('login');
-    
+    //check password    
     const user = await userModel.getByEmail(req.body.email);
-    console.log('user=', user);
     const isAuth = (user) && compareHash(req.body.password, user.hashedPassword);
 
     if (isAuth) {   
@@ -76,7 +69,6 @@ export const login = async (req, res, next) => {
 
 // POST /user/register
 export const register = async (req, res, next) => {
-    console.log('register is being processed');
     var messageHTML = null;
     try {
         //check email in database; reject if email exists
@@ -93,18 +85,12 @@ export const register = async (req, res, next) => {
             }
             return;
         }
-
-        console.log('email is not found in db')
-
         //hash and erase password
         req.body.hashedPassword = await hashPassword(req.body.password);
         req.body.password = 'xxxxxxxx';
         if (!req.body.hashedPassword) {
             next(new GeneralServerError(500, 'Hashing error'))
         }
-
-        console.log('password is hashed:', req.body.hashedPassword)
-
         //add user to the database (non-activated at this stage)
         const userData = {
             name: req.body.name,
@@ -115,23 +101,17 @@ export const register = async (req, res, next) => {
             activated: false
         };
 
-        console.log('userService.add.userData=', userData)
-        const addResult = await userModel.add(userData);//addResult.insertedId is the id of added user
-        console.log('addResult=', addResult);
-        if (!addResult.acknowledged) {
-            next(new GeneralServerError(500, 'Database error'))
-        }
-
+        const addResult = await userModel.add(userData);
 
         //create default categories for the user
         const defaultCategories = DEFAULT_CATEGORIES.map((item)=>{
             return {
                 ...item,
-                userId: addResult.insertedId,
+                userId: addResult._id,
                 default : true
             }
         })
-        await categoriesService.addMany(defaultCategories);
+        await categoriesModel.addMany(defaultCategories);
 
         //send invitation to activate email to the user
         // messageHTML = renderHTML(path.join(__dirname, '../views/activation.handlebars'),
@@ -142,7 +122,7 @@ export const register = async (req, res, next) => {
         const userExtended = await userModel.getExtendedByEmail(req.body.email); 
 
         //create a token for the user
-        const token = jwt.sign({ email: req.body.email, id: addResult.insertedId.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '48h' });
+        const token = jwt.sign({ email: req.body.email, id: addResult._id.toString() }, process.env.SECRET_KEY_TOKEN, { expiresIn: '48h' });
         res.status(200).json({
             status: 'OK',
             message: 'Proceed with activation',

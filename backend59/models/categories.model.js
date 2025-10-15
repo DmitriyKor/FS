@@ -1,18 +1,21 @@
 import mongoose from 'mongoose';
+import { ensureObjectId, ensureValueObjectId } from './objectIdHelper.js';
 
 const categorySchema = new mongoose.Schema({
+    userId: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true, unique: true },
     description: String,
     default: Boolean
 });
 
-export const CategoryModel = mongoose.model('Category', categorySchema, 'categories');
+const CategoryModel = mongoose.model('Category', categorySchema, 'categories');
 
 export const getAll = async (userId) => {
+    userId = ensureValueObjectId(userId);
     const results = await CategoryModel.aggregate([
         {
             $match: {
-                userId: new mongoose.Types.ObjectId(userId)
+                userId
             }
         },
         {
@@ -37,16 +40,14 @@ export const getAll = async (userId) => {
     return results;
 }
 
-export const addMany = async (items) => {
-    return await CategoryModel.insertMany(items);
-}
-
 export const getItem = async (userId, itemId) => {
+    userId = ensureValueObjectId(userId);
+    const _id = ensureValueObjectId(itemId);
     const results = await CategoryModel.aggregate([
         {
             $match: {
-                userId: new mongoose.Types.ObjectId(userId),
-                _id: new mongoose.Types.ObjectId(itemId)
+                userId,
+                _id
             }
         },
         {
@@ -68,29 +69,41 @@ export const getItem = async (userId, itemId) => {
             }
         }
     ]);
-    //console.log('categories=', results)
     return results? results[0] : null;
 }
 
 export const addItem = async (item) => {
-    return await CategoryModel.insertOne(item);
+    ensureObjectId(item, "userId");
+    const result = await CategoryModel.insertOne(item);
+    delete result.userId;
+    return result;
+}
+
+export const addMany = async (items) => {
+    items = items.map((item)=>ensureObjectId(item, "userId"));
+    return await CategoryModel.insertMany(items);
 }
 
 export const changeItem = async (item) => {
+    ensureObjectId(item, "userId");
+    ensureObjectId(item, "_id");
     const updateDoc = {
         $set: {
-            name: true,
-            description: true
+            name: item.name,
+            description: item.description,
         },
     };
-    return await CategoryModel.updateOne( { _id: new mongoose.Types.ObjectId(item.id) }, updateDoc);
+    return await CategoryModel.updateOne( { _id: item._id}, updateDoc);
 }
 
 export const deleteItem = async (userId, itemId) => {
-    return await CategoryModel.deleteOne({ userId: new mongoose.Types.ObjectId(userId), _id: new mongoose.Types.ObjectId(itemId), default: false });
+    userId = ensureValueObjectId(userId);
+    itemId = ensureValueObjectId(itemId);
+    return await CategoryModel.deleteOne({ userId, _id: itemId, default: false });
 }
 
 export const deleteAll = async (userId) => {
-    return null//await CategoryModel.deleteMany({ userId: new mongoose.Types.ObjectId(userId), default: false });
+    userId = ensureValueObjectId(userId);
+    return await CategoryModel.deleteMany({ userId, default: false });
 }
 

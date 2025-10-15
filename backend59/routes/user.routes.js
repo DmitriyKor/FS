@@ -10,8 +10,7 @@ const userRouter = express.Router();
 
 //middleware for user
 userRouter.use((req, res, next) => {
-  console.log(`Request received for user: ${req.method} ${req.url}`);
-  //req.myField=... for subsequent use
+  //console.log(`Request received for user: ${req.method} ${req.url}`);
   next(); // Pass control to the next middleware or route handler
 });
 

@@ -46,7 +46,7 @@ app.use(cookieParser(SECRET_KEY_COOKIES));
 
 //logging
 app.use((req, res, next) => {
-  console.log(`Request received: ${req.method} ${req.url}`);
+  //console.log(`Request received: ${req.method} ${req.url}`);
   next(); // Pass control to the next middleware or route handler
 });
 
@@ -68,5 +68,5 @@ app.use('/api', router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(process.env.PORT, () => {
-  console.log(`Example app listening on port ${process.env.PORT}`)
+  console.log(`App has started and is listening on port ${process.env.PORT}`)
 })

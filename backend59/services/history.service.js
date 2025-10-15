@@ -12,8 +12,6 @@ export const getAll = async (userId, from, count, filter) => {
         match = { "userId": new ObjectId(userId), "expense": { "$gt": 0 } }
     };
 
-    console.log(match);
-
     const countTotal = await collection.countDocuments(match);
 
     const historyCursor = await collection.aggregate([

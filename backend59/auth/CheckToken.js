@@ -19,8 +19,6 @@ export const checkTokenHeaders = (req, res, next) => {
     // Verify the token using your secret key
     const decoded = jwt.verify(token, process.env.SECRET_KEY_TOKEN);
     req.user = decoded; // Attach the decoded user information to the request object
-    //req.user._id = mongoose.Types.ObjectId(req.user.id);
-    //console.log('moddleware token data: ', req.user)
     next(); // Proceed to the next middleware or route handler
   } catch (error) {
     next(new GeneralServerError(403, 'Access denied. Invalid or expired token'));
