@@ -51,7 +51,6 @@ export const HistoryArea = () => {
         const io = new IntersectionObserver(
             (entries) => {
                 const target = entries[0];
-                console.log('IntersectionObserver, target.isIntersecting=', target.isIntersecting);
                 if (target.isIntersecting && !history.isLoading && (history.items.length < history.countTotal)) {
                     dispatch(fetchHistory({ ...history.params, from: history.items.length }))
                 }

@@ -25,17 +25,10 @@ const Login = () => {
 
     const onSubmit = async (values: any) => {
         try {
-            const response: AxiosResponse = await axios.post(API_URL + ENDPOINT_USER+ '/login', values);
-            console.log('OnSubmit:');
-            console.log(response);
-            
+            const response: AxiosResponse = await axios.post(API_URL + ENDPOINT_USER+ '/login', values);           
             if (response.request.status == 200) {
-                
-                
                 if  (!response.data.user.image || response.data.user.image == '') { response.data.user.image = null }
-                
                 authAxios.setToken(response.data.token);
-
                 dispatch(setUser(response.data.user));
                 setLoginError("");
                 navigate('/');

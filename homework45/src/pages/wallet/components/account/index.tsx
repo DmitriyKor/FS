@@ -6,9 +6,6 @@ import type { IUser } from "../../../../store/user";
 
 export const AccountArea = () => {
     const user: IUser = useSelector((state:any) => state.user);
-
-    console.log('AccountArea, user:', user)
-
     return (
         <AccountLayout>
             <Panel>

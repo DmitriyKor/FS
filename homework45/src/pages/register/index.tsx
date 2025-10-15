@@ -28,9 +28,7 @@ const Register = () => {
                 return;
             }
             const {password2, ...valuesToSend} = values;
-            console.log('Registering with values:', valuesToSend);
             const response  : AxiosResponse = await axios.post(API_URL+ ENDPOINT_USER+'/register', valuesToSend);
-            console.log('response is ', response)
             if (response.request.status==200) {                
                 if (response.data.user.image=='') {response.data.user.image=null}
                 setToken(response.data.accessToken);

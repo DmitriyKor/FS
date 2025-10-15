@@ -16,7 +16,6 @@ export const fetchUser : any = createAsyncThunk(
   'user/fetchUser',
   async () => {
     const response = await authAxios.instance(API_URL + ENDPOINT_USER);
-    
     return response.data?.user;
   }
 )
@@ -27,7 +26,6 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<IUserData>) => {
       state.data = action.payload;
-      console.log('reducer setUser: ', action.payload)
     },
     resetUser: (state)=>{
       state.data = null;
@@ -37,8 +35,7 @@ const userSlice = createSlice({
     builder
       .addCase(fetchUser.pending, () => {})
       .addCase(fetchUser.fulfilled, (state, action) => {       
-        state.data = action.payload;   
-         console.log('extra reducer fetchUser: ', action.payload)    
+        state.data = action.payload;    
       })
       .addCase(fetchUser.rejected, (state) => {
         state.data = null;

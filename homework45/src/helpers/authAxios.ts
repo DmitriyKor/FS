@@ -15,15 +15,15 @@ export class AuthAxios {
 
         if (status === 401) {
           // Handle unauthorized access
-          console.log("Unauthorized access");
+          //console.log("Unauthorized access");
           //this.forwardToLogin();
 
         } else if (status === 404) {
           // Handle not found errors
-          console.log("Post not found");
+          //console.log("Item not found");
         } else {
           // Handle other errors
-          console.error("An error occurred:", error);
+          //console.error("An error occurred:", error);
         }
 
         return Promise.reject(error);

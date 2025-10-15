@@ -8,12 +8,9 @@ import { setUser } from '../../../store/user';
 import { useNavigate } from 'react-router-dom';
 
 const GoogleAuth = () => {
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const onGoogleSuccess = async (credentialResponse: any) => {
-        console.log(credentialResponse);
         try {
             const response: AxiosResponse = await axios.post(API_URL + '/google-auth', credentialResponse);
             if (response.request.status == 200) {
@@ -32,7 +29,7 @@ const GoogleAuth = () => {
         <GoogleLogin
             onSuccess={credentialResponse => onGoogleSuccess(credentialResponse)}
             onError={() => {
-                console.log('Login Failed');
+                //console.log('Login Failed');
             }}
         />
     );
