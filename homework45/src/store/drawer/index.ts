@@ -7,8 +7,6 @@ const drawerSlice = createSlice({
     initialState: DrawerState.extended,
     reducers: {
         displayDrawer: (state: DrawerState, action) => {
-            console.log('New drawer state:')
-            console.log(action);
             state = action.payload;
             return state;
         }

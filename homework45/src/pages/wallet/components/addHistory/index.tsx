@@ -4,34 +4,29 @@ import Button from '@mui/material/Button';
 import { FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from '@mui/material';
 
 import { AddHistoryLayout } from "./index.styles"
-import type { IUser } from '../../../../store/user';
 import type { ICategories, ICategoryItem } from '../../../../store/category';
 import type { RootState } from '../../../../store/store';
 import { mustBeNumber, required, requiredSelect } from '../../../../shared/validation';
 import { addHistory, OPERATION_TYPE, type IHistoryItem } from '../../../../store/history';
-import { Panel, PanelToolBar } from '../../../../shared/components/panel';
+import { Panel } from '../../../../shared/components/panel';
+import { PanelToolBarStyle, PanelToolBarText } from '../../../../shared/styles/styles';
 
 export const AddHistoryArea = () => {
 
     const dispatch = useDispatch();
     const categories: ICategories = useSelector((state : RootState) => state.categories);
-    const user: IUser = useSelector((state : RootState)=> state.user);
 
     const onSubmit = async (data:any, form:any) => {
-        console.log('AddHistory onSubmit, data is');
-        console.log(data);
-        console.log(user);
 
         let item: IHistoryItem = {
-            id: "",
-            userId: user.data?.id,
-            categoryId: data.category,
+            _id: "",
+            categoryName : '',
+            categoryId: data.categoryId,
             comment: data.comment,
             income: data.type == OPERATION_TYPE.income ? data.amount: 0,
             expense: data.type == OPERATION_TYPE.expense ? data.amount: 0,
         }
 
-        console.log(item);
         await dispatch(addHistory(item));
         form.restart();
     }
@@ -39,8 +34,9 @@ export const AddHistoryArea = () => {
     return (
         <AddHistoryLayout>
             <Panel>
-                <PanelToolBar title='Add history'>
-                </PanelToolBar>
+                <PanelToolBarStyle>
+                    <PanelToolBarText>Add history</PanelToolBarText>
+                </PanelToolBarStyle>
                 <Form
                     onSubmit={onSubmit}
                     initialValues={{ type: OPERATION_TYPE.income }}
@@ -64,7 +60,7 @@ export const AddHistoryArea = () => {
                                     )}
                                 </Field>
 
-                                <Field name="category" validate={requiredSelect}>
+                                <Field name="categoryId" validate={requiredSelect}>
                                     {({ input, meta }) => (
                                         <FormControl fullWidth>
                                             <InputLabel id="demo-simple-select-label">
@@ -81,7 +77,7 @@ export const AddHistoryArea = () => {
                                             >
                                                 {categories.items?.map((item: ICategoryItem) => {
                                                     return (
-                                                        <MenuItem value={item.id} key={item.id + item.name}>{item.name}</MenuItem>
+                                                        <MenuItem value={item._id} key={item._id + item.name}>{item.name}</MenuItem>
                                                     )
                                                 })}
                                             </Select>

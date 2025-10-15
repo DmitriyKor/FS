@@ -1,48 +1,47 @@
 import { createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
-
-import type { IHistoryItem, IHistoryId } from './types.ts';
-import { updateCategoriesBalance } from '../category/index.ts';
+import type { IHistoryItem, IHistoryId, IHistoryParams } from './types.ts';
 import { API_URL } from '../const.ts';
-import { HISTORY_URI, initialState } from './const.ts';
+import { HISTORY_ENDPOINT, initialState } from './const.ts';
 import { authAxios } from '../../helpers/authAxios.ts';
-
+import { setUser } from '../user/index.ts';
 
 export const fetchHistory : any = createAsyncThunk(
   'history/fetchHistory',
-  async (_, thunkAPI) => {
-    const response = await authAxios.instance(API_URL+HISTORY_URI);
-    //recalculate categories while we mock the backend
-    thunkAPI.dispatch(updateCategoriesBalance(response.data));
-    return response.data;
+  async (params: IHistoryParams) => {    
+    const response = await authAxios.instance(API_URL+HISTORY_ENDPOINT, {params});
+    return response.data.history;
   }
 )
 
 export const setHistory : any = createAsyncThunk(
   'history/setHistory',
-  async (data: IHistoryItem, thunkAPI) => {
-    const {id, ...dataToPost} = data;   
-    await authAxios.instance.put(API_URL+HISTORY_URI+'/'+id, dataToPost);
-    //refetch full history and recalulate categories there
-    await thunkAPI.dispatch(fetchHistory()); 
+  async (data: IHistoryItem, {dispatch}) => {
+    const {_id, ...dataToPost} = data;   
+    const response = await authAxios.instance.patch(API_URL+HISTORY_ENDPOINT+'/'+_id, dataToPost);
+    //refresh user
+    dispatch(setUser(response.data.user))
+    return {response: response.data, _id};
   }
 )
 
 export const addHistory : any = createAsyncThunk(
   'history/addHistory',
-  async (data: IHistoryItem, thunkAPI) => {
-    await authAxios.instance.post(API_URL+HISTORY_URI, data);
-    //refetch full history and recalulate categories there
-    await thunkAPI.dispatch(fetchHistory()); 
+  async (data: IHistoryItem, {dispatch}) => {
+    const response = await authAxios.instance.post(API_URL+HISTORY_ENDPOINT, data);
+    //refresh user
+    dispatch(setUser(response.data.user))
+    return response.data.item;
   }
 )
 
 export const deleteHistory : any = createAsyncThunk(
   'history/deleteHistory',
-  async (data: IHistoryId, thunkAPI) => {
-    await authAxios.instance.delete(API_URL+HISTORY_URI+'/'+data.id);
-    //refetch full history and recalulate categories there
-    await thunkAPI.dispatch(fetchHistory()); 
+  async (data: IHistoryId, {dispatch}) => {
+    const response = await authAxios.instance.delete(API_URL+HISTORY_ENDPOINT+'/'+data._id);
+    //refresh user
+    dispatch(setUser(response.data.user))
+    return {response: response.data, data};
   }
 )
 
@@ -50,42 +49,34 @@ const historySlice = createSlice({
   name: 'history',
   initialState,
   reducers: {
-    // addOrSetHistoryItem: (state, action: PayloadAction<IHistoryItem>) => {
-    //   const idx: number = (action.payload.id === null) ?
-    //     -1 : state.items.findIndex((el) => el.id === action.payload.id);
-    //   if (idx < 0) {
-    //     state.items.push({ ...action.payload, id: uuidv4() });
-    //   } else {
-    //     const current_id = state.items[idx].id;
-    //     state.items[idx] = { ...action.payload, id: current_id }
-    //   }
-    // },
-    // deleteHistoryItem: (state, action: PayloadAction<IHistoryId>) => {
-    //   const idx: number = state.items.findIndex((el) => el.id === action.payload.id);
-    //   if (idx >= 0) {
-    //     state.items = state.items.filter((el) => el.id !== action.payload.id)
-    //   }
-    // },
-    // clearHistory: (state) => {
-    //   state = initialState;
-    // }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchHistory.pending, (state) => { state.isLoading = true })
+      .addCase(fetchHistory.pending, (state, action) => { 
+        state.isLoading = true;
+        state.params = action.meta.arg;
+      })
       .addCase(fetchHistory.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.items = action.payload;        
+        state.isLoading = false;              
+        //rewrite or add new items
+        for (let i = 0; i < action.payload.items.length; i++) {
+            state.items[action.meta.arg.from + i] = action.payload.items[i];
+        }
+        state.countTotal = action.payload.count;
+        //remove unnecessary items which may appear after changing the filter
+        if (state.items.length>state.countTotal) state.items.splice(state.countTotal, state.items.length-state.countTotal);     
       })
       .addCase(fetchHistory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       })
-      .addCase(addHistory.fulfilled, () => {
+      .addCase(addHistory.fulfilled, (state, action) => {
+        state.items.splice(0, 0, action.payload);
       })
       .addCase(setHistory.fulfilled, () => {
       })
-      .addCase(deleteHistory.fulfilled, () => {
+      .addCase(deleteHistory.fulfilled, (state, action) => {
+        state.items = state.items.filter(item => item._id !== action.payload.data._id);
       })
 
       ;

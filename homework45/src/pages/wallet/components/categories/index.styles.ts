@@ -13,6 +13,8 @@ export const CategoriesListStyle = styled.div`
 `
 export const CategoryItemStyle = styled.div`
     display: flex;
+    flex-shrink: 0; 
+    font-size: 12px;
     flex-direction: column;
     border: 1px solid ${props => props.theme.panel.borderColor};
     height: 100%;
@@ -20,10 +22,22 @@ export const CategoryItemStyle = styled.div`
     box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.1);
     border-radius: ${props => props.theme.panel.borderRadius};
     box-sizing: border-box;
-    width: calc((100% / 5) - 10px);
+    width: 15%;
     padding: 10px;
-    h5 {
+    h4 { 
+        font-size: 14px;
         margin:0;
         padding:0;
     }
+    h5 {
+        margin: 0 0 10px 0;
+        padding: 0;
+    }
+    
+    p {
+        font-size: 10px;
+    }
 `
+
+
+

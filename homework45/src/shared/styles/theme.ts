@@ -14,6 +14,9 @@ interface ICustomTheme {
     borderRadius: string;
     padding: string;
   },
+  historyItem: {
+    backgroundColor: string;
+  }
 }
 
 export const mainTheme : ICustomTheme = {
@@ -29,6 +32,9 @@ export const mainTheme : ICustomTheme = {
     borderRadius: '8px',
     padding: '10px',
   },
+  historyItem: {
+      backgroundColor: 'lightgreen'
+  }
 };
 
 

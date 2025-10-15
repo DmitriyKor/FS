@@ -12,6 +12,8 @@ import { API_URL } from '../../store/const';
 import { setUser } from '../../store/user';
 import { LoginFormElementsStyle, LoginFormStyle } from '../../shared/styles/styles';
 import { authAxios } from '../../helpers/authAxios';
+import GoogleAuth from '../../shared/components/googleAuth/googleAuth';
+import { ENDPOINT_USER } from '../../store/user/const';
 
 const Login = () => {
 
@@ -23,12 +25,10 @@ const Login = () => {
 
     const onSubmit = async (values: any) => {
         try {
-            const response: AxiosResponse = await axios.post(API_URL + '/login', values);
+            const response: AxiosResponse = await axios.post(API_URL + ENDPOINT_USER+ '/login', values);           
             if (response.request.status == 200) {
-                if (response.data.user.image == '') { response.data.user.image = null }
-                
-                authAxios.setToken(response.data.accessToken);
-
+                if  (!response.data.user.image || response.data.user.image == '') { response.data.user.image = null }
+                authAxios.setToken(response.data.token);
                 dispatch(setUser(response.data.user));
                 setLoginError("");
                 navigate('/');
@@ -87,11 +87,14 @@ const Login = () => {
                             </Stack>
                             <Button sx={{ mt: 2 }} variant="outlined" type='submit'>Login</Button>
                             {loginError != "" && <Alert severity="error">{loginError}</Alert>}
+                            <GoogleAuth></GoogleAuth>
                             <Link to='/register'><Button sx={{ mt: 2 }}>Register</Button></Link>
                         </LoginFormElementsStyle>
+                                            
                     </form>
                 )}
             />
+            
         </LoginFormStyle>
     )
 }

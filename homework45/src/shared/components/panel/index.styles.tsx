@@ -13,16 +13,6 @@ export const PanelStyle = styled.div`
     display: flex;
     flex-direction: column;
 `
-export const PanelToolBarStyle = styled.div`
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    h4 {
-        margin: 0;
-        padding: 0;
-    }
-`
+
 export const PanelToolBarButtonStyle = styled.button`
 `

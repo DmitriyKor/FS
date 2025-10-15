@@ -1,18 +1,27 @@
 export interface IHistoryItem {
-    id: string;
+    _id: string;
     categoryId : string | undefined | null;
-    userId : string | undefined | null;
+    categoryName : string | undefined | null;
     comment : string | undefined | null;
     income: number;
     expense: number;
 }
 
 export interface IHistoryId {
-    id: string;
+    _id: string;
 }
+
+export interface IHistoryParams {
+    filter: string;
+    from: number;
+    count: number;
+}
+
 export interface IHistory {
     items: IHistoryItem[];
+    countTotal: number;
     isLoading: boolean;
+    params: IHistoryParams;
     error: string | undefined | null;
 }
 

@@ -1,14 +1,14 @@
 export interface ICategoryItem {
-    id: string;
+    _id: string;
     default: boolean;
     name: string;
     description: string;
-    balanceIncome: number;
-    balanceExpense: number;
+    incomeAmount: number;
+    expenseAmount: number;
 }
 
 export interface ICategoryId {
-    id: String;
+    _id: String;
 }
 
 export interface ICategories {

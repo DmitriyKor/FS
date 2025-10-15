@@ -1,19 +1,22 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import type { IUserData, IUser } from './interfaces.ts';
+import type { IUserData } from './interfaces.ts';
 import { API_URL } from '../const.ts';
 import { authAxios } from '../../helpers/authAxios.ts';
+import { ENDPOINT_USER, initialState } from './const.ts';
 
-const initialState: IUser = {
-  data: null,
-}
+ // "email":"john@gmail.com",
+ // "password": "yryU&77i",
+
+ //aaa@
+ //qW1234%a
 
 export const fetchUser : any = createAsyncThunk(
   'user/fetchUser',
   async () => {
-    const response = await authAxios.instance(API_URL+'/users/1');
-    return response.data;
+    const response = await authAxios.instance(API_URL + ENDPOINT_USER);
+    return response.data?.user;
   }
 )
 
@@ -31,15 +34,13 @@ const userSlice = createSlice({
  extraReducers: (builder) => {
     builder
       .addCase(fetchUser.pending, () => {})
-      .addCase(fetchUser.fulfilled, (state, action) => {
-        state.data = action.payload;        
+      .addCase(fetchUser.fulfilled, (state, action) => {       
+        state.data = action.payload;    
       })
       .addCase(fetchUser.rejected, (state) => {
         state.data = null;
-      })
-      ;
+      });
   }
-
 });
 
 export const { setUser, resetUser } = userSlice.actions;

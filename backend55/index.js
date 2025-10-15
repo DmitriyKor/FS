@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import routerUsers from './routes/users.js';
 import routerHome from './routes/home.js';
 
@@ -10,6 +11,11 @@ const ENDPOINT_HOME = '/';
 
 const app = express();
 const port = 3000;
+const secret = 'your_secret_key'; 
+
+//global middlewares
+
+app.use(cookieParser(secret)); 
 
 app.use((req, res, next) => {
   console.log(`Request received: ${req.method} ${req.url}`);
@@ -17,6 +23,8 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+
+//routes
 
 app.use(ENDPOINT_USERS, routerUsers);
 app.use(ENDPOINT_HOME, routerHome);

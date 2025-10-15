@@ -12,6 +12,7 @@ import { API_URL } from '../../store/const';
 import { LoginFormElementsStyle, LoginFormStyle } from '../../shared/styles/styles';
 import { setToken } from '../../helpers/auth';
 import { setUser } from '../../store/user';
+import { ENDPOINT_USER } from '../../store/user/const';
 
 const Register = () => {
 
@@ -27,7 +28,7 @@ const Register = () => {
                 return;
             }
             const {password2, ...valuesToSend} = values;
-            const response  : AxiosResponse = await axios.post(API_URL+'/register', valuesToSend);
+            const response  : AxiosResponse = await axios.post(API_URL+ ENDPOINT_USER+'/register', valuesToSend);
             if (response.request.status==200) {                
                 if (response.data.user.image=='') {response.data.user.image=null}
                 setToken(response.data.accessToken);
